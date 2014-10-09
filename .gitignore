@@ -1,0 +1,7 @@
+.gradle
+/local.properties
+
+# Android Studio
+.idea
+.DS_Store
+/build
