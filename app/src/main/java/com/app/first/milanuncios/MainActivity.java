@@ -17,7 +17,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.main_activity);
         new GetCategoriesTask().execute(this);
     }
 
@@ -49,7 +49,8 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
             list.add(cat.getName());
         }
 
-        CategoriesListViewAdapter adapter = new CategoriesListViewAdapter(this, android.R.layout.simple_list_item_1, list);
+        //CategoriesListViewAdapter adapter = new CategoriesListViewAdapter(this, android.R.layout.simple_list_item_1, list);
+        CategoriesListAdapter adapter = new CategoriesListAdapter(this, categories);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

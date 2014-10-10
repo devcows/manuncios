@@ -1,13 +1,15 @@
 package com.app.first.milanuncios;
 
-import android.media.Image;
+import android.graphics.Bitmap;
 
 public class Category {
     private String name;
-    private Image icon;
+    private Bitmap icon;
     private String url;
 
-    public Category(String name, Image icon, String url) {
+    public Category(){}
+
+    public Category(String name, Bitmap icon, String url) {
         this.name = name;
         this.icon = icon;
         this.url = url;
@@ -16,5 +18,7 @@ public class Category {
     public String getName() {
         return name;
     }
+
+    public Bitmap getIcon() { return icon; }
 
 }
