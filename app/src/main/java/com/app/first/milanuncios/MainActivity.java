@@ -13,45 +13,12 @@ import java.util.List;
 
 
 public class MainActivity extends Activity {
-    private List<Category> categories = getCategories();
-
-
-    private List<Category> getCategories() {
-        List<Category> categories = new ArrayList<Category>();
-
-        //TODO: GET A LA WEB
-        Category c1 = new Category("Motor", null, "http://www.milanuncios.com/motor");
-        categories.add(c1);
-        Category c2 = new Category("Empleo", null, "http://www.milanuncios.com/ofertas-de-empleo");
-        categories.add(c2);
-
-        return categories;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-
-        final ListView listview = (ListView) findViewById(R.id.category_lst);
-        final ArrayList<String> list = new ArrayList<String>();
-        for (Category cat : categories) {
-            list.add(cat.getName());
-        }
-        final CategoryArrayAdapter adapter = new CategoryArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                //categories[position] =>  access to categories with index.
-
-            }
-
-        });
+        new Category().execute(this);
     }
 
     @Override
@@ -72,6 +39,7 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
 
 
