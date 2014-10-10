@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements CategoriesTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,29 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onGetCategoriesResult(List<Category> categories) {
+        // Set description into TextView
+        final ListView listview = (ListView) findViewById(R.id.category_lst);
+        ArrayList<String> list = new ArrayList<String>();
+        for (Category cat : categories) {
+            list.add(cat.getName());
+        }
+
+        CategoriesListViewAdapter adapter = new CategoriesListViewAdapter(this, android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                //categories[position] =>  access to categories with index.
+
+            }
+        });
+    }
 }
 
 

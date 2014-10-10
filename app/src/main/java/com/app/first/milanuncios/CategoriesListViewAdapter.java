@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CategoryArrayAdapter extends ArrayAdapter<String> {
+public class CategoriesListViewAdapter extends ArrayAdapter<String> {
 
     HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
-    public CategoryArrayAdapter(Context context, int textViewResourceId, List<String> objects) {
+    public CategoriesListViewAdapter(Context context, int textViewResourceId, List<String> objects) {
         super(context, textViewResourceId, objects);
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(objects.get(i), i);
