@@ -10,15 +10,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetCategoriesTask extends AsyncTask<CategoriesTaskListener, Void, Void> {
+public class GetCategoriesTask extends AsyncTask<CategoriesTaskListener, Void, List<Category>> {
     public GetCategoriesTask() {}
 
-    private List<Category> categories = new ArrayList<Category>();
     private CategoriesTaskListener[] listeners;
 
     @Override
-    protected Void doInBackground(CategoriesTaskListener... listeners) {
+    protected List<Category> doInBackground(CategoriesTaskListener... listeners) {
         this.listeners = listeners;
+        List<Category> categories = new ArrayList<Category>();
 
         try {
             Document doc = Jsoup.connect("http://www.milanuncios.com").get();
@@ -36,11 +36,11 @@ public class GetCategoriesTask extends AsyncTask<CategoriesTaskListener, Void, V
         Category c2 = new Category("Empleo", null, "http://www.milanuncios.com/ofertas-de-empleo");
         categories.add(c2);
 
-        return null;
+        return categories;
     }
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(List<Category> categories) {
         for(CategoriesTaskListener listener: listeners){
             listener.onGetCategoriesResult(categories);
         }
