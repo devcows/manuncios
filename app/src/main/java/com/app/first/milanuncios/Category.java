@@ -2,9 +2,16 @@ package com.app.first.milanuncios;
 
 import android.graphics.Bitmap;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
     private String name;
-    private Bitmap icon;
+    private transient Bitmap icon;
+
+    public String getUrl() {
+        return url;
+    }
+
     private String url;
 
     public Category(){}

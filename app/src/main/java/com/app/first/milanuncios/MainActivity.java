@@ -1,6 +1,7 @@
 package com.app.first.milanuncios;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
         new GetCategoriesTask().execute(this);
     }
 
@@ -49,7 +50,6 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
             list.add(cat.getName());
         }
 
-        //CategoriesListViewAdapter adapter = new CategoriesListViewAdapter(this, android.R.layout.simple_list_item_1, list);
         CategoriesListAdapter adapter = new CategoriesListAdapter(this, categories);
         listview.setAdapter(adapter);
 
@@ -58,9 +58,15 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                //categories[position] =>  access to categories with index.
+                final Category item = (Category) parent.getItemAtPosition(position);
 
+                Intent intent = new Intent(getBaseContext(), OfferActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("selected_category", item);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
             }
         });
     }
