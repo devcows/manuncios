@@ -2,59 +2,73 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:alignmentMode="alignBounds"
     android:background="#EFFFEF"
     >
 
     <TextView
-        android:id="@+id/secondTitle"
-        android:text="label2"
+        android:id="@+id/firstTitle"
+        android:text="First title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="10dp"
+        android:maxWidth="@dimen/activity_offer_titles_max_width"
+        android:paddingTop="7dp"
+        android:paddingLeft="5dp"
         android:textColor="#114411"
-        android:textSize="14dp"
-        android:layout_row="1"
-        android:layout_column="1" />
+        android:textSize="8dp"
+        android:layout_row="0"
+        android:layout_column="0" />
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginRight="5dp"
         android:layout_row="0"
-        android:layout_column="0" />
+        android:layout_column="1"
+        android:layout_rowSpan="2" />
 
     <TextView
-        android:id="@+id/firstTitle"
-        android:text="label1"
+        android:id="@+id/secondTitle"
+        android:text="Second title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="10dp"
+        android:maxWidth="@dimen/activity_offer_titles_max_width"
+        android:paddingTop="5dp"
+        android:paddingLeft="@dimen/activity_offer_normal_padding_left"
         android:textColor="#114411"
         android:textSize="10dp"
-        android:layout_row="0"
-        android:layout_column="1" />
+        android:layout_row="1"
+        android:layout_column="0" />
+
 
     <TextView
         android:id="@+id/description"
-        android:text="label3"
+        android:text="Large description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="6dp"
+        android:paddingLeft="@dimen/activity_offer_normal_padding_left"
+        android:maxWidth="@dimen/activity_offer_other_max_width"
         android:textColor="#114411"
-        android:textSize="14dp"
+        android:textSize="7dp"
+        android:layout_columnSpan="2"
         android:layout_row="2"
-        android:layout_column="1" />
+        android:layout_column="0" />
+
+    <TextView
+        android:id="@+id/other"
+        android:text="Prices and others"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="@dimen/activity_offer_normal_padding_left"
+        android:maxWidth="@dimen/activity_offer_other_max_width"
+        android:textColor="#114411"
+        android:textSize="7dp"
+        android:layout_columnSpan="2"
+        android:layout_row="3"
+        android:layout_column="0" />
 
 </GridLayout>

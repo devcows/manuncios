@@ -57,8 +57,12 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
             description = elem.text();
         }
 
-        Elements imgTag = images.get(0).select("img");
-        String strImage = imgTag.get(0).attr("src");
+        String strImage = "";
+        if (images.size() > 0) {
+            Elements imgTag = images.get(0).select("img");
+            strImage = imgTag.get(0).attr("src");
+        }
+
 
         Bitmap bmpImage = null;
         try {
