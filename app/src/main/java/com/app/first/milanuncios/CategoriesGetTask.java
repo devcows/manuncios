@@ -14,8 +14,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetCategoriesTask extends AsyncTask<CategoriesTaskListener, Void, List<Category>> {
-    public GetCategoriesTask() {}
+public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, List<Category>> {
+    public CategoriesGetTask() {}
 
     private CategoriesTaskListener[] listeners;
 
@@ -79,7 +79,7 @@ public class GetCategoriesTask extends AsyncTask<CategoriesTaskListener, Void, L
     @Override
     protected void onPostExecute(List<Category> categories) {
         for(CategoriesTaskListener listener: listeners){
-            listener.onGetCategoriesResult(categories);
+            listener.onCategoriesGetResult(categories);
         }
     }
 }

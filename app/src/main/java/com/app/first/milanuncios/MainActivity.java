@@ -19,7 +19,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new GetCategoriesTask().execute(this);
+        new CategoriesGetTask().execute(this);
     }
 
     @Override
@@ -42,13 +42,9 @@ public class MainActivity extends Activity implements CategoriesTaskListener {
     }
 
     @Override
-    public void onGetCategoriesResult(List<Category> categories) {
+    public void onCategoriesGetResult(List<Category> categories) {
         // Set description into TextView
         final ListView listview = (ListView) findViewById(R.id.category_lst);
-        ArrayList<String> list = new ArrayList<String>();
-        for (Category cat : categories) {
-            list.add(cat.getName());
-        }
 
         CategoriesListAdapter adapter = new CategoriesListAdapter(this, categories);
         listview.setAdapter(adapter);
