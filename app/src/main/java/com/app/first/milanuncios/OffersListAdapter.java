@@ -54,6 +54,7 @@ public class OffersListAdapter extends BaseAdapter {
 
             holder.txtFirstTitle = (TextView) view.findViewById(R.id.firstTitle);
             holder.txtSecondTitle = (TextView) view.findViewById(R.id.secondTitle);
+            holder.txtDescription = (TextView) view.findViewById(R.id.description);
             holder.imageView = (ImageView) view.findViewById(R.id.icon);
             view.setTag(holder);
         } else {
@@ -64,6 +65,7 @@ public class OffersListAdapter extends BaseAdapter {
 
         holder.txtFirstTitle.setText(rowItem.getFirstTitle());
         holder.txtSecondTitle.setText(rowItem.getSecondTitle());
+        holder.txtDescription.setText(rowItem.getDescription());
         holder.imageView.setImageBitmap(rowItem.getIcon());
 
         return view;
@@ -74,6 +76,7 @@ public class OffersListAdapter extends BaseAdapter {
         ImageView imageView;
         TextView txtFirstTitle;
         TextView txtSecondTitle;
+        TextView txtDescription;
     }
 
 }

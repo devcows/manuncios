@@ -1,5 +1,7 @@
 package com.app.first.milanuncios;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import org.jsoup.Jsoup;
@@ -10,6 +12,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +27,11 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
     private Offer LoadHtmlOffer(Element row) {
         Elements firstTitles = row.select("div.x4");
         Elements secondTitles = row.select("div.x7");
+        Elements descriptions = row.select("div.tx");
+        Elements images = row.select("div.x8");
 
-//        this.secondTitle = secondTitle;
-//        this.description = description;
+        //TODO: Get other fields. (price, others)
 //        this.other = other;
-//        this.icon = icon;
 
         String firstTitle = "";
         if (firstTitles.size() > 0) {
@@ -40,22 +43,6 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
                     firstTitle += ((TextNode) elem).text();
                 }
             }
-
-
-//            Elements imgTag = divIcons.get(0).select("img");
-//            String strImage = imgTag.get(0).attr("src");
-//
-//            Bitmap bmpImage = null;
-//            try {
-//                URL urlImage = new URL(strImage);
-//                bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Elements nodeCategory = divCategories.get(0).select("a");
-//            String strUrl = "http://www.milanuncios.com" + nodeCategory.get(0).attr("href");
-//            String strName = nodeCategory.get(0).text();
         }
 
         String secondTitle = "";
@@ -64,8 +51,24 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
             secondTitle = elem.text();
         }
 
+        String description = "";
+        if (descriptions.size() > 0) {
+            Element elem = descriptions.get(0);
+            description = elem.text();
+        }
 
-        Offer o = new Offer(firstTitle, secondTitle, null, null, null);
+        Elements imgTag = images.get(0).select("img");
+        String strImage = imgTag.get(0).attr("src");
+
+        Bitmap bmpImage = null;
+        try {
+            URL urlImage = new URL(strImage);
+            bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Offer o = new Offer(firstTitle, secondTitle, description, null, bmpImage);
         return o;
     }
 
