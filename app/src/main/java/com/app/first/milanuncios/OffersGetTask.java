@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -18,10 +17,19 @@ import java.util.List;
 
 public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offer>> {
     private Category category;
+    private String querySearch;
+
     private OffersTaskListener[] listeners;
 
-    public OffersGetTask(Category category) {
+    public OffersGetTask() {
+    }
+
+    public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setQuerySearch(String querySearch) {
+        this.querySearch = querySearch.replace(" ", "-");
     }
 
     private Offer LoadHtmlOffer(Element row) {
@@ -60,9 +68,10 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
         String strImage = "";
         if (images.size() > 0) {
             Elements imgTag = images.get(0).select("img");
-            strImage = imgTag.get(0).attr("src");
+            if (imgTag.size() > 0) {
+                strImage = imgTag.get(0).attr("src");
+            }
         }
-
 
         Bitmap bmpImage = null;
         try {
@@ -72,8 +81,7 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
             e.printStackTrace();
         }
 
-        Offer o = new Offer(firstTitle, secondTitle, description, null, bmpImage);
-        return o;
+        return new Offer(firstTitle, secondTitle, description, null, bmpImage);
     }
 
     @Override
@@ -81,14 +89,17 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
         this.listeners = listeners;
         List<Offer> offers = new ArrayList<Offer>();
 
-        try {
-            String urlQuery = "http://www.milanuncios.com";
-            if (category != null) {
-                urlQuery = category.getUrl();
-            }
+        String urlQuery = "http://www.milanuncios.com/anuncios/";
+        if (category != null) {
+            urlQuery = category.getUrl();
+        }
 
-            Document doc = Jsoup.connect(urlQuery).get();
+        if (querySearch != null){
+            urlQuery += querySearch + ".htm";
+        }
 
+        Document doc = Utils.getDocumentFromUrl(urlQuery);
+        if (doc != null) {
             Elements rows = doc.select("div.x1");
             for (Element row : rows) {
 
@@ -97,9 +108,6 @@ public class OffersGetTask extends AsyncTask<OffersTaskListener, Void, List<Offe
                     offers.add(offer);
                 }
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return offers;

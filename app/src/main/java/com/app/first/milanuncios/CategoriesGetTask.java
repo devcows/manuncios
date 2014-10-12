@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -15,17 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, List<Category>> {
-    public CategoriesGetTask() {}
-
     private CategoriesTaskListener[] listeners;
 
-    private Category LoadHtmlCatergory(Element row, String divNameIco, String divNameCategory){
+    public CategoriesGetTask() {
+    }
+
+    private Category LoadHtmlCatergory(Element row, String divNameIco, String divNameCategory) {
         Category c = null;
 
-        Elements divIcons =  row.select(divNameIco);
-        Elements divCategories =  row.select(divNameCategory);
+        Elements divIcons = row.select(divNameIco);
+        Elements divCategories = row.select(divNameCategory);
 
-        if(divIcons.size() > 0 && divCategories.size() > 0){
+        if (divIcons.size() > 0 && divCategories.size() > 0) {
             Elements imgTag = divIcons.get(0).select("img");
             String strImage = imgTag.get(0).attr("src");
 
@@ -52,25 +52,21 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
         this.listeners = listeners;
         List<Category> categories = new ArrayList<Category>();
 
-        try {
-            Document doc = Jsoup.connect("http://www.milanuncios.com").get();
-
+        Document doc = Utils.getDocumentFromUrl("http://www.milanuncios.com");
+        if (doc != null) {
             Elements rows = doc.select("div.filaCat");
-            for (Element row: rows){
+            for (Element row : rows) {
                 Category c1 = LoadHtmlCatergory(row, "div.catIcoIzq", "div.categoriaIzq");
                 Category c2 = LoadHtmlCatergory(row, "div.catIcoDch", "div.categoriaDch");
 
-                if(c1 != null) {
+                if (c1 != null) {
                     categories.add(c1);
                 }
 
-                if(c2 != null){
+                if (c2 != null) {
                     categories.add(c2);
                 }
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return categories;
@@ -78,7 +74,7 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
 
     @Override
     protected void onPostExecute(List<Category> categories) {
-        for(CategoriesTaskListener listener: listeners){
+        for (CategoriesTaskListener listener : listeners) {
             listener.onCategoriesGetResult(categories);
         }
     }

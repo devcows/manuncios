@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,14 +19,23 @@ public class OfferActivity extends Activity implements OffersTaskListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
+        TextView label = (TextView) findViewById(R.id.offer_label);
+        OffersGetTask offerTask = new OffersGetTask();
 
         Intent intent = getIntent();
-        Category selectedCategory = (Category) intent.getSerializableExtra("selected_category");
+        if (intent.hasExtra("selected_category")) {
+            Category selectedCategory = (Category) intent.getSerializableExtra("selected_category");
+            offerTask.setCategory(selectedCategory);
+            label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
+        }
 
-        TextView label = (TextView) findViewById(R.id.offer_label);
-        label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
+        if (intent.hasExtra("query_string")){
+            String query = intent.getStringExtra("query_string");
+            label.setText("Search => " + query);
+            offerTask.setQuerySearch(query);
+        }
 
-        new OffersGetTask(selectedCategory).execute(this);
+        offerTask.execute(this);
     }
 
 

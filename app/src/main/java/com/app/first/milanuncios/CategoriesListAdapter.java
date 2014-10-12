@@ -2,8 +2,6 @@ package com.app.first.milanuncios;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 
@@ -20,6 +16,10 @@ public class CategoriesListAdapter extends BaseAdapter {
 
     private Context context;
     private List<Category> objects;
+
+    public void setObjects(List<Category> objects) {
+        this.objects = objects;
+    }
 
     public CategoriesListAdapter(Context context, List<Category> objects) {
         this.context = context;
