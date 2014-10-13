@@ -15,13 +15,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeachOffersGetTask extends AsyncTask<SeachOffersTaskListener, Void, List<Offer>> {
+public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Void, List<Offer>> {
     private Category category;
     private String querySearch;
 
-    private SeachOffersTaskListener[] listeners;
+    private SearchOffersTaskListener[] listeners;
 
-    public SeachOffersGetTask() {
+    public SearchOffersGetTask() {
     }
 
     public void setCategory(Category category) {
@@ -85,7 +85,7 @@ public class SeachOffersGetTask extends AsyncTask<SeachOffersTaskListener, Void,
     }
 
     @Override
-    protected List<Offer> doInBackground(SeachOffersTaskListener... listeners) {
+    protected List<Offer> doInBackground(SearchOffersTaskListener... listeners) {
         this.listeners = listeners;
         List<Offer> offers = new ArrayList<Offer>();
 
@@ -115,7 +115,7 @@ public class SeachOffersGetTask extends AsyncTask<SeachOffersTaskListener, Void,
 
     @Override
     protected void onPostExecute(List<Offer> offers) {
-        for (SeachOffersTaskListener listener : listeners) {
+        for (SearchOffersTaskListener listener : listeners) {
             listener.onOffersGetResult(offers);
         }
     }

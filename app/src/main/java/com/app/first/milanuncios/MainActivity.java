@@ -2,7 +2,6 @@ package com.app.first.milanuncios;
 
 import android.app.Activity;
 import android.app.SearchManager;
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +51,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
                                     int position, long id) {
                 final Category item = (Category) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
+                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("selected_category", item);
@@ -119,7 +118,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
 
 //    @Override
 //    public boolean onQueryTextSubmit(String query_string){
-//        Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
+//        Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
 //
 //        Bundle mBundle = new Bundle();
 //        mBundle.putString("query_string", query_string);

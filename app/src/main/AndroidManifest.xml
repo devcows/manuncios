@@ -20,11 +20,11 @@
 
             <meta-data
                 android:name="android.app.searchable"
-                android:value="com.app.first.milanuncios.SearchOfferActivity" />
+                android:value="com.app.first.milanuncios.SearchOffersActivity" />
         </activity>
 
         <activity
-            android:name=".SearchOfferActivity"
+            android:name=".SearchOffersActivity"
             android:label="@string/title_activity_offer" >
 
             <meta-data

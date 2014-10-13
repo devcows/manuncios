@@ -1,6 +1,7 @@
 package com.app.first.milanuncios;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,27 +14,33 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class SearchOfferActivity extends Activity implements SeachOffersTaskListener {
+public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
         TextView label = (TextView) findViewById(R.id.offer_label);
-        SeachOffersGetTask offerTask = new SeachOffersGetTask();
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
 
         Intent intent = getIntent();
-        if (intent.hasExtra("selected_category")) {
-            Category selectedCategory = (Category) intent.getSerializableExtra("selected_category");
-            offerTask.setCategory(selectedCategory);
-            label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
-        }
-
-        if (intent.hasExtra("query_string")){
-            String query = intent.getStringExtra("query_string");
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
             label.setText("Search => " + query);
             offerTask.setQuerySearch(query);
+        } else {
+            if (intent.hasExtra("selected_category")) {
+                Category selectedCategory = (Category) intent.getSerializableExtra("selected_category");
+                offerTask.setCategory(selectedCategory);
+                label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
+            }
         }
+
+//        if (intent.hasExtra("query_string")){
+//            String query = intent.getStringExtra("query_string");
+//            label.setText("Search => " + query);
+//            offerTask.setQuerySearch(query);
+//        }
 
         offerTask.execute(this);
     }
@@ -73,7 +80,7 @@ public class SearchOfferActivity extends Activity implements SeachOffersTaskList
                                     int position, long id) {
 //                final Category item = (Category) parent.getItemAtPosition(position);
 //
-//                Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
+//                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
 //
 //                Bundle mBundle = new Bundle();
 //                mBundle.putSerializable("selected_category", item);
