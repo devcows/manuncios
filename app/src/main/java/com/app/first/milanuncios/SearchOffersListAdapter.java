@@ -12,12 +12,12 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class OffersListAdapter extends BaseAdapter {
+public class SearchOffersListAdapter extends BaseAdapter {
 
     private Context context;
     private List<Offer> objects;
 
-    public OffersListAdapter(Context context, List<Offer> objects) {
+    public SearchOffersListAdapter(Context context, List<Offer> objects) {
         this.context = context;
         this.objects = objects;
     }

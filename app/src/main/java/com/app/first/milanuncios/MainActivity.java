@@ -14,11 +14,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity implements CategoriesTaskListener, SearchView.OnQueryTextListener {
+public class MainActivity extends Activity implements CategoriesTaskListener { //, SearchView.OnQueryTextListener {
     private CategoriesListAdapter adapter;
 
     private ProgressBar pb;
@@ -47,7 +52,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener, Se
                                     int position, long id) {
                 final Category item = (Category) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getBaseContext(), OfferActivity.class);
+                Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("selected_category", item);
@@ -57,6 +62,20 @@ public class MainActivity extends Activity implements CategoriesTaskListener, Se
             }
         });
 
+
+        Context context = getBaseContext();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCacheSize(50 * 1024 * 1024) // 50 Mb
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .writeDebugLogs() // Remove for release app
+                .build();
+
+
+        ImageLoader.getInstance().init(config);
+
         new CategoriesGetTask().execute(this);
     }
 
@@ -65,52 +84,56 @@ public class MainActivity extends Activity implements CategoriesTaskListener, Se
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
 
-        mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        setupSearchView();
-
-        return true;
-    }
-
-    private void setupSearchView() {
-
-        mSearchView.setIconifiedByDefault(true);
-
+        // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        if (searchManager != null) {
-            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-            // Try to use the "applications" global search provider
-            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-            for (SearchableInfo inf : searchables) {
-                if (inf.getSuggestAuthority() != null
-                        && inf.getSuggestAuthority().startsWith("applications")) {
-                    info = inf;
-                }
-            }
-            mSearchView.setSearchableInfo(info);
-        }
+        //mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        //setupSearchView();
 
-       mSearchView.setOnQueryTextListener(this);
-       // mSearchView.setOnCloseListener(this);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query_string){
-        Intent intent = new Intent(getBaseContext(), OfferActivity.class);
-
-        Bundle mBundle = new Bundle();
-        mBundle.putString("query_string", query_string);
-        intent.putExtras(mBundle);
-
-        startActivity(intent);
         return true;
     }
 
-    @Override
-    public boolean onQueryTextChange(String s){
-        //TODO need do something
-        return true;
-    }
+//    private void setupSearchView() {
+//
+//        mSearchView.setIconifiedByDefault(true);
+//
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        if (searchManager != null) {
+//            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
+//
+//            // Try to use the "applications" global search provider
+//            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
+//            for (SearchableInfo inf : searchables) {
+//                if (inf.getSuggestAuthority() != null
+//                        && inf.getSuggestAuthority().startsWith("applications")) {
+//                    info = inf;
+//                }
+//            }
+//            mSearchView.setSearchableInfo(info);
+//        }
+//
+//       mSearchView.setOnQueryTextListener(this);
+//    }
+
+//    @Override
+//    public boolean onQueryTextSubmit(String query_string){
+//        Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
+//
+//        Bundle mBundle = new Bundle();
+//        mBundle.putString("query_string", query_string);
+//        intent.putExtras(mBundle);
+//
+//        startActivity(intent);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String s){
+//        //TODO need do something
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

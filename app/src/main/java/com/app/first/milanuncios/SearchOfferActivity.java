@@ -13,14 +13,14 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class OfferActivity extends Activity implements OffersTaskListener {
+public class SearchOfferActivity extends Activity implements SeachOffersTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
         TextView label = (TextView) findViewById(R.id.offer_label);
-        OffersGetTask offerTask = new OffersGetTask();
+        SeachOffersGetTask offerTask = new SeachOffersGetTask();
 
         Intent intent = getIntent();
         if (intent.hasExtra("selected_category")) {
@@ -63,7 +63,7 @@ public class OfferActivity extends Activity implements OffersTaskListener {
         // Set description into TextView
         final ListView listview = (ListView) findViewById(R.id.offer_lst);
 
-        OffersListAdapter adapter = new OffersListAdapter(this, offers);
+        SearchOffersListAdapter adapter = new SearchOffersListAdapter(this, offers);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,7 +73,7 @@ public class OfferActivity extends Activity implements OffersTaskListener {
                                     int position, long id) {
 //                final Category item = (Category) parent.getItemAtPosition(position);
 //
-//                Intent intent = new Intent(getBaseContext(), OfferActivity.class);
+//                Intent intent = new Intent(getBaseContext(), SearchOfferActivity.class);
 //
 //                Bundle mBundle = new Bundle();
 //                mBundle.putSerializable("selected_category", item);

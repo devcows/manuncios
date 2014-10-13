@@ -30,18 +30,18 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
             String strImage = imgTag.get(0).attr("src");
 
             Bitmap bmpImage = null;
-            try {
-                URL urlImage = new URL(strImage);
-                bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                URL urlImage = new URL(strImage);
+//                bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             Elements nodeCategory = divCategories.get(0).select("a");
             String strUrl = "http://www.milanuncios.com" + nodeCategory.get(0).attr("href");
             String strName = nodeCategory.get(0).text();
 
-            c = new Category(strName, bmpImage, strUrl);
+            c = new Category(strName, bmpImage, strImage, strUrl);
         }
 
         return c;

@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
     private String name;
     private transient Bitmap icon;
+    private String imageUri;
 
     public String getUrl() {
         return url;
@@ -16,10 +17,15 @@ public class Category implements Serializable {
 
     public Category(){}
 
-    public Category(String name, Bitmap icon, String url) {
+    public Category(String name, Bitmap icon, String imageUri, String url) {
         this.name = name;
         this.icon = icon;
         this.url = url;
+        this.imageUri = imageUri;
+    }
+
+    public String getImageUri() {
+        return imageUri;
     }
 
     public String getName() {

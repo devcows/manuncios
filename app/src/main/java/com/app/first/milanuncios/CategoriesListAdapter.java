@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import java.util.List;
 
 
@@ -66,7 +69,9 @@ public class CategoriesListAdapter extends BaseAdapter {
         Category rowItem = (Category) getItem(i);
 
         holder.txtTitle.setText(rowItem.getName());
-        holder.imageView.setImageBitmap(rowItem.getIcon());
+        ImageLoader imgLoader = ImageLoader.getInstance();
+        imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
+        //holder.imageView.setImageBitmap(rowItem.getIcon());
 
         return view;
     }
