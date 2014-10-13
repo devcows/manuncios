@@ -1,12 +1,9 @@
 package com.app.first.milanuncios;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
 public class Category implements Serializable {
     private String name;
-    private transient Bitmap icon;
     private String imageUri;
 
     public String getUrl() {
@@ -17,9 +14,8 @@ public class Category implements Serializable {
 
     public Category(){}
 
-    public Category(String name, Bitmap icon, String imageUri, String url) {
+    public Category(String name, String imageUri, String url) {
         this.name = name;
-        this.icon = icon;
         this.url = url;
         this.imageUri = imageUri;
     }
@@ -31,7 +27,5 @@ public class Category implements Serializable {
     public String getName() {
         return name;
     }
-
-    public Bitmap getIcon() { return icon; }
 
 }

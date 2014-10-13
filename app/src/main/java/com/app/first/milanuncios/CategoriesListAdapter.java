@@ -71,7 +71,6 @@ public class CategoriesListAdapter extends BaseAdapter {
         holder.txtTitle.setText(rowItem.getName());
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
-        //holder.imageView.setImageBitmap(rowItem.getIcon());
 
         return view;
     }

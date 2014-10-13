@@ -24,9 +24,7 @@ import java.util.List;
 
 public class MainActivity extends Activity implements CategoriesTaskListener { //, SearchView.OnQueryTextListener {
     private CategoriesListAdapter adapter;
-
-    private ProgressBar pb;
-    private SearchView mSearchView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +36,10 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
         adapter = new CategoriesListAdapter(this, new ArrayList<Category>());
         listview.setAdapter(adapter);
 
-        pb = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
 
-        pb.setIndeterminate(true);
-        pb.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,51 +86,8 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        //mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        //setupSearchView();
-
         return true;
     }
-
-//    private void setupSearchView() {
-//
-//        mSearchView.setIconifiedByDefault(true);
-//
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        if (searchManager != null) {
-//            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
-//
-//            // Try to use the "applications" global search provider
-//            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-//            for (SearchableInfo inf : searchables) {
-//                if (inf.getSuggestAuthority() != null
-//                        && inf.getSuggestAuthority().startsWith("applications")) {
-//                    info = inf;
-//                }
-//            }
-//            mSearchView.setSearchableInfo(info);
-//        }
-//
-//       mSearchView.setOnQueryTextListener(this);
-//    }
-
-//    @Override
-//    public boolean onQueryTextSubmit(String query_string){
-//        Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
-//
-//        Bundle mBundle = new Bundle();
-//        mBundle.putString("query_string", query_string);
-//        intent.putExtras(mBundle);
-//
-//        startActivity(intent);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onQueryTextChange(String s){
-//        //TODO need do something
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -148,7 +103,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
 
     @Override
     public void onCategoriesGetResult(List<Category> categories) {
-        pb.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         adapter.setObjects(categories);
 
         // fire the event

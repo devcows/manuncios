@@ -36,12 +36,6 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         }
 
-//        if (intent.hasExtra("query_string")){
-//            String query = intent.getStringExtra("query_string");
-//            label.setText("Search => " + query);
-//            offerTask.setQuerySearch(query);
-//        }
-
         offerTask.execute(this);
     }
 

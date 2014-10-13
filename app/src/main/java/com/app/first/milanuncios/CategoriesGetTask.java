@@ -1,15 +1,11 @@
 package com.app.first.milanuncios;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,19 +25,11 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
             Elements imgTag = divIcons.get(0).select("img");
             String strImage = imgTag.get(0).attr("src");
 
-            Bitmap bmpImage = null;
-//            try {
-//                URL urlImage = new URL(strImage);
-//                bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
             Elements nodeCategory = divCategories.get(0).select("a");
             String strUrl = "http://www.milanuncios.com" + nodeCategory.get(0).attr("href");
             String strName = nodeCategory.get(0).text();
 
-            c = new Category(strName, bmpImage, strImage, strUrl);
+            c = new Category(strName, strImage, strUrl);
         }
 
         return c;
