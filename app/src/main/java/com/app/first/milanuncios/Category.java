@@ -5,19 +5,14 @@ import java.io.Serializable;
 public class Category implements Serializable {
     private String name;
     private String imageUri;
-
-    public String getUrl() {
-        return url;
-    }
-
     private String url;
 
-    public Category(){}
+    public Category() {
+    }
 
-    public Category(String name, String imageUri, String url) {
-        this.name = name;
-        this.url = url;
-        this.imageUri = imageUri;
+    //getters
+    public String getUrl() {
+        return url;
     }
 
     public String getImageUri() {
@@ -28,4 +23,17 @@ public class Category implements Serializable {
         return name;
     }
 
+
+    //setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

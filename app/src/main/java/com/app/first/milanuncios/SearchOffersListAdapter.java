@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.List;
 
 
@@ -66,7 +68,9 @@ public class SearchOffersListAdapter extends BaseAdapter {
         holder.txtFirstTitle.setText(rowItem.getFirstTitle());
         holder.txtSecondTitle.setText(rowItem.getSecondTitle());
         holder.txtDescription.setText(rowItem.getDescription());
-        holder.imageView.setImageBitmap(rowItem.getIcon());
+
+        ImageLoader imgLoader = ImageLoader.getInstance();
+        imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
 
         return view;
     }

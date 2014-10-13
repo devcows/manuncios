@@ -1,24 +1,21 @@
 package com.app.first.milanuncios;
 
-import android.graphics.Bitmap;
+import java.util.List;
 
 public class Offer {
     private String firstTitle;
     private String secondTitle;
     private String description;
 
-    private String other; //price, year, etc.
-    private transient Bitmap icon;
+    private List<OfferOtherField> other; //price, year, etc.
+    private String imageUri;
+    private String url;
 
 
-    public Offer(String firstTitle, String secondTitle, String description, String other, Bitmap icon) {
-        this.firstTitle = firstTitle;
-        this.secondTitle = secondTitle;
-        this.description = description;
-        this.other = other;
-        this.icon = icon;
+    public Offer() {
     }
 
+    //getters
     public String getFirstTitle() {
         return firstTitle;
     }
@@ -31,11 +28,36 @@ public class Offer {
         return description;
     }
 
-    public String getOther() {
+    public List<OfferOtherField> getOther() {
         return other;
     }
 
-    public Bitmap getIcon() {
-        return icon;
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    //setters
+    public void setFirstTitle(String firstTitle) {
+        this.firstTitle = firstTitle;
+    }
+
+    public void setSecondTitle(String secondTitle) {
+        this.secondTitle = secondTitle;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOther(List<OfferOtherField> other) {
+        this.other = other;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

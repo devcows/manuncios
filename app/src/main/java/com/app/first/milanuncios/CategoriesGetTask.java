@@ -16,7 +16,7 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
     }
 
     private Category LoadHtmlCatergory(Element row, String divNameIco, String divNameCategory) {
-        Category c = null;
+        Category c = new Category();
 
         Elements divIcons = row.select(divNameIco);
         Elements divCategories = row.select(divNameCategory);
@@ -29,7 +29,10 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
             String strUrl = "http://www.milanuncios.com" + nodeCategory.get(0).attr("href");
             String strName = nodeCategory.get(0).text();
 
-            c = new Category(strName, strImage, strUrl);
+
+            c.setName(strName);
+            c.setImageUri(strImage);
+            c.setUrl(strUrl);
         }
 
         return c;
@@ -47,11 +50,11 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
                 Category c1 = LoadHtmlCatergory(row, "div.catIcoIzq", "div.categoriaIzq");
                 Category c2 = LoadHtmlCatergory(row, "div.catIcoDch", "div.categoriaDch");
 
-                if (c1 != null) {
+                if (c1.getUrl() != null) {
                     categories.add(c1);
                 }
 
-                if (c2 != null) {
+                if (c2.getUrl() != null) {
                     categories.add(c2);
                 }
             }

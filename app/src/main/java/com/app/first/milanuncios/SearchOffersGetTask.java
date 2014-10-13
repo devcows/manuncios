@@ -40,6 +40,8 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
         //TODO: Get other fields. (price, others)
 //        this.other = other;
+        //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
+        //file ==> file:///android_asset/file.css
 
         String firstTitle = "";
         if (firstTitles.size() > 0) {
@@ -73,15 +75,13 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             }
         }
 
-        Bitmap bmpImage = null;
-        try {
-            URL urlImage = new URL(strImage);
-            bmpImage = BitmapFactory.decodeStream(urlImage.openConnection().getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Offer offer = new Offer();
+        offer.setFirstTitle(firstTitle);
+        offer.setSecondTitle(secondTitle);
+        offer.setDescription(description);
+        offer.setImageUri(strImage);
 
-        return new Offer(firstTitle, secondTitle, description, null, bmpImage);
+        return offer;
     }
 
     @Override
