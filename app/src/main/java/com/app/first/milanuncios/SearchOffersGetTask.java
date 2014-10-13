@@ -1,7 +1,5 @@
 package com.app.first.milanuncios;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import org.jsoup.nodes.Document;
@@ -10,12 +8,13 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Void, List<Offer>> {
+    private String cssFile = Utils.getContentCss();
     private Category category;
     private String querySearch;
 
@@ -37,12 +36,9 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         Elements secondTitles = row.select("div.x7");
         Elements descriptions = row.select("div.tx");
         Elements images = row.select("div.x8");
+        Elements others = row.select("div.x11");
 
         //TODO: Get other fields. (price, others)
-//        this.other = other;
-        //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
-        //file ==> file:///android_asset/file.css
-
         String firstTitle = "";
         if (firstTitles.size() > 0) {
             for (Node elem : firstTitles.get(0).childNodes()) {
@@ -75,11 +71,39 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             }
         }
 
+        List<OfferOtherField> othersLst = new ArrayList<OfferOtherField>();
+        if (others.size() > 0){
+            Elements divOthers = others.get(0).select("div");
+            for(Element elem : divOthers){
+                String text = elem.text();
+                String classElem = elem.attr("class");
+
+                //http://myregexp.com/
+                //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
+                String pattern = "\\.pr.+\\{.+background:\\{1-7\\}";
+
+                Pattern r = Pattern.compile(pattern);
+                Matcher m = r.matcher(cssFile);
+
+                if (m.find( )) {
+                    String cde = m.group(0);
+                    String abc = m.group(1);
+                    System.out.println(m);
+                }
+
+                OfferOtherField fields = new OfferOtherField();
+                fields.setText(text);
+
+                othersLst.add(fields);
+            }
+        }
+
         Offer offer = new Offer();
         offer.setFirstTitle(firstTitle);
         offer.setSecondTitle(secondTitle);
         offer.setDescription(description);
         offer.setImageUri(strImage);
+        offer.setOther(othersLst);
 
         return offer;
     }

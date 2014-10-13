@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -68,6 +69,15 @@ public class SearchOffersListAdapter extends BaseAdapter {
         holder.txtFirstTitle.setText(rowItem.getFirstTitle());
         holder.txtSecondTitle.setText(rowItem.getSecondTitle());
         holder.txtDescription.setText(rowItem.getDescription());
+
+        for(OfferOtherField other: rowItem.getOther()){
+            TextView txtView = new TextView(context);
+
+            txtView.setText(other.getText());
+
+            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.othersList);
+            linearLayout.addView(txtView);
+        }
 
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);

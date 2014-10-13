@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,6 +73,9 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
 
 
         ImageLoader.getInstance().init(config);
+        AssetManager assetManager = getAssets();
+        //file:///android_asset/web_style.css
+        Utils.loadCss(assetManager, "web_style.css");
 
         new CategoriesGetTask().execute(this);
     }
