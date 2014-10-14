@@ -73,29 +73,30 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         //TODO: Get other fields. (price, others)
         List<OfferOtherField> othersLst = new ArrayList<OfferOtherField>();
         if (others.size() > 0) {
-            Elements divOthers = others.get(0).select("div");
-            for (Element elem : divOthers) {
-                String text = elem.text();
-                String backgroundColor = "";
-                String classElem = elem.attr("class");
+            for (Node elem : others.get(0).childNodes()) {
+                if(elem instanceof Element) {
+                    String text = ((Element) elem).text();
+                    String backgroundColor = "";
+                    String classElem = elem.attr("class");
 
-                //http://myregexp.com/
-                //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
-                //regex in java ===> \.pr[,\{].+\{.+background:#(.+);
-                String pattern = "\\." + classElem + "[,\\{].+\\{.+background:#(.+);";
+                    //http://myregexp.com/
+                    //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
+                    //regex in java ===> \.pr[,\{].+\{.+background:#(.+);
+                    String pattern = "\\." + classElem + "[,\\{].+\\{.+background:(.+);";
 
-                Pattern r = Pattern.compile(pattern);
-                Matcher m = r.matcher(cssFile);
+                    Pattern r = Pattern.compile(pattern);
+                    Matcher m = r.matcher(cssFile);
 
-                if (m.find() && m.groupCount() > 0) {
-                    backgroundColor = m.group(1);
+                    if (m.find() && m.groupCount() > 0) {
+                        backgroundColor = m.group(1);
+                    }
+
+                    OfferOtherField fields = new OfferOtherField();
+                    fields.setText(text);
+                    fields.setBoxColor(backgroundColor);
+
+                    othersLst.add(fields);
                 }
-
-                OfferOtherField fields = new OfferOtherField();
-                fields.setText(text);
-                fields.setBoxColor(backgroundColor);
-
-                othersLst.add(fields);
             }
         }
 
