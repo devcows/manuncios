@@ -2,6 +2,7 @@ package com.app.first.milanuncios;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,13 @@ public class SearchOffersListAdapter extends BaseAdapter {
             TextView txtView = new TextView(context);
 
             txtView.setText(other.getText());
+            txtView.setTextColor(Color.parseColor(other.getBoxColor()));
+
+            /*
+            String myHexColor = "#CC2233";
+            TextView myView = (TextView) findViewById(R.id.myTextView);
+            myView.setBackGroundColor(Color.pasrsehexString(myHexColor));
+            */
 
             LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.othersList);
             linearLayout.addView(txtView);
@@ -83,6 +91,16 @@ public class SearchOffersListAdapter extends BaseAdapter {
         imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
 
         return view;
+    }
+
+    String stringToHex(String string) {
+        StringBuilder buf = new StringBuilder(200);
+        for (char ch: string.toCharArray()) {
+            if (buf.length() > 0)
+                buf.append(' ');
+            buf.append(String.format("%04x", (int) ch));
+        }
+        return buf.toString();
     }
 
     /*private view holder class*/

@@ -10,4 +10,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
     }
+
+    public void testSearchOfferGetTask() throws Exception {
+        Category item = new Category();
+        item.setName("Motor");
+        item.setUrl("http://www.milanuncios.com/motor/");
+
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
+        offerTask.setCategory(item);
+        offerTask.doInBackground();
+    }
 }

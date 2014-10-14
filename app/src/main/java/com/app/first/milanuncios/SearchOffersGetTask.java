@@ -38,7 +38,6 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         Elements images = row.select("div.x8");
         Elements others = row.select("div.x11");
 
-        //TODO: Get other fields. (price, others)
         String firstTitle = "";
         if (firstTitles.size() > 0) {
             for (Node elem : firstTitles.get(0).childNodes()) {
@@ -71,28 +70,30 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             }
         }
 
+        //TODO: Get other fields. (price, others)
         List<OfferOtherField> othersLst = new ArrayList<OfferOtherField>();
-        if (others.size() > 0){
+        if (others.size() > 0) {
             Elements divOthers = others.get(0).select("div");
-            for(Element elem : divOthers){
+            for (Element elem : divOthers) {
                 String text = elem.text();
+                String backgroundColor = "";
                 String classElem = elem.attr("class");
 
                 //http://myregexp.com/
                 //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
-                String pattern = "\\.pr.+\\{.+background:\\{1-7\\}";
+                //regex in java ===> \.pr[,\{].+\{.+background:#(.+);
+                String pattern = "\\." + classElem + "[,\\{].+\\{.+background:#(.+);";
 
                 Pattern r = Pattern.compile(pattern);
                 Matcher m = r.matcher(cssFile);
 
-                if (m.find( )) {
-                    String cde = m.group(0);
-                    String abc = m.group(1);
-                    System.out.println(m);
+                if (m.find() && m.groupCount() > 0) {
+                    backgroundColor = m.group(1);
                 }
 
                 OfferOtherField fields = new OfferOtherField();
                 fields.setText(text);
+                fields.setBoxColor(backgroundColor);
 
                 othersLst.add(fields);
             }
@@ -118,7 +119,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             urlQuery = category.getUrl();
         }
 
-        if (querySearch != null){
+        if (querySearch != null) {
             urlQuery += querySearch + ".htm";
         }
 
