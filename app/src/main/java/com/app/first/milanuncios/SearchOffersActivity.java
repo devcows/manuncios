@@ -61,7 +61,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                                     int position, long id) {
                 final Offer item = (Offer) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
+                Intent intent = new Intent(getBaseContext(), OfferActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("selected_offer", item);
