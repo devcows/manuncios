@@ -1,8 +1,9 @@
 package com.app.first.milanuncios;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Offer {
+public class Offer implements Serializable {
     private String firstTitle;
     private String secondTitle;
     private String description;
@@ -59,5 +60,17 @@ public class Offer {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "firstTitle='" + firstTitle + '\'' +
+                ", secondTitle='" + secondTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", other=" + other +
+                ", imageUri='" + imageUri + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

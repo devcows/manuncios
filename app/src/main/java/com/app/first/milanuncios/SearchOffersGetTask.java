@@ -75,7 +75,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         if (others.size() > 0) {
             for (Node elem : others.get(0).childNodes()) {
                 if(elem instanceof Element) {
-                    String text = ((Element) elem).text();
+                    String text = ((Element) elem).text().replace("\u0080", "€");
                     String backgroundColor = "";
                     String classElem = elem.attr("class");
 

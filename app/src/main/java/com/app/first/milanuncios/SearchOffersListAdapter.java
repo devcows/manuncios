@@ -60,6 +60,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
             holder.txtSecondTitle = (TextView) view.findViewById(R.id.secondTitle);
             holder.txtDescription = (TextView) view.findViewById(R.id.description);
             holder.imageView = (ImageView) view.findViewById(R.id.icon);
+            holder.lLayout = (LinearLayout) view.findViewById(R.id.othersList);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -73,14 +74,14 @@ public class SearchOffersListAdapter extends BaseAdapter {
 
         for(OfferOtherField other: rowItem.getOther()){
             TextView txtView = new TextView(context);
+            txtView.setPadding(3, 0, 3, 0);
 
             txtView.setText(other.getText());
             if(other.getBoxColor() != null && other.getBoxColor().length() > 0) {
                 txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
             }
 
-            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.othersList);
-            linearLayout.addView(txtView);
+            holder.lLayout.addView(txtView);
         }
 
         ImageLoader imgLoader = ImageLoader.getInstance();
@@ -95,6 +96,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
         TextView txtFirstTitle;
         TextView txtSecondTitle;
         TextView txtDescription;
+        LinearLayout lLayout;
     }
 
 }

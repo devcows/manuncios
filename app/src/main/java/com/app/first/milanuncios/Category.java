@@ -36,4 +36,13 @@ public class Category implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", imageUri='" + imageUri + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

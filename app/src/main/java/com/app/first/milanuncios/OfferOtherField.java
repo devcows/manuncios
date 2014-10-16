@@ -1,6 +1,8 @@
 package com.app.first.milanuncios;
 
-public class OfferOtherField {
+import java.io.Serializable;
+
+public class OfferOtherField implements Serializable{
     private String text;
     private String textColor;
     private String boxColor;
@@ -32,5 +34,14 @@ public class OfferOtherField {
 
     public void setBoxColor(String boxColor) {
         this.boxColor = boxColor;
+    }
+
+    @Override
+    public String toString() {
+        return "OfferOtherField{" +
+                "text='" + text + '\'' +
+                ", textColor='" + textColor + '\'' +
+                ", boxColor='" + boxColor + '\'' +
+                '}';
     }
 }
