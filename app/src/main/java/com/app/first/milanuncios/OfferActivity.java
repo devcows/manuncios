@@ -34,15 +34,15 @@ public class OfferActivity extends Activity {
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.displayImage(offer.getImageUri(), imageView);
 
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.othersList);
         for(OfferOtherField other: offer.getOther()){
-            TextView txtView = new TextView(getBaseContext());
+            TextView txtView = new TextView(this);
 
             txtView.setText(other.getText());
             if(other.getBoxColor() != null && other.getBoxColor().length() > 0) {
                 txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
             }
 
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.othersList);
             linearLayout.addView(txtView);
         }
     }

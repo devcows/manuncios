@@ -76,14 +76,26 @@ public class SearchOffersListAdapter extends BaseAdapter {
         holder.txtSecondTitle.setText(rowItem.getSecondTitle());
         holder.txtDescription.setText(rowItem.getDescription());
 
-        for(OfferOtherField other: rowItem.getOther()){
+        holder.lLayout.removeAllViews();
+        for (int j = 0; j < rowItem.getOther().size() && j < 4; j++) {
+            OfferOtherField other = rowItem.getOther().get(j);
+
             TextView txtView = new TextView(context);
             txtView.setPadding(3, 0, 3, 0);
 
             txtView.setText(other.getText());
-            if(other.getBoxColor() != null && other.getBoxColor().length() > 0) {
+            if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
                 txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
             }
+
+            holder.lLayout.addView(txtView);
+        }
+
+        if (rowItem.getOther().size() >= 4) {
+            TextView txtView = new TextView(context);
+            txtView.setPadding(3, 0, 3, 0);
+
+            txtView.setText("...");
 
             holder.lLayout.addView(txtView);
         }

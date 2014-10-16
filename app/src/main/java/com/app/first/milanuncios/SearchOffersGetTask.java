@@ -78,19 +78,27 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             for (Node elem : others.get(0).childNodes()) {
                 if(elem instanceof Element) {
                     String text = ((Element) elem).text().replace("\u0080", "€");
-                    String backgroundColor = "";
                     String classElem = elem.attr("class");
 
-                    //http://myregexp.com/
-                    //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
-                    //regex in java ===> \.pr[,\{].+\{.+background:#(.+);
-                    String pattern = "\\." + classElem + "[,\\{].+\\{.+background:(.+);";
+                    //recolect particular and ver fotos case
+                    if(classElem.equals("vembox") || classElem.equals("vefbox")){
+                        if(elem.childNodes().size() > 0 && elem.childNode(0).childNodes().size() > 0) {
+                            classElem = elem.childNode(0).childNode(0).attr("class");
+                        }
+                    }
 
-                    Pattern r = Pattern.compile(pattern);
-                    Matcher m = r.matcher(cssFile);
+                    if (classElem.contains("vem")){
+                        System.out.println("aaa");
+                    }
 
-                    if (m.find() && m.groupCount() > 0) {
-                        backgroundColor = m.group(1);
+                    String backgroundColor = Utils.findPattern(classElem, cssFile);
+                    if (backgroundColor.isEmpty()){
+                        String[] classSplited = classElem.split(" ");
+                        backgroundColor = Utils.findPattern(classSplited[0], cssFile);
+
+                        if(backgroundColor.isEmpty() && classSplited.length > 1){
+                            backgroundColor = Utils.findPattern(classSplited[1], cssFile);
+                        }
                     }
 
                     OfferOtherField fields = new OfferOtherField();

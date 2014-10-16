@@ -2,14 +2,10 @@ package com.app.first.milanuncios;
 
 import android.content.res.AssetManager;
 
-import com.nostra13.universalimageloader.utils.IoUtils;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
@@ -41,23 +37,23 @@ public class Utils {
         }
     }
 
-    public static String getPattern(String classHtml){
-        //String pattern = "\\." + classHtml + ".+\\{.+background:\\(?<color>.\\{1,7\\}\\)";
-        String pattern = "\\.pr.+{.+background:(?<color>.{1,7})";
-        return pattern;
-    }
+    public static String findPattern(String classElem, String cssFile){
+        String backgroundColor = "";
 
-    public static final String PATTERN = "(?<=(^|,))(([^\",]+)|\"([^\"]*)\")(?=($|,))";
-    public static void main(String[] args) {
-        String line = ",1234,ABC";
-        Matcher matcher = Pattern.compile(PATTERN).matcher(line);
-        while (matcher.find()) {
-            if (matcher.group(3) != null) {
-                System.out.println(matcher.group(3));
-            } else {
-                System.out.println(matcher.group(4));
-            }
+        //http://myregexp.com/
+        //regex to read others ===> \.pr.+{.+background:(?<color>.{1,7})
+        //regex in java ===> \.pr[,\{].+\{.+background:#(.+);
+        //      corregida => \.pr[,\{]?.*\{.*background:([^;]+);
+        String pattern = "\\." + classElem + "[,\\{]?.*\\{.*background:([^;]+);";
+
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(cssFile);
+
+        if (m.find() && m.groupCount() > 0) {
+            backgroundColor = m.group(1);
         }
+
+        return backgroundColor;
     }
 
 
