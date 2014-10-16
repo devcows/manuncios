@@ -9,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
 
 
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         setContentView(R.layout.activity_offer);
         TextView label = (TextView) findViewById(R.id.offer_label);
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
+
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -61,6 +69,8 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
     @Override
     public void onOffersGetResult(List<Offer> offers) {
+        progressBar.setVisibility(View.INVISIBLE);
+
         // Set description into TextView
         final ListView listview = (ListView) findViewById(R.id.offer_lst);
 
