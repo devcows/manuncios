@@ -51,9 +51,11 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         }
 
         String secondTitle = "";
+        String url = "http://www.milanuncios.com";
         if (secondTitles.size() > 0) {
             Element elem = (Element) secondTitles.get(0).childNodes().get(0);
             secondTitle = elem.text();
+            url += elem.attr("href");
         }
 
         String description = "";
@@ -106,6 +108,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         offer.setDescription(description);
         offer.setImageUri(strImage);
         offer.setOther(othersLst);
+        offer.setUrl(url);
 
         return offer;
     }
