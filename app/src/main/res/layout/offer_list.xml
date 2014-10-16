@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:alignmentMode="alignBounds"
-    android:background="#EFFFEF"
-    >
+    android:background="#EFFFEF">
 
     <TextView
         android:id="@+id/firstTitle"
