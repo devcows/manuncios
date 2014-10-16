@@ -26,6 +26,10 @@ public class SearchOffersListAdapter extends BaseAdapter {
         this.objects = objects;
     }
 
+    public void setObjects(List<Offer> objects) {
+        this.objects = objects;
+    }
+
     @Override
     public int getCount() {
         return objects.size();

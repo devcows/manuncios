@@ -1,6 +1,8 @@
 package com.app.first.milanuncios;
 
-public class OfferOtherField {
+import java.io.Serializable;
+
+public class OfferOtherField implements Serializable {
     private String text;
     private String textColor;
     private String boxColor;

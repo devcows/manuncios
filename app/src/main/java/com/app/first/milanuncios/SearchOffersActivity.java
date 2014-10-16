@@ -12,22 +12,31 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+    private SearchOffersListAdapter adapter;
     private ProgressBar progressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer);
+        setContentView(R.layout.activity_search_offers);
+
+        // Set description into TextView
+        final ListView listview = (ListView) findViewById(R.id.offer_lst);
+
+        adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
+        listview.setAdapter(adapter);
+
+
         TextView label = (TextView) findViewById(R.id.offer_label);
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
-
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -43,6 +52,24 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
             }
         }
+
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final Offer item = (Offer) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("selected_offer", item);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            }
+        });
 
         offerTask.execute(this);
     }
@@ -70,28 +97,9 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     @Override
     public void onOffersGetResult(List<Offer> offers) {
         progressBar.setVisibility(View.INVISIBLE);
+        adapter.setObjects(offers);
 
-        // Set description into TextView
-        final ListView listview = (ListView) findViewById(R.id.offer_lst);
-
-        SearchOffersListAdapter adapter = new SearchOffersListAdapter(this, offers);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-//                final Category item = (Category) parent.getItemAtPosition(position);
-//
-//                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
-//
-//                Bundle mBundle = new Bundle();
-//                mBundle.putSerializable("selected_category", item);
-//                intent.putExtras(mBundle);
-//
-//                startActivity(intent);
-            }
-        });
+        // fire the event
+        adapter.notifyDataSetChanged();
     }
 }

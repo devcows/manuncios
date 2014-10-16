@@ -1,8 +1,9 @@
 package com.app.first.milanuncios;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Offer {
+public class Offer implements Serializable {
     private String firstTitle;
     private String secondTitle;
     private String description;
