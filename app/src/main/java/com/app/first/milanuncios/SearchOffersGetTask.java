@@ -10,8 +10,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Void, List<Offer>> {
     private String cssFile = Utils.getContentCss();
@@ -64,11 +62,15 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             description = elem.text();
         }
 
+        String idOffer = "";
         String strImage = "";
         if (images.size() > 0) {
-            Elements imgTag = images.get(0).select("img");
-            if (imgTag.size() > 0) {
-                strImage = imgTag.get(0).attr("src");
+            idOffer = images.get(0).attr("id").replace("f", "");
+
+            if (Integer.parseInt(idOffer) > 99999999) {
+                strImage = "http://91.229.239.12/fp/" + idOffer.substring(0, 4) + "/" + idOffer.substring(4, 6) + "/" + idOffer + "_1.jpg";
+            } else {
+                strImage = "http://91.229.239.12/fp/" + idOffer.substring(0, 3) + "/" + idOffer.substring(3, 5) + "/" + idOffer + "_1.jpg";
             }
         }
 
@@ -76,27 +78,27 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         List<OfferOtherField> othersLst = new ArrayList<OfferOtherField>();
         if (others.size() > 0) {
             for (Node elem : others.get(0).childNodes()) {
-                if(elem instanceof Element) {
+                if (elem instanceof Element) {
                     String text = ((Element) elem).text().replace("\u0080", "€");
                     String classElem = elem.attr("class");
 
                     //recolect particular and ver fotos case
-                    if(classElem.equals("vembox") || classElem.equals("vefbox")){
-                        if(elem.childNodes().size() > 0 && elem.childNode(0).childNodes().size() > 0) {
+                    if (classElem.equals("vembox") || classElem.equals("vefbox")) {
+                        if (elem.childNodes().size() > 0 && elem.childNode(0).childNodes().size() > 0) {
                             classElem = elem.childNode(0).childNode(0).attr("class");
                         }
                     }
 
-                    if (classElem.contains("vem")){
+                    if (classElem.contains("vem")) {
                         System.out.println("aaa");
                     }
 
                     String backgroundColor = Utils.findPattern(classElem, cssFile);
-                    if (backgroundColor.isEmpty()){
+                    if (backgroundColor.isEmpty()) {
                         String[] classSplited = classElem.split(" ");
                         backgroundColor = Utils.findPattern(classSplited[0], cssFile);
 
-                        if(backgroundColor.isEmpty() && classSplited.length > 1){
+                        if (backgroundColor.isEmpty() && classSplited.length > 1) {
                             backgroundColor = Utils.findPattern(classSplited[1], cssFile);
                         }
                     }
@@ -111,6 +113,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         }
 
         Offer offer = new Offer();
+        offer.setId(idOffer);
         offer.setFirstTitle(firstTitle);
         offer.setSecondTitle(secondTitle);
         offer.setDescription(description);

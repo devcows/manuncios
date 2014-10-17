@@ -73,7 +73,7 @@ public class OfferActivity extends Activity {
         }
 
         Button btnLink = (Button) findViewById(R.id.goto_url);
-        btnLink.setText("Ir a la web.");
+        btnLink.setText("Ir a la web");
         btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Offer implements Serializable {
+    private String id;
     private String firstTitle;
     private String secondTitle;
     private String description;
@@ -41,6 +42,10 @@ public class Offer implements Serializable {
         return url;
     }
 
+    public String getId() {
+        return id;
+    }
+
     //setters
     public void setFirstTitle(String firstTitle) {
         this.firstTitle = firstTitle;
@@ -64,6 +69,10 @@ public class Offer implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
