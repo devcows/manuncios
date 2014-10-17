@@ -19,6 +19,7 @@ import java.util.List;
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
     private SearchOffersListAdapter adapter;
     private ProgressBar progressBar;
+    SearchOffersGetTask offerTask;
 
 
     @Override
@@ -34,7 +35,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
 
         TextView label = (TextView) findViewById(R.id.offer_label);
-        SearchOffersGetTask offerTask = new SearchOffersGetTask();
+        offerTask = new SearchOffersGetTask();
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setIndeterminate(true);
@@ -71,9 +72,22 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         });
 
+        listview.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                customLoadMoreOffers(page);
+            }
+        });
+
         offerTask.execute(this);
     }
 
+
+    private void customLoadMoreOffers(int page){
+        //todo do offer load.
+        offerTask.setPage(page);
+        offerTask.execute(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,7 +111,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     @Override
     public void onOffersGetResult(List<Offer> offers) {
         progressBar.setVisibility(View.INVISIBLE);
-        adapter.setObjects(offers);
+        adapter.addAllObjects(offers);
 
         // fire the event
         adapter.notifyDataSetChanged();

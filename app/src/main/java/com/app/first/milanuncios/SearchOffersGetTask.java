@@ -15,10 +15,16 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
     private String cssFile = Utils.getContentCss();
     private Category category;
     private String querySearch;
+    private int page;
 
     private SearchOffersTaskListener[] listeners;
 
     public SearchOffersGetTask() {
+        this.page = 1;
+    }
+
+    public void setPage(int page){
+        this.page = page;
     }
 
     public void setCategory(Category category) {
@@ -136,6 +142,10 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
         if (querySearch != null) {
             urlQuery += querySearch + ".htm";
+        }
+
+        if(page > 1){
+            urlQuery += "?pagina=2";
         }
 
         Document doc = Utils.getDocumentFromUrl(urlQuery);
