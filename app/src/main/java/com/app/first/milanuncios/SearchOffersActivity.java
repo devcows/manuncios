@@ -21,11 +21,20 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private ProgressBar progressBar;
     SearchOffersGetTask offerTask;
 
+    //search parameters
+    private Category category = null;
+    private String string_query = null;
+    private int page_number = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_offers);
+
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         // Set description into TextView
         final ListView listview = (ListView) findViewById(R.id.offer_lst);
@@ -33,30 +42,16 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
         listview.setAdapter(adapter);
 
-
-        TextView label = (TextView) findViewById(R.id.offer_label);
-        offerTask = new SearchOffersGetTask();
-
-        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            label.setText("Search => " + query);
-            offerTask.setQuerySearch(query);
+            string_query = intent.getStringExtra(SearchManager.QUERY);
         } else {
             if (intent.hasExtra("selected_category")) {
-                Category selectedCategory = (Category) intent.getSerializableExtra("selected_category");
-                offerTask.setCategory(selectedCategory);
-                label.setText(selectedCategory.getName() + " => " + selectedCategory.getUrl());
+                category = (Category) intent.getSerializableExtra("selected_category");
             }
         }
 
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
@@ -79,13 +74,30 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         });
 
-        offerTask.execute(this);
+        doSearch();
     }
 
 
     private void customLoadMoreOffers(int page){
-        //todo do offer load.
-        offerTask.setPage(page);
+        this.page_number = page;
+        doSearch();
+    }
+
+    private void doSearch(){
+        //TODO Kill offertask if the activity finish.
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
+
+        TextView label = (TextView) findViewById(R.id.offer_label);
+        if(category != null){
+            label.setText(category.getName() + " => " + category.getUrl());
+            offerTask.setCategory(category);
+        }
+
+        if (string_query != null && !string_query.isEmpty()) {
+            label.setText("Search => " + string_query);
+            offerTask.setQuerySearch(string_query);
+        }
+        offerTask.setPage(page_number);
         offerTask.execute(this);
     }
 
