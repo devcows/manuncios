@@ -5,6 +5,14 @@
     android:alignmentMode="alignBounds"
     android:background="#EFFFEF">
 
+    <ProgressBar
+        android:id="@+id/pbHeaderProgress"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ProgressBar>
+
+
     <TextView
         android:id="@+id/firstTitle"
         android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"

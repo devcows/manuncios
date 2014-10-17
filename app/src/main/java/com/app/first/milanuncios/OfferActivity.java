@@ -5,19 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.regex.Pattern;
 
 
 public class OfferActivity extends Activity {
@@ -26,6 +24,10 @@ public class OfferActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
+
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
         final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
@@ -62,13 +64,13 @@ public class OfferActivity extends Activity {
 
             if (i <= 3) {
                 tr1.addView(txtView);
-            } else{
+            } else {
                 tr2.addView(txtView);
             }
         }
 
         tl.addView(tr1, layoutParams);
-        if (offer.getOther().size() > 3){
+        if (offer.getOther().size() > 3) {
             tl.addView(tr2, layoutParams);
         }
 
@@ -82,6 +84,8 @@ public class OfferActivity extends Activity {
                 startActivity(launchBrowser);
             }
         });
+
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
