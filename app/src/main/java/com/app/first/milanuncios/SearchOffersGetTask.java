@@ -23,7 +23,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.page = 1;
     }
 
-    public void setPage(int page){
+    public void setPage(int page) {
         this.page = page;
     }
 
@@ -37,7 +37,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
     private Offer LoadHtmlOffer(Element row) {
         Elements firstTitles = row.select("div.x4");
-        Elements secondTitles = row.select("div.x7");
+        Elements secondTitles = row.select("div.x7 a");
         Elements descriptions = row.select("div.tx");
         Elements images = row.select("div.x8");
         Elements others = row.select("div.x11");
@@ -57,7 +57,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         String secondTitle = "";
         String url = "http://www.milanuncios.com";
         if (secondTitles.size() > 0) {
-            Element elem = (Element) secondTitles.get(0).childNodes().get(0);
+            Element elem = secondTitles.get(0);
             secondTitle = elem.text();
             url += elem.attr("href");
         }
@@ -93,10 +93,6 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
                         if (elem.childNodes().size() > 0 && elem.childNode(0).childNodes().size() > 0) {
                             classElem = elem.childNode(0).childNode(0).attr("class");
                         }
-                    }
-
-                    if (classElem.contains("vem")) {
-                        System.out.println("aaa");
                     }
 
                     String backgroundColor = Utils.findPattern(classElem, cssFile);
@@ -144,7 +140,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             urlQuery += querySearch + ".htm";
         }
 
-        if(page > 1){
+        if (page > 1) {
             urlQuery += "?pagina=2";
         }
 

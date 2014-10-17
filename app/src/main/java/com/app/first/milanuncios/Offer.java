@@ -1,6 +1,7 @@
 package com.app.first.milanuncios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Offer implements Serializable {
@@ -11,10 +12,12 @@ public class Offer implements Serializable {
 
     private List<OfferOtherField> other; //price, year, etc.
     private String imageUri;
+    private List<String> secondaryImages;
     private String url;
 
 
     public Offer() {
+        secondaryImages = new ArrayList<String>();
     }
 
     //getters
@@ -73,6 +76,10 @@ public class Offer implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setSecondaryImages(List<String> secondaryImages) {
+        this.secondaryImages = secondaryImages;
     }
 
     @Override

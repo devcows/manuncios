@@ -17,7 +17,6 @@
         android:textColor="#114411"
         android:textSize="13dp"
         android:layout_alignParentTop="true"
-        android:textIsSelectable="true"
         android:layout_alignParentLeft="true" />
 
     <ImageView
@@ -38,7 +37,6 @@
         android:paddingRight="3dp"
         android:textColor="#114411"
         android:textSize="18dp"
-        android:textIsSelectable="true"
         android:layout_below="@+id/firstTitle" />
 
 
@@ -53,7 +51,6 @@
         android:maxWidth="@dimen/activity_offer_other_max_width"
         android:textColor="#114411"
         android:textSize="16dp"
-        android:textIsSelectable="true"
         android:layout_below="@+id/secondTitle" />
 
 
@@ -67,7 +64,6 @@
         android:paddingRight="3dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textIsSelectable="true"
-        android:layout_below="@+id/description"></LinearLayout>
+        android:layout_below="@+id/description" />
 
 </RelativeLayout>

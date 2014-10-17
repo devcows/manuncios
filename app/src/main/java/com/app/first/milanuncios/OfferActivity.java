@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-public class OfferActivity extends Activity {
+public class OfferActivity extends Activity implements OfferTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,10 @@ public class OfferActivity extends Activity {
 
         Intent intent = getIntent();
         final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
+
+        OfferGetTask offerGetTask = new OfferGetTask();
+        offerGetTask.setOffer(offer);
+        offerGetTask.execute(this);
 
         TextView txtFirstTitle = (TextView) findViewById(R.id.firstTitle);
         txtFirstTitle.setText(offer.getFirstTitle());
@@ -106,5 +110,10 @@ public class OfferActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onOfferGetResult(Offer offer) {
+        //TODO Update pictures.
     }
 }

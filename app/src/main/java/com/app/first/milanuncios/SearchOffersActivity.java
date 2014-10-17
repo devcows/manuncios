@@ -19,7 +19,6 @@ import java.util.List;
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
     private SearchOffersListAdapter adapter;
     private ProgressBar progressBar;
-    SearchOffersGetTask offerTask;
 
     //search parameters
     private Category category = null;
@@ -64,13 +63,6 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
-            }
-        });
-
-        listview.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                customLoadMoreOffers(page);
             }
         });
 
