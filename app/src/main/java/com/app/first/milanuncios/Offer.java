@@ -37,6 +37,10 @@ public class Offer implements Serializable {
         return imageUri;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     //setters
     public void setFirstTitle(String firstTitle) {
         this.firstTitle = firstTitle;

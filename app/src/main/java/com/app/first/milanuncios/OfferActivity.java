@@ -3,15 +3,21 @@ package com.app.first.milanuncios;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.regex.Pattern;
 
 
 public class OfferActivity extends Activity {
@@ -22,7 +28,7 @@ public class OfferActivity extends Activity {
         setContentView(R.layout.activity_offer);
 
         Intent intent = getIntent();
-        Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
+        final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
 
         TextView txtFirstTitle = (TextView) findViewById(R.id.firstTitle);
         txtFirstTitle.setText(offer.getFirstTitle());
@@ -65,6 +71,17 @@ public class OfferActivity extends Activity {
         if (offer.getOther().size() > 3){
             tl.addView(tr2, layoutParams);
         }
+
+        Button btnLink = (Button) findViewById(R.id.goto_url);
+        btnLink.setText("Ir a la web.");
+        btnLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uriUrl = Uri.parse(offer.getUrl());
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+            }
+        });
     }
 
 
