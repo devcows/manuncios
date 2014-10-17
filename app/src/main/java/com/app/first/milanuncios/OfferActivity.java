@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -34,16 +35,35 @@ public class OfferActivity extends Activity {
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.displayImage(offer.getImageUri(), imageView);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.othersList);
-        for(OfferOtherField other: offer.getOther()){
+        TableLayout tl = (TableLayout) findViewById(R.id.othersList);
+
+
+        android.view.ViewGroup.LayoutParams layoutParams = new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        TableRow tr1 = new TableRow(this);
+        tr1.setLayoutParams(layoutParams);
+
+        TableRow tr2 = new TableRow(this);
+        tr2.setLayoutParams(layoutParams);
+
+        for (int i = 0; i < offer.getOther().size(); i++) {
+            OfferOtherField other = offer.getOther().get(i);
             TextView txtView = new TextView(this);
 
             txtView.setText(other.getText());
-            if(other.getBoxColor() != null && other.getBoxColor().length() > 0) {
+            if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
                 txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
             }
 
-            linearLayout.addView(txtView);
+            if (i <= 3) {
+                tr1.addView(txtView);
+            } else{
+                tr2.addView(txtView);
+            }
+        }
+
+        tl.addView(tr1, layoutParams);
+        if (offer.getOther().size() > 3){
+            tl.addView(tr2, layoutParams);
         }
     }
 
