@@ -31,7 +31,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
     }
 
     public void addAllObjects(List<Offer> objects){
-        objects.addAll(objects);
+        this.objects.addAll(objects);
     }
 
     @Override
