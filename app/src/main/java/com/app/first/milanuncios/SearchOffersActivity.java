@@ -70,17 +70,17 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     }
 
 
-    private void customLoadMoreOffers(int page){
+    private void customLoadMoreOffers(int page) {
         this.page_number = page;
         doSearch();
     }
 
-    private void doSearch(){
+    private void doSearch() {
         //TODO Kill offertask if the activity finish.
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
 
         TextView label = (TextView) findViewById(R.id.offer_label);
-        if(category != null){
+        if (category != null) {
             label.setText(category.getName() + " => " + category.getUrl());
             offerTask.setCategory(category);
         }
@@ -106,10 +106,20 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_search:
+                Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
+
+                Bundle mBundle = new Bundle();
+                //mBundle.putSerializable("selected_category", item);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
