@@ -49,6 +49,10 @@ public class Offer implements Serializable {
         return id;
     }
 
+    public List<String> getSecondaryImages() {
+        return secondaryImages;
+    }
+
     //setters
     public void setFirstTitle(String firstTitle) {
         this.firstTitle = firstTitle;

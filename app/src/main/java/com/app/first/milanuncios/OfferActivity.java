@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,13 +21,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class OfferActivity extends Activity implements OfferTaskListener {
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -50,7 +53,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         TableLayout tl = (TableLayout) findViewById(R.id.othersList);
 
 
-        android.view.ViewGroup.LayoutParams layoutParams = new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TableRow tr1 = new TableRow(this);
         tr1.setLayoutParams(layoutParams);
 
@@ -88,8 +91,6 @@ public class OfferActivity extends Activity implements OfferTaskListener {
                 startActivity(launchBrowser);
             }
         });
-
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -114,6 +115,19 @@ public class OfferActivity extends Activity implements OfferTaskListener {
 
     @Override
     public void onOfferGetResult(Offer offer) {
-        //TODO Update pictures.
+        progressBar.setVisibility(View.INVISIBLE);
+
+        for (String imageUri: offer.getSecondaryImages()) {
+
+            LinearLayout lLayout = (LinearLayout) findViewById(R.id.images_layout);
+            ImageView imgView = new ImageView(this);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+            imgView.setLayoutParams(layoutParams);
+
+            ImageLoader imgLoader = ImageLoader.getInstance();
+            imgLoader.displayImage(imageUri, imgView);
+
+            lLayout.addView(imgView);
+        }
     }
 }
