@@ -168,7 +168,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         }
 
         if(most_recent){
-            parameters.add("orden=nuevos");
+            //parameters.add("orden=nuevos");
         } else if(most_old){
             parameters.add("orden=viejos");
         } else if(most_expensive){
@@ -182,6 +182,8 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             for(String param: parameters){
                 urlQuery += param + "&";
             }
+
+            urlQuery = urlQuery.substring(0, urlQuery.length()-1);
         }
 
 

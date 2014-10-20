@@ -14,15 +14,24 @@ import java.util.regex.Pattern;
 public class Utils {
     private static String contentCss = "";
 
-    public static Document getDocumentFromUrl(String url) {
+    public static Document getDocumentFromUrl(String url){
+        return getDocumentFromUrl(url, 3);
+    }
+    public static Document getDocumentFromUrl(String url, int retries) {
         Document doc = null;
 
         try {
             doc = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
-                    .referrer("http://www.google.com").get();
+                    .referrer("http://www.google.com")
+                    .timeout(5000)
+                    .get();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (doc == null && retries > 0){
+            doc = getDocumentFromUrl(url, retries-1);
         }
 
         return doc;

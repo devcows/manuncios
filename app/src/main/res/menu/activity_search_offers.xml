@@ -1,8 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MyActivity" >
+    tools:context=".MyActivity">
 
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/action_search"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="always" />
@@ -12,20 +13,26 @@
         android:showAsAction="ifRoom"
         android:title="Sort by">
         <menu>
+
             <item
                 android:id="@+id/menuSortDateRecent"
-                android:title="Mas reciente" />
+                android:title="Mas nuevos"
+                android:checkable="true" />
             <item
                 android:id="@+id/menuSortDateOld"
-                android:title="Menos reciente" />
+                android:title="Mas antiguos"
+                android:checkable="true" />
 
             <item
                 android:id="@+id/menuSortPriceExpensive"
-                android:title="Mayor precio" />
+                android:title="Mas caros"
+                android:checkable="true" />
 
             <item
                 android:id="@+id/menuSortPriceCheap"
-                android:title="Menor precio" />
+                android:title="Mas baratos"
+                android:checkable="true" />
+
         </menu>
     </item>
 </menu>

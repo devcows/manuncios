@@ -64,15 +64,19 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         }
 
         if (intent.hasExtra("most_old")) {
-            most_recent = (Boolean) intent.getSerializableExtra("most_old");
+            most_old = (Boolean) intent.getSerializableExtra("most_old");
         }
 
         if (intent.hasExtra("most_expensive")) {
-            most_recent = (Boolean) intent.getSerializableExtra("most_expensive");
+            most_expensive = (Boolean) intent.getSerializableExtra("most_expensive");
         }
 
         if (intent.hasExtra("most_cheap")) {
-            most_recent = (Boolean) intent.getSerializableExtra("most_cheap");
+            most_cheap = (Boolean) intent.getSerializableExtra("most_cheap");
+        }
+
+        if(!most_recent && !most_old && !most_expensive && !most_cheap){
+            most_recent = true;
         }
 
 
@@ -137,12 +141,18 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_search_offers, menu);
 
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
         menu.findItem(R.id.menuSortDateOld).setChecked(most_old);
         menu.findItem(R.id.menuSortDateRecent).setChecked(most_recent);
         menu.findItem(R.id.menuSortPriceCheap).setChecked(most_cheap);
         menu.findItem(R.id.menuSortPriceExpensive).setChecked(most_expensive);
 
-        return true;
+        return super.onPrepareOptionsMenu(menu);
     }
 
 
@@ -152,13 +162,18 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         switch (btnId) {
             case R.id.menuSortDateRecent:
                 mBundle.putSerializable("most_recent", true);
+                break;
             case R.id.menuSortDateOld:
                 mBundle.putSerializable("most_old", true);
+                break;
             case R.id.menuSortPriceExpensive:
                 mBundle.putSerializable("most_expensive", true);
+                break;
             case R.id.menuSortPriceCheap:
                 mBundle.putSerializable("most_cheap", true);
+                break;
             case R.id.action_search:
+                break;
         }
 
         if(string_query != null){
@@ -189,11 +204,8 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             case R.id.action_settings:
                 return true;
             case R.id.menuSortDateRecent:
-                return createNewSearch(id);
             case R.id.menuSortDateOld:
-                return createNewSearch(id);
             case R.id.menuSortPriceExpensive:
-                return createNewSearch(id);
             case R.id.menuSortPriceCheap:
                 return createNewSearch(id);
             case R.id.action_search:
