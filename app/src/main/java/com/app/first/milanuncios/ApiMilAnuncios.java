@@ -9,7 +9,11 @@ import java.util.List;
 
 public class ApiMilAnuncios {
     private static String MAIN_WEB = "http://www.milanuncios.com";
+    private static String[] IMG_SERVERS = {"91.229.239.8", "91.229.239.12"};
 
+    public static String[] getIMG_SERVERS() {
+        return IMG_SERVERS;
+    }
 
     private static Category LoadHtmlCatergory(Element row, String divNameIco, String divNameCategory) {
         Category c = new Category();

@@ -56,7 +56,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.most_cheap = most_cheap;
     }
 
-    private Offer LoadHtmlOffer(Element row) {
+    private Offer LoadHtmlOffer(Element row, int index) {
         Elements firstTitles = row.select("div.x4");
         Elements secondTitles = row.select("div.x7 a");
         Elements descriptions = row.select("div.tx");
@@ -91,13 +91,14 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
         String idOffer = "";
         String strImage = "";
+        String[] imgServers = ApiMilAnuncios.getIMG_SERVERS();
         if (images.size() > 0) {
             idOffer = images.get(0).attr("id").replace("f", "");
 
             if (Integer.parseInt(idOffer) > 99999999) {
-                strImage = "http://91.229.239.12/fp/" + idOffer.substring(0, 4) + "/" + idOffer.substring(4, 6) + "/" + idOffer + "_1.jpg";
+                strImage = "http://" + imgServers[index % imgServers.length] + "/fp/" + idOffer.substring(0, 4) + "/" + idOffer.substring(4, 6) + "/" + idOffer + "_1.jpg";
             } else {
-                strImage = "http://91.229.239.12/fp/" + idOffer.substring(0, 3) + "/" + idOffer.substring(3, 5) + "/" + idOffer + "_1.jpg";
+                strImage = "http://" + imgServers[index % imgServers.length] + "/fp/" + idOffer.substring(0, 3) + "/" + idOffer.substring(3, 5) + "/" + idOffer + "_1.jpg";
             }
         }
 
@@ -167,32 +168,33 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             parameters.add("pagina=" + String.valueOf(page));
         }
 
-        if(most_recent){
+        if (most_recent) {
             //parameters.add("orden=nuevos");
-        } else if(most_old){
+        } else if (most_old) {
             parameters.add("orden=viejos");
-        } else if(most_expensive){
+        } else if (most_expensive) {
             parameters.add("orden=caros");
-        } else if(most_cheap) {
+        } else if (most_cheap) {
             parameters.add("orden=baratos");
         }
 
-        if(parameters.size() > 0){
+        if (parameters.size() > 0) {
             urlQuery += "?";
-            for(String param: parameters){
+            for (String param : parameters) {
                 urlQuery += param + "&";
             }
 
-            urlQuery = urlQuery.substring(0, urlQuery.length()-1);
+            urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
         }
 
 
         Document doc = Utils.getDocumentFromUrl(urlQuery);
         if (doc != null) {
             Elements rows = doc.select("div.x1");
-            for (Element row : rows) {
+            for (int i = 0; i < rows.size(); i++) {
+                Element row = rows.get(i);
 
-                Offer offer = LoadHtmlOffer(row);
+                Offer offer = LoadHtmlOffer(row, i);
                 if (offer != null) {
                     offers.add(offer);
                 }
