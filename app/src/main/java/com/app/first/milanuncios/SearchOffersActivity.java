@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +74,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             most_cheap = (Boolean) intent.getSerializableExtra("most_cheap");
         }
 
-        if(!most_recent && !most_old && !most_expensive && !most_cheap){
+        if (!most_recent && !most_old && !most_expensive && !most_cheap) {
             most_recent = true;
         }
 
@@ -116,14 +115,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         //TODO Kill offertask if the activity finish.
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
 
-        TextView label = (TextView) findViewById(R.id.offer_label);
         if (category != null) {
-            label.setText(category.getName() + " => " + category.getUrl());
             offerTask.setCategory(category);
         }
 
         if (string_query != null && !string_query.isEmpty()) {
-            label.setText("Search => " + string_query);
             offerTask.setQuerySearch(string_query);
         }
 
@@ -145,8 +141,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menuSortDateOld).setChecked(most_old);
         menu.findItem(R.id.menuSortDateRecent).setChecked(most_recent);
         menu.findItem(R.id.menuSortPriceCheap).setChecked(most_cheap);
@@ -155,9 +150,32 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         return super.onPrepareOptionsMenu(menu);
     }
 
-
-    private boolean createNewSearch(int btnId){
+    private Bundle createBundle() {
         Bundle mBundle = new Bundle();
+
+        mBundle.putSerializable("most_recent", most_recent);
+        mBundle.putSerializable("most_old", most_old);
+        mBundle.putSerializable("most_expensive", most_expensive);
+        mBundle.putSerializable("most_cheap", most_cheap);
+
+        if (string_query != null) {
+            mBundle.putSerializable("string_query", string_query);
+        }
+
+        if (category != null) {
+            mBundle.putSerializable("selected_category", category);
+        }
+
+        return mBundle;
+    }
+
+    private boolean createNewSearch(int btnId) {
+        Bundle mBundle = createBundle();
+
+        mBundle.putSerializable("most_recent", false);
+        mBundle.putSerializable("most_old", false);
+        mBundle.putSerializable("most_expensive", false);
+        mBundle.putSerializable("most_cheap", false);
 
         switch (btnId) {
             case R.id.menuSortDateRecent:
@@ -174,14 +192,6 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 break;
             case R.id.action_search:
                 break;
-        }
-
-        if(string_query != null){
-            mBundle.putSerializable("string_query", string_query);
-        }
-
-        if(category != null){
-            mBundle.putSerializable("selected_category", category);
         }
 
         Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
@@ -209,6 +219,12 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             case R.id.menuSortPriceCheap:
                 return createNewSearch(id);
             case R.id.action_search:
+                Bundle mBundle = createBundle();
+
+                Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -12,8 +12,8 @@
         android:id="@+id/pbHeaderProgress"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-    </ProgressBar>
+        android:layout_height="wrap_content" />
+
 
     <ListView
         android:layout_width="fill_parent"

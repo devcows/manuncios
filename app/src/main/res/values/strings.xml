@@ -4,9 +4,9 @@
     <string name="app_name">milanuncios</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_search_offer_activity">Search Offer Activity</string>
-    <string name="title_offer_activity">Offer Activity</string>
-    <string name="search_hint">TODO Hint del buscador</string>
-    <string name="title_activity_advanced_search">AdvancedSearchActivity</string>
+    <string name="title_search_offer_activity">Lista de anuncios</string>
+    <string name="title_offer_activity">Anuncio</string>
+    <string name="search_hint">Búsqueda por palabra</string>
+    <string name="title_activity_advanced_search">Buscador avanzado</string>
 
 </resources>

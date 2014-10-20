@@ -4,14 +4,25 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 
-public class AdvancedSearchActivity extends Activity {
+public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener{
+    private AdvancedSearchGetTask advancedSearchGetTask;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search);
+
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
+
+        advancedSearchGetTask = new AdvancedSearchGetTask();
+        advancedSearchGetTask.execute(this);
     }
 
 
@@ -32,5 +43,12 @@ public class AdvancedSearchActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAdvancedSearchGetResult() {
+        progressBar.setVisibility(View.INVISIBLE);
+
+        //TODO set items in the activity.
     }
 }

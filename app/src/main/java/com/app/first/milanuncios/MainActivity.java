@@ -26,6 +26,7 @@ import java.util.List;
 public class MainActivity extends Activity implements CategoriesTaskListener { //, SearchView.OnQueryTextListener {
     private CategoriesListAdapter adapter;
     private ProgressBar progressBar;
+    private List<Category> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
 
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
-
+        this.categories = new ArrayList<Category>();
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -107,6 +108,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
 
     @Override
     public void onCategoriesGetResult(List<Category> categories) {
+        this.categories = categories;
         progressBar.setVisibility(View.INVISIBLE);
         adapter.setObjects(categories);
 
