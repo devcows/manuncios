@@ -51,27 +51,29 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             string_query = intent.getStringExtra(SearchManager.QUERY);
         }
 
-        if (intent.hasExtra("selected_category")) {
-            category = (Category) intent.getSerializableExtra("selected_category");
+        if (intent.hasExtra("string_query")) {
+            string_query = (String) intent.getSerializableExtra("string_query");
         }
 
         if (intent.hasExtra("selected_category")) {
             category = (Category) intent.getSerializableExtra("selected_category");
         }
 
+        if (intent.hasExtra("most_recent")) {
+            most_recent = (Boolean) intent.getSerializableExtra("most_recent");
+        }
 
+        if (intent.hasExtra("most_old")) {
+            most_recent = (Boolean) intent.getSerializableExtra("most_old");
+        }
 
-//        mBundle.putSerializable("most_recent", true);
-//        case R.id.menuSortDateOld:
-//        //mostOld = true;//?orden=viejos
-//        mBundle.putSerializable("most_old", true);
-//        case R.id.menuSortPriceExpensive:
-//        //mostExpensive = true;//?orden=caros
-//        mBundle.putSerializable("most_expensive", true);
-//        case R.id.menuSortPriceCheap:
-//        //mostCheap = true;//?orden=baratos
-//        mBundle.putSerializable("most_cheap", true);
+        if (intent.hasExtra("most_expensive")) {
+            most_recent = (Boolean) intent.getSerializableExtra("most_expensive");
+        }
 
+        if (intent.hasExtra("most_cheap")) {
+            most_recent = (Boolean) intent.getSerializableExtra("most_cheap");
+        }
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,6 +122,12 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             label.setText("Search => " + string_query);
             offerTask.setQuerySearch(string_query);
         }
+
+        offerTask.setMost_cheap(most_cheap);
+        offerTask.setMost_expensive(most_expensive);
+        offerTask.setMost_old(most_old);
+        offerTask.setMost_recent(most_recent);
+
         offerTask.setPage(page_number);
         offerTask.execute(this);
     }
@@ -128,31 +136,40 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_search_offers, menu);
+
+        menu.findItem(R.id.menuSortDateOld).setChecked(most_old);
+        menu.findItem(R.id.menuSortDateRecent).setChecked(most_recent);
+        menu.findItem(R.id.menuSortPriceCheap).setChecked(most_cheap);
+        menu.findItem(R.id.menuSortPriceExpensive).setChecked(most_expensive);
+
         return true;
     }
 
 
     private boolean createNewSearch(int btnId){
-        Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
-
         Bundle mBundle = new Bundle();
 
         switch (btnId) {
             case R.id.menuSortDateRecent:
-                //mostRecent = true;//?orden=nuevos
                 mBundle.putSerializable("most_recent", true);
             case R.id.menuSortDateOld:
-                //mostOld = true;//?orden=viejos
                 mBundle.putSerializable("most_old", true);
             case R.id.menuSortPriceExpensive:
-                //mostExpensive = true;//?orden=caros
                 mBundle.putSerializable("most_expensive", true);
             case R.id.menuSortPriceCheap:
-                //mostCheap = true;//?orden=baratos
                 mBundle.putSerializable("most_cheap", true);
             case R.id.action_search:
         }
 
+        if(string_query != null){
+            mBundle.putSerializable("string_query", string_query);
+        }
+
+        if(category != null){
+            mBundle.putSerializable("selected_category", category);
+        }
+
+        Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
         intent.putExtras(mBundle);
 
         startActivity(intent);

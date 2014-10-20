@@ -17,6 +17,11 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
     private String querySearch;
     private int page;
 
+    private boolean most_recent = false;
+    private boolean most_old = false;
+    private boolean most_expensive = false;
+    private boolean most_cheap = false;
+
     private SearchOffersTaskListener[] listeners;
 
     public SearchOffersGetTask() {
@@ -33,6 +38,22 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
     public void setQuerySearch(String querySearch) {
         this.querySearch = querySearch.replace(" ", "-");
+    }
+
+    public void setMost_recent(boolean most_recent) {
+        this.most_recent = most_recent;
+    }
+
+    public void setMost_old(boolean most_old) {
+        this.most_old = most_old;
+    }
+
+    public void setMost_expensive(boolean most_expensive) {
+        this.most_expensive = most_expensive;
+    }
+
+    public void setMost_cheap(boolean most_cheap) {
+        this.most_cheap = most_cheap;
     }
 
     private Offer LoadHtmlOffer(Element row) {
@@ -140,9 +161,29 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             urlQuery += querySearch + ".htm";
         }
 
+        List<String> parameters = new ArrayList<String>();
+
         if (page > 1) {
-            urlQuery += "?pagina=2";
+            parameters.add("pagina=" + String.valueOf(page));
         }
+
+        if(most_recent){
+            parameters.add("orden=nuevos");
+        } else if(most_old){
+            parameters.add("orden=viejos");
+        } else if(most_expensive){
+            parameters.add("orden=caros");
+        } else if(most_cheap) {
+            parameters.add("orden=baratos");
+        }
+
+        if(parameters.size() > 0){
+            urlQuery += "?";
+            for(String param: parameters){
+                urlQuery += param + "&";
+            }
+        }
+
 
         Document doc = Utils.getDocumentFromUrl(urlQuery);
         if (doc != null) {
