@@ -58,6 +58,17 @@
                 android:textSize="18sp"
                 android:textIsSelectable="true" />
 
+            <HorizontalScrollView
+                android:id="@+id/hsv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/images_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp" />
+            </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/description"
@@ -81,30 +92,35 @@
                 android:paddingLeft="@dimen/activity_offer_normal_padding_left"
                 android:paddingRight="3dp" />
 
-            <Button
-                android:id="@+id/goto_url"
-                android:text="Go to the web"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:paddingTop="5dp"
-                android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-                android:paddingRight="3dp"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
-                android:textColor="#114411"
-                android:textSize="16sp" />
-
-            <HorizontalScrollView
-                android:id="@+id/hsv1"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/images_layout"
-                    android:orientation="horizontal"
+                <Button
+                    android:id="@+id/contact"
+                    android:text="Contact"
                     android:layout_width="wrap_content"
-                    android:layout_height="200dp" />
-            </HorizontalScrollView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="5dp"
+                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:maxWidth="@dimen/activity_offer_other_max_width"
+                    android:textColor="#114411"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/goto_url"
+                    android:text="Go to the web"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:maxWidth="@dimen/activity_offer_other_max_width"
+                    android:textColor="#114411"
+                    android:textSize="16sp"
+                    android:layout_toRightOf="@+id/contact"/>
+            </RelativeLayout>
         </LinearLayout>
 
         <ProgressBar

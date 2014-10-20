@@ -91,6 +91,15 @@ public class OfferActivity extends Activity implements OfferTaskListener {
                 startActivity(launchBrowser);
             }
         });
+
+        btnLink = (Button) findViewById(R.id.contact);
+        btnLink.setText("Contactar");
+        btnLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO click contact
+            }
+        });
     }
 
 
