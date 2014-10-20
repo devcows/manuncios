@@ -66,6 +66,13 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         });
 
+        listview.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                customLoadMoreOffers(page);
+            }
+        });
+
         doSearch();
     }
 
