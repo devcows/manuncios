@@ -6,5 +6,27 @@
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="always" />
+
+    <item
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="ifRoom"
+        android:title="Sort by">
+        <menu>
+            <item
+                android:id="@+id/menuSortDateRecent"
+                android:title="Mas reciente" />
+            <item
+                android:id="@+id/menuSortDateOld"
+                android:title="Menos reciente" />
+
+            <item
+                android:id="@+id/menuSortPriceExpensive"
+                android:title="Mayor precio" />
+
+            <item
+                android:id="@+id/menuSortPriceCheap"
+                android:title="Menor precio" />
+        </menu>
+    </item>
 </menu>
 

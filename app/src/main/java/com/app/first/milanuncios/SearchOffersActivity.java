@@ -25,6 +25,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private String string_query = null;
     private int page_number = 1;
 
+    private boolean most_recent = false;
+    private boolean most_old = false;
+    private boolean most_expensive = false;
+    private boolean most_cheap = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,30 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             string_query = intent.getStringExtra(SearchManager.QUERY);
-        } else {
-            if (intent.hasExtra("selected_category")) {
-                category = (Category) intent.getSerializableExtra("selected_category");
-            }
         }
+
+        if (intent.hasExtra("selected_category")) {
+            category = (Category) intent.getSerializableExtra("selected_category");
+        }
+
+        if (intent.hasExtra("selected_category")) {
+            category = (Category) intent.getSerializableExtra("selected_category");
+        }
+
+
+
+//        mBundle.putSerializable("most_recent", true);
+//        case R.id.menuSortDateOld:
+//        //mostOld = true;//?orden=viejos
+//        mBundle.putSerializable("most_old", true);
+//        case R.id.menuSortPriceExpensive:
+//        //mostExpensive = true;//?orden=caros
+//        mBundle.putSerializable("most_expensive", true);
+//        case R.id.menuSortPriceCheap:
+//        //mostCheap = true;//?orden=baratos
+//        mBundle.putSerializable("most_cheap", true);
+
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,7 +127,37 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.offer, menu);
+        getMenuInflater().inflate(R.menu.activity_search_offers, menu);
+        return true;
+    }
+
+
+    private boolean createNewSearch(int btnId){
+        Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
+
+        Bundle mBundle = new Bundle();
+
+        switch (btnId) {
+            case R.id.menuSortDateRecent:
+                //mostRecent = true;//?orden=nuevos
+                mBundle.putSerializable("most_recent", true);
+            case R.id.menuSortDateOld:
+                //mostOld = true;//?orden=viejos
+                mBundle.putSerializable("most_old", true);
+            case R.id.menuSortPriceExpensive:
+                //mostExpensive = true;//?orden=caros
+                mBundle.putSerializable("most_expensive", true);
+            case R.id.menuSortPriceCheap:
+                //mostCheap = true;//?orden=baratos
+                mBundle.putSerializable("most_cheap", true);
+            case R.id.action_search:
+        }
+
+        intent.putExtras(mBundle);
+
+        startActivity(intent);
+        finish();
+
         return true;
     }
 
@@ -113,20 +167,24 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         switch (id) {
             case R.id.action_settings:
                 return true;
+            case R.id.menuSortDateRecent:
+                return createNewSearch(id);
+            case R.id.menuSortDateOld:
+                return createNewSearch(id);
+            case R.id.menuSortPriceExpensive:
+                return createNewSearch(id);
+            case R.id.menuSortPriceCheap:
+                return createNewSearch(id);
             case R.id.action_search:
-                Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
-
-                Bundle mBundle = new Bundle();
-                //mBundle.putSerializable("selected_category", item);
-                intent.putExtras(mBundle);
-
-                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     @Override
