@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+
+import java.util.List;
 
 
 public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener{
@@ -48,6 +52,13 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     @Override
     public void onAdvancedSearchGetResult() {
         progressBar.setVisibility(View.INVISIBLE);
+
+        List<Category> categories = advancedSearchGetTask.getCategories();
+        ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
+        spn_categories.setAdapter(categoryArrayAdapter);
+
+
 
         //TODO set items in the activity.
     }
