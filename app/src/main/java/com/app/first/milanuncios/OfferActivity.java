@@ -45,14 +45,8 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         txtSecondTitle.setText(offer.getSecondTitle());
         TextView txtDescription = (TextView) findViewById(R.id.description);
         txtDescription.setText(offer.getDescription());
-        ImageView imageView = (ImageView) findViewById(R.id.icon);
-
-        ImageLoader imgLoader = ImageLoader.getInstance();
-        imgLoader.displayImage(offer.getImageUri(), imageView);
 
         TableLayout tl = (TableLayout) findViewById(R.id.othersList);
-
-
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TableRow tr1 = new TableRow(this);
         tr1.setLayoutParams(layoutParams);
