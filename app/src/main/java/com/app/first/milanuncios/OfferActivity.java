@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -101,13 +102,27 @@ public class OfferActivity extends Activity implements OfferTaskListener {
 
             }
         });
+
+        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
+        hsv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("selected_offer", offer);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            }
+        });
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.offer, menu);
+        getMenuInflater().inflate(R.menu.activity_offer, menu);
         return true;
     }
 

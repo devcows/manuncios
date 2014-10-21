@@ -94,7 +94,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.advanced_search, menu);
+        getMenuInflater().inflate(R.menu.activity_advanced_search, menu);
         return true;
     }
 

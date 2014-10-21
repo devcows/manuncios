@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class CategoriesListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
-            view = mInflater.inflate(R.layout.category_list, null);
+            view = mInflater.inflate(R.layout.layout_category_list, null);
             holder = new ViewHolder();
 
             holder.txtTitle = (TextView) view.findViewById(R.id.title);

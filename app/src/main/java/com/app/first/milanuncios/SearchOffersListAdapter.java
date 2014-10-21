@@ -61,7 +61,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
-            view = mInflater.inflate(R.layout.offer_list, null);
+            view = mInflater.inflate(R.layout.layout_offer_list, null);
             holder = new ViewHolder();
 
             holder.txtFirstTitle = (TextView) view.findViewById(R.id.firstTitle);
