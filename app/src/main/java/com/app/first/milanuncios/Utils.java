@@ -1,6 +1,7 @@
 package com.app.first.milanuncios;
 
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
@@ -24,7 +25,7 @@ public class Utils {
             doc = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
                     .referrer("http://www.google.com")
-                    .timeout(5000)
+                    .timeout(10*1000) //10 seconds
                     .get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,6 +66,13 @@ public class Utils {
         return backgroundColor;
     }
 
+
+    public static int getPixels(Resources resource, int dps){
+        final float scale = resource.getDisplayMetrics().density;
+        int pixels = (int) (dps * scale + 0.5f);
+
+        return pixels;
+    }
 
     public static String getContentCss(){
         return contentCss;

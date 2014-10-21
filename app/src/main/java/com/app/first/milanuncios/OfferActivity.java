@@ -138,9 +138,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             LinearLayout lLayout = (LinearLayout) findViewById(R.id.images_layout);
             ImageView imgView = new ImageView(this);
 
-            final float scale = getResources().getDisplayMetrics().density;
-            int pixels = (int) (300 * scale + 0.5f);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.FILL_PARENT);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
             imgView.setLayoutParams(layoutParams);
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
 
