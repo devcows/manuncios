@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class OfferActivity extends Activity implements OfferTaskListener {
     private ProgressBar progressBar;
+    private Offer offer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
+        this.offer = (Offer) intent.getSerializableExtra("selected_offer");
 
         OfferGetTask offerGetTask = new OfferGetTask();
         offerGetTask.setOffer(offer);
@@ -103,19 +105,71 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             }
         });
 
-        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
-        hsv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
+//        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
+//        hsv.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//
+//                    Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
+//
+//                    Bundle mBundle = new Bundle();
+//                    mBundle.putSerializable("selected_offer", offer);
+//                    intent.putExtras(mBundle);
+//
+//                    startActivity(intent);
+//                }
+//                return false;
+//            }
+//        });
+//
+//
 
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("selected_offer", offer);
-                intent.putExtras(mBundle);
 
-                startActivity(intent);
-            }
-        });
+
+//
+//        HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollView);
+//
+//        final GestureDetector detector = new GestureDetector(this, new OnGestureListener() {
+//
+//            @Override
+//            public boolean onSingleTapUp(MotionEvent e) {
+//                // Do stuff.
+//                return false;
+//            }
+//
+//            // Note that there are more methods which will appear here
+//            // (which you probably don't need).
+//        });
+//
+//
+//        scrollView.setOnTouchListener(new OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                detector.onTouchEvent(event);
+//                return false;
+//            }
+//        });
+
+
+
+
+
+//        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
+//        hsv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
+//
+//                Bundle mBundle = new Bundle();
+//                mBundle.putSerializable("selected_offer", offer);
+//                intent.putExtras(mBundle);
+//
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -150,6 +204,20 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
             imgView.setLayoutParams(layoutParams);
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            final Offer selectedOffer = offer;
+            imgView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
+
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("selected_offer", selectedOffer);
+                    intent.putExtras(mBundle);
+
+                    startActivity(intent);
+                }
+            });
 
             ImageLoader imgLoader = ImageLoader.getInstance();
             imgLoader.displayImage(imageUri, imgView);
