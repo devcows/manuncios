@@ -6,6 +6,7 @@ public class Category implements Serializable {
     private String name;
     private String imageUri;
     private String url;
+    private int position;
 
     public Category() {
     }
@@ -23,6 +24,9 @@ public class Category implements Serializable {
         return name;
     }
 
+    public int getPosition() {
+        return position;
+    }
 
     //setters
     public void setName(String name) {
@@ -37,6 +41,10 @@ public class Category implements Serializable {
         this.url = url;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -47,6 +55,7 @@ public class Category implements Serializable {
                 "name='" + name + '\'' +
                 ", imageUri='" + imageUri + '\'' +
                 ", url='" + url + '\'' +
+                ", position='" + position + '\'' +
                 '}';
     }
 }

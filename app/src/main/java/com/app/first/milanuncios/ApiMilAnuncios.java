@@ -58,6 +58,11 @@ public class ApiMilAnuncios {
             }
         }
 
+        for(int position = 0; position<categories.size(); position++){
+            Category c = categories.get(position);
+            c.setPosition(position);
+        }
+
         return categories;
     }
 
