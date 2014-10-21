@@ -41,6 +41,10 @@
             android:name=".AdvancedSearchActivity"
             android:label="@string/title_activity_advanced_search" >
         </activity>
+        <activity
+            android:name=".ContactActivity"
+            android:label="@string/title_activity_contact" >
+        </activity>
     </application>
 
 </manifest>

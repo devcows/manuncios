@@ -97,7 +97,14 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO click contact
+                Intent intent = new Intent(getBaseContext(), ContactActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("contact_url", "http://www.milanuncios.com/datos-contacto/?id=" + offer.getId());
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+
             }
         });
     }

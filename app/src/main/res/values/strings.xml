@@ -8,5 +8,6 @@
     <string name="title_offer_activity">Anuncio</string>
     <string name="search_hint">Búsqueda por palabra</string>
     <string name="title_activity_advanced_search">Buscador avanzado</string>
+    <string name="title_activity_contact">Contacto</string>
 
 </resources>

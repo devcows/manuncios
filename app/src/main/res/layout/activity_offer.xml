@@ -67,7 +67,7 @@
                     android:id="@+id/images_layout"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="200dp" />
+                    android:layout_height="300dp" />
             </HorizontalScrollView>
 
             <TextView
