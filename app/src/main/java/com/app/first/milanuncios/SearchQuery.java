@@ -2,7 +2,9 @@ package com.app.first.milanuncios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchQuery implements Serializable {
 
@@ -10,13 +12,30 @@ public class SearchQuery implements Serializable {
     private Category category = null;
     private String string_query = null;
 
-    private Integer page_number, order_by, min_price, max_price;
+    private Integer page_number, order_by, min_price, max_price, publish_at;
 
     //ORDER BY
     public static final int ORDER_BY_RECENT = 0;
     public static final int ORDER_BY_OLD = 1;
     public static final int ORDER_BY_EXPENSIVE = 2;
     public static final int ORDER_BY_CHEAP = 3;
+
+
+    //PUBLISH AT
+    public static final Map<String , Integer> map_published_at = new HashMap<String , Integer>() {{
+        put("En cualquier momento", -1);
+        put("En el último dia", 1);
+        put("En los últimos 3 dias", 3);
+        put("En los últimos 5 dias", 5);
+        put("En los últimos 10 dias", 10);
+        put("En los últimos 15 dias", 15);
+        put("En los últimos 20 dias", 20);
+        put("En los últimos 30 dias", 30);
+        put("En los últimos 60 dias", 60);
+        put("En los últimos 90 dias", 90);
+        put("En los últimos 120 dias", 120);
+
+    }};
 
     public SearchQuery() {
         this.order_by = SearchQuery.ORDER_BY_RECENT;
@@ -58,6 +77,9 @@ public class SearchQuery implements Serializable {
         this.max_price = max_price;
     }
 
+    public void setPublish_at(Integer publish_at) {
+        this.publish_at = publish_at;
+    }
 
     public String getUrlQuery(){
         String urlQuery = "http://www.milanuncios.com/anuncios/";
@@ -101,6 +123,9 @@ public class SearchQuery implements Serializable {
             parameters.add("hasta=" + min_price.toString());
         }
 
+        if (publish_at != null && publish_at > 0){
+            parameters.add("dias=" + publish_at.toString());
+        }
 
         if (parameters.size() > 0) {
             urlQuery += "?";

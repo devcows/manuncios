@@ -13,10 +13,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener{
+public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener {
     private AdvancedSearchGetTask advancedSearchGetTask;
     private ProgressBar progressBar;
     private ArrayAdapter<Category> categoryArrayAdapter;
@@ -32,8 +33,11 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
+        advancedSearchGetTask = new AdvancedSearchGetTask();
+        advancedSearchGetTask.execute(this);
+
         Intent intent = getIntent();
-        if(intent.hasExtra(Utils.SEARCH_QUERY)){
+        if (intent.hasExtra(Utils.SEARCH_QUERY)) {
             searchQuery = (SearchQuery) intent.getSerializableExtra(Utils.SEARCH_QUERY);
         } else {
             searchQuery = new SearchQuery();
@@ -47,9 +51,17 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
         spn_order_by.setSelection(searchQuery.getOrder_by());
 
+        //map_published_at
+        Spinner spn_publish_at = (Spinner) findViewById(R.id.spn_publish_at);
+        ArrayList<String> publish_values = new ArrayList<String>();
+        for (String str : SearchQuery.map_published_at.keySet()) {
+            publish_values.add(str);
+        }
 
-        advancedSearchGetTask = new AdvancedSearchGetTask();
-        advancedSearchGetTask.execute(this);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, publish_values); //selected item will look like a spinner set from XML
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_publish_at.setAdapter(spinnerArrayAdapter);
+
 
         Button btnSearch = (Button) findViewById(R.id.btn_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +70,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
 
                 EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
-                if(!txtSearch.getText().toString().isEmpty()){
+                if (!txtSearch.getText().toString().isEmpty()) {
                     searchQuery.setString_query(txtSearch.getText().toString());
                 }
 
@@ -73,14 +85,18 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 searchQuery.setOrder_by(spn_order_by.getSelectedItemPosition());
 
                 EditText txtMinPrice = (EditText) findViewById(R.id.txt_min_price);
-                if(!txtMinPrice.getText().toString().isEmpty()){
+                if (!txtMinPrice.getText().toString().isEmpty()) {
                     searchQuery.setMin_price(Integer.parseInt(txtMinPrice.getText().toString()));
                 }
 
                 EditText txtMaxPrice = (EditText) findViewById(R.id.txt_max_price);
-                if(!txtMaxPrice.getText().toString().isEmpty()){
+                if (!txtMaxPrice.getText().toString().isEmpty()) {
                     searchQuery.setMax_price(Integer.parseInt(txtMaxPrice.getText().toString()));
                 }
+
+                Spinner spn_publish_at = (Spinner) findViewById(R.id.spn_publish_at);
+                Integer publish_at = SearchQuery.map_published_at.get(spn_publish_at.getSelectedItem());
+                searchQuery.setPublish_at(publish_at);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
@@ -88,7 +104,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 startActivity(intent);
 
                 Intent returnIntent = new Intent();
-                setResult(RESULT_OK,returnIntent);
+                setResult(RESULT_OK, returnIntent);
 
                 finish();
             }
@@ -120,7 +136,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     public void onAdvancedSearchGetResult() {
         progressBar.setVisibility(View.INVISIBLE);
 
-        if(searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()){
+        if (searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()) {
             EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
             txtSearch.setText(searchQuery.getString_query());
         }
@@ -136,7 +152,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
         spn_categories.setAdapter(categoryArrayAdapter);
 
-        if(searchQuery.getCategory() != null){
+        if (searchQuery.getCategory() != null) {
             spn_categories.setSelection(searchQuery.getCategory().getPosition());
         }
 
@@ -149,6 +165,6 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         super.onDestroy();
 
         Intent returnIntent = new Intent();
-        setResult(RESULT_CANCELED,returnIntent);
+        setResult(RESULT_CANCELED, returnIntent);
     }
 }
