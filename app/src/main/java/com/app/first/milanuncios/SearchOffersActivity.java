@@ -28,7 +28,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private String string_query = null;
     private int page_number = 1;
 
-    private int order_by;
+    private Integer order_by, min_price, max_price;
 
 
     @Override
@@ -65,6 +65,13 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             order_by = Utils.ORDER_BY_RECENT;
         }
 
+        if(intent.hasExtra(Utils.MIN_PRICE)){
+            min_price = (Integer) intent.getSerializableExtra(Utils.MIN_PRICE);
+        }
+
+        if(intent.hasExtra(Utils.MAX_PRICE)){
+            max_price = (Integer) intent.getSerializableExtra(Utils.MAX_PRICE);
+        }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,6 +115,14 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
         if (string_query != null && !string_query.isEmpty()) {
             offerTask.setQuerySearch(string_query);
+        }
+
+        if(min_price != null){
+            offerTask.setMinPrice(min_price);
+        }
+
+        if(max_price != null){
+            offerTask.setMaxPrice(max_price);
         }
 
         offerTask.setOrder_by(order_by);

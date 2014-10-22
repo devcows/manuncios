@@ -17,7 +17,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
     private String querySearch;
 
     private int page;
-    private int order_by;
+    private Integer order_by, min_price, max_price;
 
     private SearchOffersTaskListener[] listeners;
 
@@ -39,6 +39,14 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
     public void setOrder_by(int order_by) {
         this.order_by = order_by;
+    }
+
+    public void setMinPrice(Integer min_price) {
+        this.min_price = min_price;
+    }
+
+    public void setMaxPrice(Integer max_price) {
+        this.max_price = max_price;
     }
 
     private Offer LoadHtmlOffer(Element row, int index) {
@@ -166,6 +174,15 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             case Utils.ORDER_BY_CHEAP:
                 parameters.add("orden=baratos");
                 break;
+        }
+
+
+        if (min_price != null){
+            parameters.add("desde=" + min_price.toString());
+        }
+
+        if (max_price != null){
+            parameters.add("hasta=" + min_price.toString());
         }
 
 

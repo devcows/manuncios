@@ -25,7 +25,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     private Category category = null;
     private String string_query = null;
 
-    private int order_by;
+    private Integer order_by, min_price, max_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,14 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             order_by = (Integer) intent.getSerializableExtra(Utils.ORDER_BY);
         } else {
             order_by = Utils.ORDER_BY_RECENT;
+        }
+
+        if(intent.hasExtra(Utils.MIN_PRICE)){
+            min_price = (Integer) intent.getSerializableExtra(Utils.MIN_PRICE);
+        }
+
+        if(intent.hasExtra(Utils.MAX_PRICE)){
+            max_price = (Integer) intent.getSerializableExtra(Utils.MAX_PRICE);
         }
 
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
@@ -85,9 +93,16 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
                 mBundle.putSerializable(Utils.ORDER_BY, spn_order_by.getSelectedItemPosition());
 
+                if (min_price != null){
+                    mBundle.putSerializable(Utils.MIN_PRICE, min_price);
+                }
+
+                if (max_price != null){
+                    mBundle.putSerializable(Utils.MIN_PRICE, max_price);
+                }
+
                 intent.putExtras(mBundle);
                 startActivity(intent);
-
 
                 Intent returnIntent = new Intent();
                 setResult(RESULT_OK,returnIntent);

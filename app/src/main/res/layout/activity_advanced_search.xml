@@ -72,6 +72,39 @@
                 android:entries="@array/array_order_by" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/min_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="Precio:" />
+
+            <EditText
+                android:id="@+id/txt_min_price"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/min_price" />
+
+            <TextView
+                android:id="@+id/lbl_max_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="15dp"
+                android:layout_toRightOf="@+id/txt_min_price"
+                android:text="a" />
+
+            <EditText
+                android:id="@+id/txt_max_price"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lbl_max_price" />
+
+        </RelativeLayout>
+
         <Button
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
