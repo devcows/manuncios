@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
-                android:text="Palabra" />
+                android:text="Palabra:" />
 
             <EditText
                 android:id="@+id/txt_string_query"
@@ -44,13 +44,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
-                android:text="Catergorias" />
+                android:text="Catergorias:" />
 
             <Spinner
                 android:id="@+id/spn_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lbl_categories" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/lbl_order_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="Ordenar por:" />
+
+            <Spinner
+                android:id="@+id/spn_order_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lbl_order_by"
+                android:entries="@array/array_order_by" />
         </RelativeLayout>
 
         <Button

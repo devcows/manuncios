@@ -9,7 +9,7 @@
         <!--android:layout_height="fill_parent"-->
         <!--android:scaleType="fitCenter" />-->
 
-    <com.app.first.milanuncios.TouchImageView
+    <com.app.first.milanuncios.other_controls.TouchImageView
         android:id="@+id/imgDisplay"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

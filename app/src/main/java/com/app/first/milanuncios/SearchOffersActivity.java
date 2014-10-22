@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.app.first.milanuncios.other_controls.EndlessScrollListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +28,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private String string_query = null;
     private int page_number = 1;
 
-    private boolean most_recent = false;
-    private boolean most_old = false;
-    private boolean most_expensive = false;
-    private boolean most_cheap = false;
+    private int order_by;
 
 
     @Override
@@ -60,24 +59,10 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
         }
 
-        if (intent.hasExtra("most_recent")) {
-            most_recent = (Boolean) intent.getSerializableExtra("most_recent");
-        }
-
-        if (intent.hasExtra("most_old")) {
-            most_old = (Boolean) intent.getSerializableExtra("most_old");
-        }
-
-        if (intent.hasExtra("most_expensive")) {
-            most_expensive = (Boolean) intent.getSerializableExtra("most_expensive");
-        }
-
-        if (intent.hasExtra("most_cheap")) {
-            most_cheap = (Boolean) intent.getSerializableExtra("most_cheap");
-        }
-
-        if (!most_recent && !most_old && !most_expensive && !most_cheap) {
-            most_recent = true;
+        if(intent.hasExtra(Utils.ORDER_BY)){
+            order_by = (Integer) intent.getSerializableExtra(Utils.ORDER_BY);
+        } else{
+            order_by = Utils.ORDER_BY_RECENT;
         }
 
 
@@ -125,11 +110,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             offerTask.setQuerySearch(string_query);
         }
 
-        offerTask.setMost_cheap(most_cheap);
-        offerTask.setMost_expensive(most_expensive);
-        offerTask.setMost_old(most_old);
-        offerTask.setMost_recent(most_recent);
-
+        offerTask.setOrder_by(order_by);
         offerTask.setPage(page_number);
         offerTask.execute(this);
     }
@@ -144,10 +125,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menuSortDateOld).setChecked(most_old);
-        menu.findItem(R.id.menuSortDateRecent).setChecked(most_recent);
-        menu.findItem(R.id.menuSortPriceCheap).setChecked(most_cheap);
-        menu.findItem(R.id.menuSortPriceExpensive).setChecked(most_expensive);
+
+        menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == Utils.ORDER_BY_RECENT);
+        menu.findItem(R.id.menuSortDateOld).setChecked(order_by == Utils.ORDER_BY_OLD);
+        menu.findItem(R.id.menuSortPriceCheap).setChecked(order_by == Utils.ORDER_BY_CHEAP);
+        menu.findItem(R.id.menuSortPriceExpensive).setChecked(order_by == Utils.ORDER_BY_EXPENSIVE);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -155,10 +137,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private Bundle createBundle() {
         Bundle mBundle = new Bundle();
 
-        mBundle.putSerializable("most_recent", most_recent);
-        mBundle.putSerializable("most_old", most_old);
-        mBundle.putSerializable("most_expensive", most_expensive);
-        mBundle.putSerializable("most_cheap", most_cheap);
+        mBundle.putSerializable(Utils.ORDER_BY, order_by);
 
         if (string_query != null) {
             mBundle.putSerializable(Utils.STRING_QUERY, string_query);
@@ -174,27 +153,24 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private boolean createNewSearch(int btnId) {
         Bundle mBundle = createBundle();
 
-        mBundle.putSerializable("most_recent", false);
-        mBundle.putSerializable("most_old", false);
-        mBundle.putSerializable("most_expensive", false);
-        mBundle.putSerializable("most_cheap", false);
-
         switch (btnId) {
             case R.id.menuSortDateRecent:
-                mBundle.putSerializable("most_recent", true);
+                order_by = Utils.ORDER_BY_RECENT;
                 break;
             case R.id.menuSortDateOld:
-                mBundle.putSerializable("most_old", true);
+                order_by = Utils.ORDER_BY_OLD;
                 break;
             case R.id.menuSortPriceExpensive:
-                mBundle.putSerializable("most_expensive", true);
+                order_by = Utils.ORDER_BY_EXPENSIVE;
                 break;
             case R.id.menuSortPriceCheap:
-                mBundle.putSerializable("most_cheap", true);
+                order_by = Utils.ORDER_BY_CHEAP;
                 break;
             case R.id.action_search:
                 break;
         }
+
+        mBundle.putSerializable(Utils.ORDER_BY, order_by);
 
         Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
         intent.putExtras(mBundle);

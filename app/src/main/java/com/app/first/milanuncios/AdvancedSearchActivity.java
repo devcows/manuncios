@@ -25,10 +25,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     private Category category = null;
     private String string_query = null;
 
-    private boolean most_recent = false;
-    private boolean most_old = false;
-    private boolean most_expensive = false;
-    private boolean most_cheap = false;
+    private int order_by;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +50,14 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
         }
 
-        if (intent.hasExtra("most_recent")) {
-            most_recent = (Boolean) intent.getSerializableExtra("most_recent");
+        if(intent.hasExtra(Utils.ORDER_BY)){
+            order_by = (Integer) intent.getSerializableExtra(Utils.ORDER_BY);
+        } else {
+            order_by = Utils.ORDER_BY_RECENT;
         }
 
-        if (intent.hasExtra("most_old")) {
-            most_old = (Boolean) intent.getSerializableExtra("most_old");
-        }
-
-        if (intent.hasExtra("most_expensive")) {
-            most_expensive = (Boolean) intent.getSerializableExtra("most_expensive");
-        }
-
-        if (intent.hasExtra("most_cheap")) {
-            most_cheap = (Boolean) intent.getSerializableExtra("most_cheap");
-        }
+        Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
+        spn_order_by.setSelection(order_by);
 
 
         advancedSearchGetTask = new AdvancedSearchGetTask();
@@ -82,7 +72,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
 
                 EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
                 if(!txtSearch.getText().toString().isEmpty()){
-                    mBundle.putSerializable(Utils.STRING_QUERY, string_query);
+                    mBundle.putSerializable(Utils.STRING_QUERY, txtSearch.getText().toString());
                 }
 
                 Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
@@ -92,8 +82,8 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                     mBundle.putSerializable(Utils.SELECTED_CATEGORY, category);
                 }
 
-                //TODO pass parameters.
-
+                Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
+                mBundle.putSerializable(Utils.ORDER_BY, spn_order_by.getSelectedItemPosition());
 
                 intent.putExtras(mBundle);
                 startActivity(intent);

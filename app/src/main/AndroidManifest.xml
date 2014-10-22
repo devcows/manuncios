@@ -47,7 +47,7 @@
         </activity>
 
         <activity
-            android:name=".FullScreenImageActivity"
+            android:name=".other_controls.FullScreenImageActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
         </activity>
     </application>

@@ -15,12 +15,9 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
     private String cssFile = Utils.getContentCss();
     private Category category;
     private String querySearch;
-    private int page;
 
-    private boolean most_recent = false;
-    private boolean most_old = false;
-    private boolean most_expensive = false;
-    private boolean most_cheap = false;
+    private int page;
+    private int order_by;
 
     private SearchOffersTaskListener[] listeners;
 
@@ -40,20 +37,8 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.querySearch = querySearch.replace(" ", "-");
     }
 
-    public void setMost_recent(boolean most_recent) {
-        this.most_recent = most_recent;
-    }
-
-    public void setMost_old(boolean most_old) {
-        this.most_old = most_old;
-    }
-
-    public void setMost_expensive(boolean most_expensive) {
-        this.most_expensive = most_expensive;
-    }
-
-    public void setMost_cheap(boolean most_cheap) {
-        this.most_cheap = most_cheap;
+    public void setOrder_by(int order_by) {
+        this.order_by = order_by;
     }
 
     private Offer LoadHtmlOffer(Element row, int index) {
@@ -168,15 +153,21 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
             parameters.add("pagina=" + String.valueOf(page));
         }
 
-        if (most_recent) {
-            //parameters.add("orden=nuevos");
-        } else if (most_old) {
-            parameters.add("orden=viejos");
-        } else if (most_expensive) {
-            parameters.add("orden=caros");
-        } else if (most_cheap) {
-            parameters.add("orden=baratos");
+        switch (order_by){
+            case Utils.ORDER_BY_RECENT:
+                //parameters.add("orden=nuevos");
+                break;
+            case Utils.ORDER_BY_OLD:
+                parameters.add("orden=viejos");
+                break;
+            case Utils.ORDER_BY_EXPENSIVE:
+                parameters.add("orden=caros");
+                break;
+            case Utils.ORDER_BY_CHEAP:
+                parameters.add("orden=baratos");
+                break;
         }
+
 
         if (parameters.size() > 0) {
             urlQuery += "?";
