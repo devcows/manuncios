@@ -16,13 +16,6 @@ public class Utils {
     private static String contentCss = "";
     public static final String SEARCH_QUERY = "search_query";
 
-    //ORDER BY
-    public static final int ORDER_BY_RECENT = 0;
-    public static final int ORDER_BY_OLD = 1;
-    public static final int ORDER_BY_EXPENSIVE = 2;
-    public static final int ORDER_BY_CHEAP = 3;
-
-
 
     //TODO PUT ALLSTRING PARAMETERS
 

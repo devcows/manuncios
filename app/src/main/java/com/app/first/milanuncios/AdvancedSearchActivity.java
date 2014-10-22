@@ -1,6 +1,7 @@
 package com.app.first.milanuncios;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,7 +33,15 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        searchQuery = new SearchQuery(intent);
+        if(intent.hasExtra(Utils.SEARCH_QUERY)){
+            searchQuery = (SearchQuery) intent.getSerializableExtra(Utils.SEARCH_QUERY);
+        } else {
+            searchQuery = new SearchQuery();
+
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
+            }
+        }
 
 
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);

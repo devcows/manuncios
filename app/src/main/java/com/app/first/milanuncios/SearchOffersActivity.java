@@ -42,8 +42,16 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
         listview.setAdapter(adapter);
 
-        searchQuery = new SearchQuery(getIntent());
+        Intent intent = getIntent();
+        if(intent.hasExtra(Utils.SEARCH_QUERY)){
+            searchQuery = (SearchQuery) intent.getSerializableExtra(Utils.SEARCH_QUERY);
+        } else {
+            searchQuery = new SearchQuery();
 
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
+            }
+        }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,10 +104,10 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     public boolean onPrepareOptionsMenu(Menu menu) {
         Integer order_by = searchQuery.getOrder_by();
 
-        menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == Utils.ORDER_BY_RECENT);
-        menu.findItem(R.id.menuSortDateOld).setChecked(order_by == Utils.ORDER_BY_OLD);
-        menu.findItem(R.id.menuSortPriceCheap).setChecked(order_by == Utils.ORDER_BY_CHEAP);
-        menu.findItem(R.id.menuSortPriceExpensive).setChecked(order_by == Utils.ORDER_BY_EXPENSIVE);
+        menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == SearchQuery.ORDER_BY_RECENT);
+        menu.findItem(R.id.menuSortDateOld).setChecked(order_by == SearchQuery.ORDER_BY_OLD);
+        menu.findItem(R.id.menuSortPriceCheap).setChecked(order_by == SearchQuery.ORDER_BY_CHEAP);
+        menu.findItem(R.id.menuSortPriceExpensive).setChecked(order_by == SearchQuery.ORDER_BY_EXPENSIVE);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -109,16 +117,16 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
         switch (btnId) {
             case R.id.menuSortDateRecent:
-                searchQuery.setOrder_by(Utils.ORDER_BY_RECENT);
+                searchQuery.setOrder_by(SearchQuery.ORDER_BY_RECENT);
                 break;
             case R.id.menuSortDateOld:
-                searchQuery.setOrder_by(Utils.ORDER_BY_OLD);
+                searchQuery.setOrder_by(SearchQuery.ORDER_BY_OLD);
                 break;
             case R.id.menuSortPriceExpensive:
-                searchQuery.setOrder_by(Utils.ORDER_BY_EXPENSIVE);
+                searchQuery.setOrder_by(SearchQuery.ORDER_BY_EXPENSIVE);
                 break;
             case R.id.menuSortPriceCheap:
-                searchQuery.setOrder_by(Utils.ORDER_BY_CHEAP);
+                searchQuery.setOrder_by(SearchQuery.ORDER_BY_CHEAP);
                 break;
             case R.id.action_search:
                 break;
