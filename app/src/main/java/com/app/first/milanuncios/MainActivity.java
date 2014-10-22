@@ -54,7 +54,7 @@ public class MainActivity extends Activity implements CategoriesTaskListener { /
                 Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
 
                 Bundle mBundle = new Bundle();
-                mBundle.putSerializable("selected_category", item);
+                mBundle.putSerializable(Utils.SELECTED_CATEGORY, item);
                 intent.putExtras(mBundle);
 
                 startActivity(intent);

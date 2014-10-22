@@ -19,6 +19,7 @@ import java.util.List;
 public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener{
     private AdvancedSearchGetTask advancedSearchGetTask;
     private ProgressBar progressBar;
+    private ArrayAdapter<Category> categoryArrayAdapter;
 
     //search parameters
     private Category category = null;
@@ -44,12 +45,12 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             string_query = intent.getStringExtra(SearchManager.QUERY);
         }
 
-        if (intent.hasExtra("string_query")) {
-            string_query = (String) intent.getSerializableExtra("string_query");
+        if (intent.hasExtra(Utils.STRING_QUERY)) {
+            string_query = (String) intent.getSerializableExtra(Utils.STRING_QUERY);
         }
 
-        if (intent.hasExtra("selected_category")) {
-            category = (Category) intent.getSerializableExtra("selected_category");
+        if (intent.hasExtra(Utils.SELECTED_CATEGORY)) {
+            category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
         }
 
         if (intent.hasExtra("most_recent")) {
@@ -79,12 +80,29 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
                 Bundle mBundle = new Bundle();
 
+                EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
+                if(!txtSearch.getText().toString().isEmpty()){
+                    mBundle.putSerializable(Utils.STRING_QUERY, string_query);
+                }
+
+                Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
+
+                if (spn_categories.getSelectedItemPosition() > 0) {
+                    Category category = categoryArrayAdapter.getItem(spn_categories.getSelectedItemPosition());
+                    mBundle.putSerializable(Utils.SELECTED_CATEGORY, category);
+                }
+
                 //TODO pass parameters.
 
 
                 intent.putExtras(mBundle);
                 startActivity(intent);
 
+
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK,returnIntent);
+
+                finish();
             }
         });
 
@@ -120,7 +138,13 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         }
 
         List<Category> categories = advancedSearchGetTask.getCategories();
-        ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        Category all = new Category();
+        all.setPosition(0);
+        all.setName("Todas");
+        categories.add(0, all);
+
+        categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+
         Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
         spn_categories.setAdapter(categoryArrayAdapter);
 
@@ -130,5 +154,13 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
 
 
         //TODO set items in the activity.
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED,returnIntent);
     }
 }

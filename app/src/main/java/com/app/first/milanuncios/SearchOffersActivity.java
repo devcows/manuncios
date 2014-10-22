@@ -16,6 +16,8 @@ import java.util.List;
 
 
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+    static final int CLICK_SEARCH_ADVANCED = 1;
+
     private SearchOffersListAdapter adapter;
     private ProgressBar progressBar;
 
@@ -50,12 +52,12 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             string_query = intent.getStringExtra(SearchManager.QUERY);
         }
 
-        if (intent.hasExtra("string_query")) {
-            string_query = (String) intent.getSerializableExtra("string_query");
+        if (intent.hasExtra(Utils.STRING_QUERY)) {
+            string_query = (String) intent.getSerializableExtra(Utils.STRING_QUERY);
         }
 
-        if (intent.hasExtra("selected_category")) {
-            category = (Category) intent.getSerializableExtra("selected_category");
+        if (intent.hasExtra(Utils.SELECTED_CATEGORY)) {
+            category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
         }
 
         if (intent.hasExtra("most_recent")) {
@@ -159,11 +161,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         mBundle.putSerializable("most_cheap", most_cheap);
 
         if (string_query != null) {
-            mBundle.putSerializable("string_query", string_query);
+            mBundle.putSerializable(Utils.STRING_QUERY, string_query);
         }
 
         if (category != null) {
-            mBundle.putSerializable("selected_category", category);
+            mBundle.putSerializable(Utils.SELECTED_CATEGORY, category);
         }
 
         return mBundle;
@@ -224,7 +226,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
                 intent.putExtras(mBundle);
 
-                startActivity(intent);
+                startActivityForResult(intent, CLICK_SEARCH_ADVANCED);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -239,5 +241,16 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
         // fire the event
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == CLICK_SEARCH_ADVANCED) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                finish();
+            }
+        }
     }
 }
