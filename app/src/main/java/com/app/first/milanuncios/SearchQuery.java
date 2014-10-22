@@ -19,6 +19,7 @@ public class SearchQuery implements Serializable {
     public static final int ORDER_BY_CHEAP = 3;
 
     public SearchQuery() {
+        this.order_by = SearchQuery.ORDER_BY_RECENT;
     }
 
     public Category getCategory() {
@@ -70,23 +71,25 @@ public class SearchQuery implements Serializable {
 
         List<String> parameters = new ArrayList<String>();
 
-        if (page_number > 1) {
+        if (page_number != null && page_number > 1) {
             parameters.add("pagina=" + page_number.toString());
         }
 
-        switch (order_by){
-            case ORDER_BY_RECENT:
-                //parameters.add("orden=nuevos");
-                break;
-            case ORDER_BY_OLD:
-                parameters.add("orden=viejos");
-                break;
-            case ORDER_BY_EXPENSIVE:
-                parameters.add("orden=caros");
-                break;
-            case ORDER_BY_CHEAP:
-                parameters.add("orden=baratos");
-                break;
+        if (order_by != null) {
+            switch (order_by) {
+                case ORDER_BY_RECENT:
+                    //parameters.add("orden=nuevos");
+                    break;
+                case ORDER_BY_OLD:
+                    parameters.add("orden=viejos");
+                    break;
+                case ORDER_BY_EXPENSIVE:
+                    parameters.add("orden=caros");
+                    break;
+                case ORDER_BY_CHEAP:
+                    parameters.add("orden=baratos");
+                    break;
+            }
         }
 
 

@@ -51,6 +51,10 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
             }
+
+            if (intent.hasExtra(Utils.SELECTED_CATEGORY)){
+                searchQuery.setCategory((Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY));
+            }
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,10 +108,12 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     public boolean onPrepareOptionsMenu(Menu menu) {
         Integer order_by = searchQuery.getOrder_by();
 
-        menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == SearchQuery.ORDER_BY_RECENT);
-        menu.findItem(R.id.menuSortDateOld).setChecked(order_by == SearchQuery.ORDER_BY_OLD);
-        menu.findItem(R.id.menuSortPriceCheap).setChecked(order_by == SearchQuery.ORDER_BY_CHEAP);
-        menu.findItem(R.id.menuSortPriceExpensive).setChecked(order_by == SearchQuery.ORDER_BY_EXPENSIVE);
+        if(order_by != null) {
+            menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == SearchQuery.ORDER_BY_RECENT);
+            menu.findItem(R.id.menuSortDateOld).setChecked(order_by == SearchQuery.ORDER_BY_OLD);
+            menu.findItem(R.id.menuSortPriceCheap).setChecked(order_by == SearchQuery.ORDER_BY_CHEAP);
+            menu.findItem(R.id.menuSortPriceExpensive).setChecked(order_by == SearchQuery.ORDER_BY_EXPENSIVE);
+        }
 
         return super.onPrepareOptionsMenu(menu);
     }

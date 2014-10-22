@@ -1,7 +1,5 @@
 package com.app.first.milanuncios.other_controls;
 
-import java.util.List;
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -11,6 +9,8 @@ import android.widget.RelativeLayout;
 
 import com.app.first.milanuncios.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.List;
 
 public class FullScreenImageAdapter extends PagerAdapter {
 
