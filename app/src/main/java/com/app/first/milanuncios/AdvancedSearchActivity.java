@@ -1,7 +1,6 @@
 package com.app.first.milanuncios;
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,11 +20,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     private ProgressBar progressBar;
     private ArrayAdapter<Category> categoryArrayAdapter;
 
-    //search parameters
-    private Category category = null;
-    private String string_query = null;
-
-    private Integer order_by, min_price, max_price;
+    private SearchQuery searchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,36 +31,12 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
-
         Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            string_query = intent.getStringExtra(SearchManager.QUERY);
-        }
+        searchQuery = new SearchQuery(intent);
 
-        if (intent.hasExtra(Utils.STRING_QUERY)) {
-            string_query = (String) intent.getSerializableExtra(Utils.STRING_QUERY);
-        }
-
-        if (intent.hasExtra(Utils.SELECTED_CATEGORY)) {
-            category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
-        }
-
-        if(intent.hasExtra(Utils.ORDER_BY)){
-            order_by = (Integer) intent.getSerializableExtra(Utils.ORDER_BY);
-        } else {
-            order_by = Utils.ORDER_BY_RECENT;
-        }
-
-        if(intent.hasExtra(Utils.MIN_PRICE)){
-            min_price = (Integer) intent.getSerializableExtra(Utils.MIN_PRICE);
-        }
-
-        if(intent.hasExtra(Utils.MAX_PRICE)){
-            max_price = (Integer) intent.getSerializableExtra(Utils.MAX_PRICE);
-        }
 
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
-        spn_order_by.setSelection(order_by);
+        spn_order_by.setSelection(searchQuery.getOrder_by());
 
 
         advancedSearchGetTask = new AdvancedSearchGetTask();
@@ -76,31 +47,34 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
-                Bundle mBundle = new Bundle();
 
                 EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
                 if(!txtSearch.getText().toString().isEmpty()){
-                    mBundle.putSerializable(Utils.STRING_QUERY, txtSearch.getText().toString());
+                    searchQuery.setString_query(txtSearch.getText().toString());
                 }
 
                 Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
 
                 if (spn_categories.getSelectedItemPosition() > 0) {
                     Category category = categoryArrayAdapter.getItem(spn_categories.getSelectedItemPosition());
-                    mBundle.putSerializable(Utils.SELECTED_CATEGORY, category);
+                    searchQuery.setCategory(category);
                 }
 
                 Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
-                mBundle.putSerializable(Utils.ORDER_BY, spn_order_by.getSelectedItemPosition());
+                searchQuery.setOrder_by(spn_order_by.getSelectedItemPosition());
 
-                if (min_price != null){
-                    mBundle.putSerializable(Utils.MIN_PRICE, min_price);
+                EditText txtMinPrice = (EditText) findViewById(R.id.txt_min_price);
+                if(!txtMinPrice.getText().toString().isEmpty()){
+                    searchQuery.setMin_price(Integer.parseInt(txtMinPrice.getText().toString()));
                 }
 
-                if (max_price != null){
-                    mBundle.putSerializable(Utils.MIN_PRICE, max_price);
+                EditText txtMaxPrice = (EditText) findViewById(R.id.txt_max_price);
+                if(!txtMaxPrice.getText().toString().isEmpty()){
+                    searchQuery.setMax_price(Integer.parseInt(txtMaxPrice.getText().toString()));
                 }
 
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
                 intent.putExtras(mBundle);
                 startActivity(intent);
 
@@ -137,9 +111,9 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     public void onAdvancedSearchGetResult() {
         progressBar.setVisibility(View.INVISIBLE);
 
-        if(string_query != null){
+        if(searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()){
             EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
-            txtSearch.setText(string_query);
+            txtSearch.setText(searchQuery.getString_query());
         }
 
         List<Category> categories = advancedSearchGetTask.getCategories();
@@ -153,8 +127,8 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
         spn_categories.setAdapter(categoryArrayAdapter);
 
-        if(category != null){
-            spn_categories.setSelection(category.getPosition());
+        if(searchQuery.getCategory() != null){
+            spn_categories.setSelection(searchQuery.getCategory().getPosition());
         }
 
 

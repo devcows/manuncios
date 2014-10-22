@@ -14,11 +14,7 @@ import java.util.regex.Pattern;
 
 public class Utils {
     private static String contentCss = "";
-    public static final String STRING_QUERY = "string_query";
-    public static final String SELECTED_CATEGORY = "selected_category";
-    public static final String ORDER_BY = "order_by";
-    public static final String MIN_PRICE = "min_price";
-    public static final String MAX_PRICE = "max_price";
+    public static final String SEARCH_QUERY = "search_query";
 
     //ORDER BY
     public static final int ORDER_BY_RECENT = 0;

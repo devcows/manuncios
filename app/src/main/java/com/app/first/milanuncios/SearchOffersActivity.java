@@ -24,11 +24,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     private ProgressBar progressBar;
 
     //search parameters
-    private Category category = null;
-    private String string_query = null;
-    private int page_number = 1;
-
-    private Integer order_by, min_price, max_price;
+    private SearchQuery searchQuery;
 
 
     @Override
@@ -46,32 +42,8 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
         listview.setAdapter(adapter);
 
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            string_query = intent.getStringExtra(SearchManager.QUERY);
-        }
+        searchQuery = new SearchQuery(getIntent());
 
-        if (intent.hasExtra(Utils.STRING_QUERY)) {
-            string_query = (String) intent.getSerializableExtra(Utils.STRING_QUERY);
-        }
-
-        if (intent.hasExtra(Utils.SELECTED_CATEGORY)) {
-            category = (Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY);
-        }
-
-        if(intent.hasExtra(Utils.ORDER_BY)){
-            order_by = (Integer) intent.getSerializableExtra(Utils.ORDER_BY);
-        } else{
-            order_by = Utils.ORDER_BY_RECENT;
-        }
-
-        if(intent.hasExtra(Utils.MIN_PRICE)){
-            min_price = (Integer) intent.getSerializableExtra(Utils.MIN_PRICE);
-        }
-
-        if(intent.hasExtra(Utils.MAX_PRICE)){
-            max_price = (Integer) intent.getSerializableExtra(Utils.MAX_PRICE);
-        }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,32 +73,14 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
 
     private void customLoadMoreOffers(int page) {
-        this.page_number = page;
+        searchQuery.setPage_number(page);
         doSearch();
     }
 
     private void doSearch() {
         //TODO Kill offertask if the activity finish.
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
-
-        if (category != null) {
-            offerTask.setCategory(category);
-        }
-
-        if (string_query != null && !string_query.isEmpty()) {
-            offerTask.setQuerySearch(string_query);
-        }
-
-        if(min_price != null){
-            offerTask.setMinPrice(min_price);
-        }
-
-        if(max_price != null){
-            offerTask.setMaxPrice(max_price);
-        }
-
-        offerTask.setOrder_by(order_by);
-        offerTask.setPage(page_number);
+        offerTask.setSearchQuery(searchQuery);
         offerTask.execute(this);
     }
 
@@ -140,6 +94,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        Integer order_by = searchQuery.getOrder_by();
 
         menu.findItem(R.id.menuSortDateRecent).setChecked(order_by == Utils.ORDER_BY_RECENT);
         menu.findItem(R.id.menuSortDateOld).setChecked(order_by == Utils.ORDER_BY_OLD);
@@ -149,43 +104,27 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private Bundle createBundle() {
-        Bundle mBundle = new Bundle();
-
-        mBundle.putSerializable(Utils.ORDER_BY, order_by);
-
-        if (string_query != null) {
-            mBundle.putSerializable(Utils.STRING_QUERY, string_query);
-        }
-
-        if (category != null) {
-            mBundle.putSerializable(Utils.SELECTED_CATEGORY, category);
-        }
-
-        return mBundle;
-    }
-
     private boolean createNewSearch(int btnId) {
-        Bundle mBundle = createBundle();
+        Bundle mBundle = new Bundle();
 
         switch (btnId) {
             case R.id.menuSortDateRecent:
-                order_by = Utils.ORDER_BY_RECENT;
+                searchQuery.setOrder_by(Utils.ORDER_BY_RECENT);
                 break;
             case R.id.menuSortDateOld:
-                order_by = Utils.ORDER_BY_OLD;
+                searchQuery.setOrder_by(Utils.ORDER_BY_OLD);
                 break;
             case R.id.menuSortPriceExpensive:
-                order_by = Utils.ORDER_BY_EXPENSIVE;
+                searchQuery.setOrder_by(Utils.ORDER_BY_EXPENSIVE);
                 break;
             case R.id.menuSortPriceCheap:
-                order_by = Utils.ORDER_BY_CHEAP;
+                searchQuery.setOrder_by(Utils.ORDER_BY_CHEAP);
                 break;
             case R.id.action_search:
                 break;
         }
 
-        mBundle.putSerializable(Utils.ORDER_BY, order_by);
+        mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
 
         Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
         intent.putExtras(mBundle);
@@ -212,7 +151,8 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             case R.id.menuSortPriceCheap:
                 return createNewSearch(id);
             case R.id.action_search:
-                Bundle mBundle = createBundle();
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
 
                 Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
                 intent.putExtras(mBundle);

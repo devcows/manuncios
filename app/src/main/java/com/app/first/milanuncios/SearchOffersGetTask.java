@@ -16,18 +16,9 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
     private Category category;
     private String querySearch;
 
-    private int page;
-    private Integer order_by, min_price, max_price;
+    private SearchQuery searchQuery;
 
     private SearchOffersTaskListener[] listeners;
-
-    public SearchOffersGetTask() {
-        this.page = 1;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
 
     public void setCategory(Category category) {
         this.category = category;
@@ -37,16 +28,8 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.querySearch = querySearch.replace(" ", "-");
     }
 
-    public void setOrder_by(int order_by) {
-        this.order_by = order_by;
-    }
-
-    public void setMinPrice(Integer min_price) {
-        this.min_price = min_price;
-    }
-
-    public void setMaxPrice(Integer max_price) {
-        this.max_price = max_price;
+    public void setSearchQuery(SearchQuery searchQuery) {
+        this.searchQuery = searchQuery;
     }
 
     private Offer LoadHtmlOffer(Element row, int index) {
@@ -146,56 +129,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.listeners = listeners;
         List<Offer> offers = new ArrayList<Offer>();
 
-        String urlQuery = "http://www.milanuncios.com/anuncios/";
-        if (category != null) {
-            urlQuery = category.getUrl();
-        }
-
-        if (querySearch != null) {
-            urlQuery += querySearch + ".htm";
-        }
-
-        List<String> parameters = new ArrayList<String>();
-
-        if (page > 1) {
-            parameters.add("pagina=" + String.valueOf(page));
-        }
-
-        switch (order_by){
-            case Utils.ORDER_BY_RECENT:
-                //parameters.add("orden=nuevos");
-                break;
-            case Utils.ORDER_BY_OLD:
-                parameters.add("orden=viejos");
-                break;
-            case Utils.ORDER_BY_EXPENSIVE:
-                parameters.add("orden=caros");
-                break;
-            case Utils.ORDER_BY_CHEAP:
-                parameters.add("orden=baratos");
-                break;
-        }
-
-
-        if (min_price != null){
-            parameters.add("desde=" + min_price.toString());
-        }
-
-        if (max_price != null){
-            parameters.add("hasta=" + min_price.toString());
-        }
-
-
-        if (parameters.size() > 0) {
-            urlQuery += "?";
-            for (String param : parameters) {
-                urlQuery += param + "&";
-            }
-
-            urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
-        }
-
-
+        String urlQuery = searchQuery.getUrlQuery();
         Document doc = Utils.getDocumentFromUrl(urlQuery);
         if (doc != null) {
             Elements rows = doc.select("div.x1");
