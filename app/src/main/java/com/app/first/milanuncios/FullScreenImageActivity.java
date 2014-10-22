@@ -12,15 +12,12 @@ public class FullScreenImageActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fullscreen_view);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
         Intent intent = getIntent();
         final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
 
-
         FullScreenImageAdapter adapter = new FullScreenImageAdapter(this, offer.getSecondaryImages());
-
-		viewPager.setAdapter(adapter);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
 
 		// displaying selected image first
 		viewPager.setCurrentItem(0);

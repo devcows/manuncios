@@ -4,11 +4,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,7 +29,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((RelativeLayout) object);
+        return view.equals(object);
     }
 
     @Override
@@ -39,17 +37,17 @@ public class FullScreenImageAdapter extends PagerAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewLayout = inflater.inflate(R.layout.layout_fullscreen_image, container, false);
 
-        ImageView imgDisplay = (ImageView) viewLayout.findViewById(R.id.imgDisplay);
+        TouchImageView imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.imgDisplay);
 
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.displayImage(images.get(position), imgDisplay);
 
-        ((ViewPager) container).addView(viewLayout);
+        container.addView(viewLayout);
         return viewLayout;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        ((ViewPager) container).removeView((RelativeLayout) object);
+        container.removeView((RelativeLayout) object);
     }
 }
