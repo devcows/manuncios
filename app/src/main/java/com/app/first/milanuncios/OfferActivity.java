@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -104,71 +105,10 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             }
         });
 
-//        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
-//        hsv.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-//
-//                    Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
-//
-//                    Bundle mBundle = new Bundle();
-//                    mBundle.putSerializable("selected_offer", offer);
-//                    intent.putExtras(mBundle);
-//
-//                    startActivity(intent);
-//                }
-//                return false;
-//            }
-//        });
-//
-//
-
-
-
-//
-//        HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollView);
-//
-//        final GestureDetector detector = new GestureDetector(this, new OnGestureListener() {
-//
-//            @Override
-//            public boolean onSingleTapUp(MotionEvent e) {
-//                // Do stuff.
-//                return false;
-//            }
-//
-//            // Note that there are more methods which will appear here
-//            // (which you probably don't need).
-//        });
-//
-//
-//        scrollView.setOnTouchListener(new OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                detector.onTouchEvent(event);
-//                return false;
-//            }
-//        });
-
-
-
-
-
-//        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
-//        hsv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
-//
-//                Bundle mBundle = new Bundle();
-//                mBundle.putSerializable("selected_offer", offer);
-//                intent.putExtras(mBundle);
-//
-//                startActivity(intent);
-//            }
-//        });
+        if (offer.getSecondaryImages().isEmpty()) {
+            HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
+            hsv.setVisibility(View.GONE);
+        }
     }
 
 
@@ -195,7 +135,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
     public void onOfferGetResult(Offer offer) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        for (String imageUri: offer.getSecondaryImages()) {
+        for (String imageUri : offer.getSecondaryImages()) {
 
             LinearLayout lLayout = (LinearLayout) findViewById(R.id.images_layout);
             ImageView imgView = new ImageView(this);
@@ -205,7 +145,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
 
             final Offer selectedOffer = offer;
-            imgView.setOnClickListener(new View.OnClickListener(){
+            imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);

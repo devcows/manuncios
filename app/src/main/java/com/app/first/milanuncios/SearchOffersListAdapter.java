@@ -30,7 +30,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
         this.objects = objects;
     }
 
-    public void addAllObjects(List<Offer> objects){
+    public void addAllObjects(List<Offer> objects) {
         this.objects.addAll(objects);
     }
 
@@ -104,8 +104,12 @@ public class SearchOffersListAdapter extends BaseAdapter {
             holder.lLayout.addView(txtView);
         }
 
-        ImageLoader imgLoader = ImageLoader.getInstance();
-        imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
+        if (rowItem.getImageUri() != null && !rowItem.getImageUri().isEmpty()) {
+            ImageLoader imgLoader = ImageLoader.getInstance();
+            imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+        }
 
         return view;
     }
