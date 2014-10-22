@@ -7,43 +7,43 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:alignmentMode="alignBounds">
+        android:alignmentMode="alignBounds"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:alignmentMode="alignBounds">
+            android:alignmentMode="alignBounds"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/firstTitle"
-                android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginTop="2dp"
+                android:maxWidth="@dimen/activity_offer_other_max_width"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:textColor="#114411"
-                android:textSize="13sp"
-                android:layout_alignParentTop="true"
                 android:textIsSelectable="true"
-                android:layout_alignParentLeft="true" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/secondTitle"
-                android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/activity_offer_other_max_width"
-                android:paddingTop="3dp"
+                android:paddingBottom="5dp"
                 android:paddingLeft="@dimen/activity_offer_normal_padding_left"
                 android:paddingRight="3dp"
-                android:paddingBottom="5dp"
+                android:paddingTop="3dp"
+                android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:textColor="#114411"
-                android:textSize="18sp"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="18sp" />
 
             <HorizontalScrollView
                 android:id="@+id/hsv1"
@@ -52,33 +52,33 @@
 
                 <LinearLayout
                     android:id="@+id/images_layout"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="300dp" />
+                    android:layout_height="300dp"
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
 
 
             <TextView
                 android:id="@+id/description"
-                android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:maxWidth="@dimen/activity_offer_other_max_width"
                 android:paddingLeft="@dimen/activity_offer_normal_padding_left"
                 android:paddingRight="3dp"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
+                android:paddingTop="5dp"
+                android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
                 android:textColor="#114411"
-                android:textSize="16sp"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="16sp" />
 
             <TableLayout
                 android:id="@+id/othersList"
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:paddingTop="5dp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -86,36 +86,36 @@
 
                 <Button
                     android:id="@+id/contact"
-                    android:text="Contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:paddingTop="5dp"
-                    android:padding="@dimen/activity_offer_normal_padding_left"
                     android:maxWidth="@dimen/activity_offer_other_max_width"
+                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:paddingTop="5dp"
+                    android:text="Contact"
                     android:textColor="#114411"
                     android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/goto_url"
-                    android:text="Go to the web"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
-                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/contact"
                     android:maxWidth="@dimen/activity_offer_other_max_width"
+                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:text="Go to the web"
                     android:textColor="#114411"
-                    android:textSize="16sp"
-                    android:layout_toRightOf="@+id/contact" />
+                    android:textSize="16sp" />
             </RelativeLayout>
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

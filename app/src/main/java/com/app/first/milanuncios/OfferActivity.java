@@ -135,6 +135,11 @@ public class OfferActivity extends Activity implements OfferTaskListener {
     public void onOfferGetResult(Offer offer) {
         progressBar.setVisibility(View.INVISIBLE);
 
+        if (!offer.getSecondaryImages().isEmpty()) {
+            HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
+            hsv.setVisibility(View.VISIBLE);
+        }
+
         for (String imageUri : offer.getSecondaryImages()) {
 
             LinearLayout lLayout = (LinearLayout) findViewById(R.id.images_layout);

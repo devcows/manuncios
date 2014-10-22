@@ -55,7 +55,7 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
             }
         }
 
-        /////// Old mode not working now.
+/////// Old mode not working now.
 //        Document doc = Utils.getDocumentFromUrl(offer.getUrl());
 //        if (doc != null) {
 //            Elements rows = doc.select("div.pagAnuFoto img");

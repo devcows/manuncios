@@ -7,63 +7,63 @@
 
     <TextView
         android:id="@+id/firstTitle"
-        android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:maxWidth="@dimen/activity_offer_titles_max_width"
-        android:paddingTop="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:textColor="#114411"
-        android:textSize="13dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:textSize="13dp" />
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/secondTitle"
-        android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/firstTitle"
         android:maxWidth="@dimen/activity_offer_titles_max_width"
-        android:paddingTop="5dp"
         android:paddingLeft="@dimen/activity_offer_normal_padding_left"
         android:paddingRight="3dp"
+        android:paddingTop="5dp"
+        android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:textColor="#114411"
-        android:textSize="18dp"
-        android:layout_below="@+id/firstTitle" />
+        android:textSize="18dp" />
 
 
     <TextView
         android:id="@+id/description"
-        android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:layout_below="@+id/secondTitle"
+        android:maxWidth="@dimen/activity_offer_other_max_width"
         android:paddingLeft="@dimen/activity_offer_normal_padding_left"
         android:paddingRight="3dp"
-        android:maxWidth="@dimen/activity_offer_other_max_width"
+        android:paddingTop="5dp"
+        android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
         android:textColor="#114411"
-        android:textSize="16dp"
-        android:layout_below="@+id/secondTitle" />
+        android:textSize="16dp" />
 
 
     <LinearLayout
         android:id="@+id/othersList"
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-        android:paddingRight="3dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/description" />
+        android:layout_below="@+id/description"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_offer_normal_padding_left"
+        android:paddingRight="3dp"
+        android:paddingTop="5dp" />
 
 </RelativeLayout>
