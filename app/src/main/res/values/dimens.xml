@@ -5,5 +5,5 @@
 
     <dimen name="activity_offer_titles_max_width">320dp</dimen>
     <dimen name="activity_offer_other_max_width">385dp</dimen>
-    <dimen name="activity_offer_normal_padding_left">3dp</dimen>
+    <dimen name="activity_offer_normal_padding">3dp</dimen>
 </resources>

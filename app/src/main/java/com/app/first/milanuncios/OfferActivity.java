@@ -62,6 +62,10 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             TextView txtView = new TextView(this);
 
             txtView.setText(other.getText());
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            params.setMargins(Utils.getPixels(getResources(), 10), 5, 5, 5); // setMargins(left, top, right, bottom);
+//            txtView.setLayoutParams(params);
+
             if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
                 txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
             }

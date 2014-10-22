@@ -22,24 +22,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="2dp"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="@dimen/activity_offer_normal_padding"
+                android:paddingRight="@dimen/activity_offer_normal_padding"
                 android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:textColor="#114411"
                 android:textIsSelectable="true"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/secondTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-                android:paddingRight="3dp"
-                android:paddingTop="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp"
                 android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:textColor="#114411"
                 android:textIsSelectable="true"
@@ -48,7 +44,10 @@
             <HorizontalScrollView
                 android:id="@+id/hsv1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
 
                 <LinearLayout
                     android:id="@+id/images_layout"
@@ -62,10 +61,9 @@
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/activity_offer_other_max_width"
-                android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-                android:paddingRight="3dp"
-                android:paddingTop="5dp"
+                android:paddingLeft="@dimen/activity_offer_normal_padding"
+                android:paddingRight="@dimen/activity_offer_normal_padding"
+                android:layout_marginTop="8dp"
                 android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
                 android:textColor="#114411"
                 android:textIsSelectable="true"
@@ -76,22 +74,22 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/activity_offer_normal_padding_left"
-                android:paddingRight="3dp"
-                android:paddingTop="5dp" />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="8dp" />
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
                 <Button
                     android:id="@+id/contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:maxWidth="@dimen/activity_offer_other_max_width"
-                    android:padding="@dimen/activity_offer_normal_padding_left"
-                    android:paddingTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:width="175dp"
+                    android:padding="@dimen/activity_offer_normal_padding"
                     android:text="Contact"
                     android:textColor="#114411"
                     android:textSize="16sp" />
@@ -101,10 +99,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/contact"
-                    android:maxWidth="@dimen/activity_offer_other_max_width"
-                    android:padding="@dimen/activity_offer_normal_padding_left"
+                    android:width="175dp"
+                    android:padding="@dimen/activity_offer_normal_padding"
                     android:text="Go to the web"
                     android:textColor="#114411"
                     android:textSize="16sp" />
