@@ -8,12 +8,12 @@ import android.support.v4.view.ViewPager;
 import com.app.first.milanuncios.Offer;
 import com.app.first.milanuncios.R;
 
-public class FullScreenImageActivity extends Activity{
+public class FullScreenImageActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_fullscreen_view);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fullscreen_view);
 
         Intent intent = getIntent();
         final Offer offer = (Offer) intent.getSerializableExtra("selected_offer");
@@ -22,7 +22,7 @@ public class FullScreenImageActivity extends Activity{
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
 
-		// displaying selected image first
-		viewPager.setCurrentItem(0);
-	}
+        // displaying selected image first
+        viewPager.setCurrentItem(0);
+    }
 }

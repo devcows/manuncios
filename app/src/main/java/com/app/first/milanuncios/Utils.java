@@ -20,9 +20,10 @@ public class Utils {
 
     //TODO PUT ALLSTRING PARAMETERS
 
-    public static Document getDocumentFromUrl(String url){
+    public static Document getDocumentFromUrl(String url) {
         return getDocumentFromUrl(url, 3);
     }
+
     public static Document getDocumentFromUrl(String url, int retries) {
         Document doc = null;
 
@@ -30,29 +31,29 @@ public class Utils {
             doc = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
                     .referrer("http://www.google.com")
-                    .timeout(10*1000) //10 seconds
+                    .timeout(10 * 1000) //10 seconds
                     .get();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (doc == null && retries > 0){
-            doc = getDocumentFromUrl(url, retries-1);
+        if (doc == null && retries > 0) {
+            doc = getDocumentFromUrl(url, retries - 1);
         }
 
         return doc;
     }
 
-    public static void loadCss(AssetManager assetManager, String filePath){
-        try{
+    public static void loadCss(AssetManager assetManager, String filePath) {
+        try {
             InputStream stream = assetManager.open(filePath);
             contentCss = IOUtils.toString(stream);
-        } catch(Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public static String findPattern(String classElem, String cssFile){
+    public static String findPattern(String classElem, String cssFile) {
         String backgroundColor = "";
 
         //http://myregexp.com/
@@ -72,14 +73,14 @@ public class Utils {
     }
 
 
-    public static int getPixels(Resources resource, int dps){
+    public static int getPixels(Resources resource, int dps) {
         final float scale = resource.getDisplayMetrics().density;
         int pixels = (int) (dps * scale + 0.5f);
 
         return pixels;
     }
 
-    public static String getContentCss(){
+    public static String getContentCss() {
         return contentCss;
     }
 }

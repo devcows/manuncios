@@ -59,7 +59,7 @@ public class ApiMilAnuncios {
         }
 
         //starts in 1
-        for(int position = 0; position<categories.size(); position++){
+        for (int position = 0; position < categories.size(); position++) {
             Category c = categories.get(position);
             c.setPosition(position + 1);
         }

@@ -32,7 +32,7 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
         int index = 1;
         boolean finish = false;
 
-        while(!finish){
+        while (!finish) {
             try {
                 String idOffer = offer.getId();
 
@@ -43,14 +43,14 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
                 huc.setRequestMethod("HEAD");
                 huc.connect();
                 int code = huc.getResponseCode();
-                if(code >= 200 && code <300){
+                if (code >= 200 && code < 300) {
                     images.add(strUrl);
-                } else{
+                } else {
                     finish = true;
                 }
 
                 index++;
-            }catch (IOException ex){
+            } catch (IOException ex) {
                 finish = true;
             }
         }

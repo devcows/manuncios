@@ -3,6 +3,7 @@ package com.app.first.milanuncios;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class SearchQuery implements Serializable {
 
 
     //PUBLISH AT
-    public static final Map<String , Integer> map_published_at = new HashMap<String , Integer>() {{
+    public static final LinkedHashMap<String, Integer> map_published_at = new LinkedHashMap<String, Integer>() {{
         put("En cualquier momento", -1);
         put("En el último dia", 1);
         put("En los últimos 3 dias", 3);
@@ -53,6 +54,14 @@ public class SearchQuery implements Serializable {
         return order_by;
     }
 
+    public Integer getMin_price() {
+        return min_price;
+    }
+
+    public Integer getMax_price() {
+        return max_price;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -81,7 +90,7 @@ public class SearchQuery implements Serializable {
         this.publish_at = publish_at;
     }
 
-    public String getUrlQuery(){
+    public String getUrlQuery() {
         String urlQuery = "http://www.milanuncios.com/anuncios/";
         if (category != null) {
             urlQuery = category.getUrl();
@@ -115,15 +124,15 @@ public class SearchQuery implements Serializable {
         }
 
 
-        if (min_price != null){
+        if (min_price != null) {
             parameters.add("desde=" + min_price.toString());
         }
 
-        if (max_price != null){
+        if (max_price != null) {
             parameters.add("hasta=" + min_price.toString());
         }
 
-        if (publish_at != null && publish_at > 0){
+        if (publish_at != null && publish_at > 0) {
             parameters.add("dias=" + publish_at.toString());
         }
 

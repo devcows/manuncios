@@ -13,8 +13,7 @@ public class ContactActivity extends Activity {
 
     //web view client implementation
     private class CustomWebViewClient extends WebViewClient {
-        public boolean shouldOverrideUrlLoading(WebView view, String url)
-        {
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
             //do whatever you want with the url that is clicked inside the webview.
             //for example tell the webview to load that url.
             view.loadUrl(url);
@@ -23,7 +22,6 @@ public class ContactActivity extends Activity {
             return true;
         }
     }
-
 
 
     @Override

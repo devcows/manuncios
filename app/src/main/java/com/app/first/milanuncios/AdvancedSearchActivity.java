@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,23 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             }
         }
 
+        if (searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()) {
+            EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
+            txtSearch.setText(searchQuery.getString_query());
+        }
 
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
         spn_order_by.setSelection(searchQuery.getOrder_by());
+
+        if (searchQuery.getMin_price() != null) {
+            TextView txtMinPrice = (TextView) findViewById(R.id.txt_min_price);
+            txtMinPrice.setText(searchQuery.getMin_price().toString());
+        }
+
+        if (searchQuery.getMax_price() != null) {
+            TextView txtMaxPrice = (TextView) findViewById(R.id.txt_max_price);
+            txtMaxPrice.setText(searchQuery.getMax_price().toString());
+        }
 
         //map_published_at
         Spinner spn_publish_at = (Spinner) findViewById(R.id.spn_publish_at);
@@ -135,11 +150,6 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
     @Override
     public void onAdvancedSearchGetResult() {
         progressBar.setVisibility(View.INVISIBLE);
-
-        if (searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()) {
-            EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
-            txtSearch.setText(searchQuery.getString_query());
-        }
 
         List<Category> categories = advancedSearchGetTask.getCategories();
         Category all = new Category();
