@@ -19,7 +19,6 @@ import java.util.List;
 
 
 public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener {
-    private AdvancedSearchGetTask advancedSearchGetTask;
     private ProgressBar progressBar;
     private ArrayAdapter<Category> categoryArrayAdapter;
 
@@ -33,9 +32,6 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
-
-        advancedSearchGetTask = new AdvancedSearchGetTask();
-        advancedSearchGetTask.execute(this);
 
         Intent intent = getIntent();
         if (intent.hasExtra(Utils.SEARCH_QUERY)) {
@@ -52,6 +48,23 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
             txtSearch.setText(searchQuery.getString_query());
         }
+
+        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+        List<Category> categories = api.getCategories();
+        Category all = new Category();
+        all.setPosition(0);
+        all.setName("Todas");
+        categories.add(0, all);
+
+        categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+
+        Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
+        spn_categories.setAdapter(categoryArrayAdapter);
+
+        if (searchQuery.getCategory() != null) {
+            spn_categories.setSelection(searchQuery.getCategory().getPosition());
+        }
+
 
         Spinner spn_order_by = (Spinner) findViewById(R.id.spn_order_by);
         spn_order_by.setSelection(searchQuery.getOrder_by());
@@ -79,16 +92,23 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
 
 
         //map communities
-        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
         Spinner spn_communities = (Spinner) findViewById(R.id.spn_communities);
         ArrayList<String> communities_values = new ArrayList<String>();
-        for (String str : api.getCommunities().keySet()) {
+
+        int selectedCommunityPosition = 0;
+        for (int i = 0; i < api.getCommunities().keySet().size(); i++) {
+            String str = (String) api.getCommunities().keySet().toArray()[i];
             communities_values.add(str);
+
+            if (str.compareTo(api.getCommunities().get(str)) == 0) {
+                selectedCommunityPosition = i;
+            }
         }
 
         ArrayAdapter<String> spinnerCommunitiesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, communities_values); //selected item will look like a spinner set from XML
         spinnerCommunitiesArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_communities.setAdapter(spinnerCommunitiesArrayAdapter);
+        spn_communities.setSelection(selectedCommunityPosition);
 
 
         Button btnSearch = (Button) findViewById(R.id.btn_search);
@@ -126,6 +146,13 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 Integer publish_at = SearchQuery.map_published_at.get(spn_publish_at.getSelectedItem());
                 searchQuery.setPublish_at(publish_at);
 
+
+                Spinner spn_community = (Spinner) findViewById(R.id.spn_communities);
+                ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+                String community = api.getCommunities().get(spn_community.getSelectedItem());
+                searchQuery.setCommunity(community);
+
+
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
                 intent.putExtras(mBundle);
@@ -138,6 +165,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
             }
         });
 
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -158,25 +186,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
 
     @Override
     public void onAdvancedSearchGetResult() {
-        progressBar.setVisibility(View.INVISIBLE);
 
-        List<Category> categories = advancedSearchGetTask.getCategories();
-        Category all = new Category();
-        all.setPosition(0);
-        all.setName("Todas");
-        categories.add(0, all);
-
-        categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
-
-        Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
-        spn_categories.setAdapter(categoryArrayAdapter);
-
-        if (searchQuery.getCategory() != null) {
-            spn_categories.setSelection(searchQuery.getCategory().getPosition());
-        }
-
-
-        //TODO set items in the activity.
     }
 
     @Override

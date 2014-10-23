@@ -10,6 +10,7 @@ public class SearchQuery implements Serializable {
     //search parameters
     private Category category = null;
     private String string_query = null;
+    private String community = null;
 
     private Integer page_number, order_by, min_price, max_price, publish_at;
 
@@ -37,7 +38,9 @@ public class SearchQuery implements Serializable {
     }};
 
     public SearchQuery() {
+        //default values
         this.order_by = SearchQuery.ORDER_BY_RECENT;
+        this.community = ""; //en toda españa
     }
 
     public Category getCategory() {
@@ -58,6 +61,10 @@ public class SearchQuery implements Serializable {
 
     public Integer getMax_price() {
         return max_price;
+    }
+
+    public String getCommunity() {
+        return community;
     }
 
     public void setCategory(Category category) {
@@ -88,14 +95,27 @@ public class SearchQuery implements Serializable {
         this.publish_at = publish_at;
     }
 
+    public void setCommunity(String community) {
+        this.community = community;
+    }
+
     public String getUrlQuery() {
-        //TODO community
+        //TODO community ejemplo -en-alava/
         String urlQuery = "http://www.milanuncios.com/anuncios/";
         if (category != null) {
             urlQuery = category.getUrl();
         }
 
-        if (string_query != null) {
+        if(community != null && !community.isEmpty()){
+            //remove final /
+            if(urlQuery.endsWith("/")) {
+                urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
+            }
+
+            urlQuery += "-en-" + community + "/";
+        }
+
+        if (string_query != null && !string_query.isEmpty()) {
             urlQuery += string_query + ".htm";
         }
 
@@ -144,6 +164,7 @@ public class SearchQuery implements Serializable {
             urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
         }
 
+        urlQuery = urlQuery.replace(" ", "_");
         return urlQuery;
     }
 }

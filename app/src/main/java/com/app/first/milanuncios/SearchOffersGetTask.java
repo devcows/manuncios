@@ -13,20 +13,9 @@ import java.util.List;
 
 public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Void, List<Offer>> {
     private String cssFile = Utils.getContentCss();
-    private Category category;
-    private String querySearch;
-
     private SearchQuery searchQuery;
 
     private SearchOffersTaskListener[] listeners;
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setQuerySearch(String querySearch) {
-        this.querySearch = querySearch.replace(" ", "-");
-    }
 
     public void setSearchQuery(SearchQuery searchQuery) {
         this.searchQuery = searchQuery;
