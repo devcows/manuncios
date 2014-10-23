@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener {
+public class AdvancedSearchActivity extends Activity {
     private ProgressBar progressBar;
 
     @Override
@@ -172,11 +172,6 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onAdvancedSearchGetResult() {
-
     }
 
     @Override
