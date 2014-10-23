@@ -157,8 +157,6 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
             case R.id.menuSortDateRecent:
             case R.id.menuSortDateOld:
             case R.id.menuSortPriceExpensive:
