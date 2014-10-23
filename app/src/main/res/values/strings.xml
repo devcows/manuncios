@@ -16,4 +16,7 @@
         <item>Mas caros</item>
         <item>Mas baratos</item>
     </string-array>
+
+    <string name="title_activity_categories">CategoriesActivity</string>
+
 </resources>

@@ -20,6 +20,16 @@ public class SearchQuery implements Serializable {
     public static final int ORDER_BY_EXPENSIVE = 2;
     public static final int ORDER_BY_CHEAP = 3;
 
+    private static SearchQuery instance;
+
+    public static SearchQuery getInstance() {
+        if (instance == null) {
+            instance = new SearchQuery();
+        }
+
+        return instance;
+    }
+
 
     //PUBLISH AT
     public static final LinkedHashMap<String, Integer> map_published_at = new LinkedHashMap<String, Integer>() {{
@@ -106,9 +116,9 @@ public class SearchQuery implements Serializable {
             urlQuery = category.getUrl();
         }
 
-        if(community != null && !community.isEmpty()){
+        if (community != null && !community.isEmpty()) {
             //remove final /
-            if(urlQuery.endsWith("/")) {
+            if (urlQuery.endsWith("/")) {
                 urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
             }
 

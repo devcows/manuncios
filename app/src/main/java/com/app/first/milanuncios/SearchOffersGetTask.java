@@ -13,13 +13,7 @@ import java.util.List;
 
 public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Void, List<Offer>> {
     private String cssFile = Utils.getContentCss();
-    private SearchQuery searchQuery;
-
     private SearchOffersTaskListener[] listeners;
-
-    public void setSearchQuery(SearchQuery searchQuery) {
-        this.searchQuery = searchQuery;
-    }
 
     private Offer LoadHtmlOffer(Element row, int index) {
         Elements firstTitles = row.select("div.x4");
@@ -121,6 +115,7 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
         this.listeners = listeners;
         List<Offer> offers = new ArrayList<Offer>();
 
+        SearchQuery searchQuery = SearchQuery.getInstance();
         String urlQuery = searchQuery.getUrlQuery();
         Document doc = Utils.getDocumentFromUrl(urlQuery);
         if (doc != null) {

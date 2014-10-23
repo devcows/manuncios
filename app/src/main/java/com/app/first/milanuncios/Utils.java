@@ -14,11 +14,7 @@ import java.util.regex.Pattern;
 
 public class Utils {
     private static String contentCss = "";
-    public static final String SEARCH_QUERY = "search_query";
-    public static final String SELECTED_CATEGORY = "selected_category";
-
-
-    //TODO PUT ALLSTRING PARAMETERS
+    public static final String SELECTED_OFFER = "selected_offer";
 
     public static Document getDocumentFromUrl(String url) {
         return getDocumentFromUrl(url, 3);

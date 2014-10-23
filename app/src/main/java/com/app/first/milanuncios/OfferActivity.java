@@ -36,7 +36,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        this.offer = (Offer) intent.getSerializableExtra("selected_offer");
+        this.offer = (Offer) intent.getSerializableExtra(Utils.SELECTED_OFFER);
 
         OfferGetTask offerGetTask = new OfferGetTask();
         offerGetTask.setOffer(offer);

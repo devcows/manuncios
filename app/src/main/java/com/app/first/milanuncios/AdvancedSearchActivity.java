@@ -20,9 +20,6 @@ import java.util.List;
 
 public class AdvancedSearchActivity extends Activity implements AdvancedSearchTaskListener {
     private ProgressBar progressBar;
-    private ArrayAdapter<Category> categoryArrayAdapter;
-
-    private SearchQuery searchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +30,10 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
+        SearchQuery searchQuery = SearchQuery.getInstance();
         Intent intent = getIntent();
-        if (intent.hasExtra(Utils.SEARCH_QUERY)) {
-            searchQuery = (SearchQuery) intent.getSerializableExtra(Utils.SEARCH_QUERY);
-        } else {
-            searchQuery = new SearchQuery();
-
-            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-                searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
-            }
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
         }
 
         if (searchQuery.getString_query() != null && !searchQuery.getString_query().isEmpty()) {
@@ -56,7 +48,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         all.setName("Todas");
         categories.add(0, all);
 
-        categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        final ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item, categories);
 
         Spinner spn_categories = (Spinner) findViewById(R.id.spn_categories);
         spn_categories.setAdapter(categoryArrayAdapter);
@@ -115,7 +107,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
+                SearchQuery searchQuery = SearchQuery.getInstance();
 
                 EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
                 if (!txtSearch.getText().toString().isEmpty()) {
@@ -153,9 +145,7 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
                 searchQuery.setCommunity(community);
 
 
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
-                intent.putExtras(mBundle);
+                Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
                 startActivity(intent);
 
                 Intent returnIntent = new Intent();

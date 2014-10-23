@@ -18,13 +18,12 @@ import java.util.List;
 
 
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+    private SearchOffersGetTask offerTask = new SearchOffersGetTask();
+
     static final int CLICK_SEARCH_ADVANCED = 1;
 
     private SearchOffersListAdapter adapter;
     private ProgressBar progressBar;
-
-    //search parameters
-    private SearchQuery searchQuery;
 
 
     @Override
@@ -43,18 +42,10 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         listview.setAdapter(adapter);
 
         Intent intent = getIntent();
-        if (intent.hasExtra(Utils.SEARCH_QUERY)) {
-            searchQuery = (SearchQuery) intent.getSerializableExtra(Utils.SEARCH_QUERY);
-        } else {
-            searchQuery = new SearchQuery();
+        SearchQuery searchQuery = SearchQuery.getInstance();
 
-            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-                searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
-            }
-
-            if (intent.hasExtra(Utils.SELECTED_CATEGORY)) {
-                searchQuery.setCategory((Category) intent.getSerializableExtra(Utils.SELECTED_CATEGORY));
-            }
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,7 +57,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 Intent intent = new Intent(getBaseContext(), OfferActivity.class);
 
                 Bundle mBundle = new Bundle();
-                mBundle.putSerializable("selected_offer", item);
+                mBundle.putSerializable(Utils.SELECTED_OFFER, item);
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
@@ -80,21 +71,17 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         });
 
-        doSearch();
+        offerTask.execute(this);
     }
 
 
     private void customLoadMoreOffers(int page) {
+        SearchQuery searchQuery = SearchQuery.getInstance();
         searchQuery.setPage_number(page);
-        doSearch();
-    }
 
-    private void doSearch() {
-        //TODO Kill offertask if the activity finish.
-        SearchOffersGetTask offerTask = new SearchOffersGetTask();
-        offerTask.setSearchQuery(searchQuery);
         offerTask.execute(this);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,6 +93,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        SearchQuery searchQuery = SearchQuery.getInstance();
         Integer order_by = searchQuery.getOrder_by();
 
         if (order_by != null) {
@@ -119,7 +107,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     }
 
     private boolean createNewSearch(int btnId) {
-        Bundle mBundle = new Bundle();
+        SearchQuery searchQuery = SearchQuery.getInstance();
 
         switch (btnId) {
             case R.id.menuSortDateRecent:
@@ -138,11 +126,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 break;
         }
 
-        mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
-
         Intent intent = new Intent(getBaseContext(), SearchOffersActivity.class);
-        intent.putExtras(mBundle);
-
         startActivity(intent);
         finish();
 
@@ -163,11 +147,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             case R.id.menuSortPriceCheap:
                 return createNewSearch(id);
             case R.id.action_search:
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable(Utils.SEARCH_QUERY, searchQuery);
-
                 Intent intent = new Intent(getBaseContext(), AdvancedSearchActivity.class);
-                intent.putExtras(mBundle);
 
                 startActivityForResult(intent, CLICK_SEARCH_ADVANCED);
                 return true;
