@@ -78,6 +78,19 @@ public class AdvancedSearchActivity extends Activity implements AdvancedSearchTa
         spn_publish_at.setAdapter(spinnerArrayAdapter);
 
 
+        //map communities
+        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+        Spinner spn_communities = (Spinner) findViewById(R.id.spn_communities);
+        ArrayList<String> communities_values = new ArrayList<String>();
+        for (String str : api.getCommunities().keySet()) {
+            communities_values.add(str);
+        }
+
+        ArrayAdapter<String> spinnerCommunitiesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, communities_values); //selected item will look like a spinner set from XML
+        spinnerCommunitiesArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_communities.setAdapter(spinnerCommunitiesArrayAdapter);
+
+
         Button btnSearch = (Button) findViewById(R.id.btn_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override

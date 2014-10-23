@@ -5,17 +5,48 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ApiMilAnuncios {
-    private static String MAIN_WEB = "http://www.milanuncios.com";
-    private static String[] IMG_SERVERS = {"91.229.239.8", "91.229.239.12"};
+    private List<Category> categories = new ArrayList<Category>();
+    private LinkedHashMap<String, String> communities = new LinkedHashMap<String, String>();
 
-    public static String[] getIMG_SERVERS() {
+    private final String MAIN_WEB = "http://www.milanuncios.com";
+    private final String[] IMG_SERVERS = {"91.229.239.8", "91.229.239.12"};
+
+    public String[] getIMG_SERVERS() {
         return IMG_SERVERS;
     }
 
-    private static Category LoadHtmlCatergory(Element row, String divNameIco, String divNameCategory) {
+    private static ApiMilAnuncios instance = null;
+
+    protected ApiMilAnuncios() {
+        loadCategories();
+
+        if (!categories.isEmpty()) {
+            Category firstCategory = categories.get(0);
+            loadCommunities(firstCategory);
+        }
+    }
+
+    public static ApiMilAnuncios getInstance() {
+        if (instance == null) {
+            instance = new ApiMilAnuncios();
+        }
+
+        return instance;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public LinkedHashMap<String, String> getCommunities() {
+        return communities;
+    }
+
+    private Category loadHtmlCatergory(Element row, String divNameIco, String divNameCategory) {
         Category c = new Category();
 
         Elements divIcons = row.select(divNameIco);
@@ -38,15 +69,15 @@ public class ApiMilAnuncios {
         return c;
     }
 
-    public static List<Category> LoadCategories() {
-        List<Category> categories = new ArrayList<Category>();
+    private void loadCategories() {
+        categories.clear();
 
         Document doc = Utils.getDocumentFromUrl("http://www.milanuncios.com");
         if (doc != null) {
             Elements rows = doc.select("div.filaCat");
             for (Element row : rows) {
-                Category c1 = LoadHtmlCatergory(row, "div.catIcoIzq", "div.categoriaIzq");
-                Category c2 = LoadHtmlCatergory(row, "div.catIcoDch", "div.categoriaDch");
+                Category c1 = loadHtmlCatergory(row, "div.catIcoIzq", "div.categoriaIzq");
+                Category c2 = loadHtmlCatergory(row, "div.catIcoDch", "div.categoriaDch");
 
                 if (c1.getUrl() != null) {
                     categories.add(c1);
@@ -63,8 +94,22 @@ public class ApiMilAnuncios {
             Category c = categories.get(position);
             c.setPosition(position + 1);
         }
+    }
 
-        return categories;
+    private void loadCommunities(Category category) {
+        communities.clear();
+
+        Document doc = Utils.getDocumentFromUrl(category.getUrl());
+        if (doc != null) {
+            Elements options = doc.select("select#protmp option");
+            for (Element option : options) {
+
+                String keyCommunity = option.text();
+                String valueCommunity = option.attr("value");
+                communities.put(keyCommunity, valueCommunity);
+            }
+        }
+
     }
 
 

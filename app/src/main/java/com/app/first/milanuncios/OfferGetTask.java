@@ -2,10 +2,6 @@ package com.app.first.milanuncios;
 
 import android.os.AsyncTask;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;

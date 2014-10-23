@@ -34,13 +34,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
-                android:text="Catergorias:" />
+                android:text="Catergoría:" />
 
             <Spinner
                 android:id="@+id/spn_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lbl_categories" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/lbl_community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="Localidad:" />
+
+            <Spinner
+                android:id="@+id/spn_communities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lbl_community" />
         </RelativeLayout>
 
         <RelativeLayout

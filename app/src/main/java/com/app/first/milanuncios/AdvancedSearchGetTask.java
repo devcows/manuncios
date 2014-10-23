@@ -18,7 +18,9 @@ public class AdvancedSearchGetTask extends AsyncTask<AdvancedSearchTaskListener,
     @Override
     protected Void doInBackground(AdvancedSearchTaskListener... listeners) {
         this.listeners = listeners;
-        categories = ApiMilAnuncios.LoadCategories();
+
+        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+        this.categories = api.getCategories();
 
         return null;
     }

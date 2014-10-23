@@ -13,7 +13,9 @@ public class CategoriesGetTask extends AsyncTask<CategoriesTaskListener, Void, L
     @Override
     protected List<Category> doInBackground(CategoriesTaskListener... listeners) {
         this.listeners = listeners;
-        return ApiMilAnuncios.LoadCategories();
+
+        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+        return api.getCategories();
     }
 
     @Override

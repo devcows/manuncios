@@ -67,7 +67,10 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
 
         String idOffer = "";
         String strImage = "";
-        String[] imgServers = ApiMilAnuncios.getIMG_SERVERS();
+
+        ApiMilAnuncios apiMilAnuncios = ApiMilAnuncios.getInstance();
+        String[] imgServers = apiMilAnuncios.getIMG_SERVERS();
+
         if (images.size() > 0) {
             idOffer = images.get(0).attr("id").replace("f", "");
 

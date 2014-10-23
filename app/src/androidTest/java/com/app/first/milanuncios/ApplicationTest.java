@@ -14,6 +14,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
+    public void testApi() throws Exception{
+        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
+    }
+
     public void testSearchOfferGetTask() throws Exception {
         Category item = new Category();
         item.setName("Motor");

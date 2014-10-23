@@ -2,10 +2,8 @@ package com.app.first.milanuncios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SearchQuery implements Serializable {
 
@@ -91,6 +89,7 @@ public class SearchQuery implements Serializable {
     }
 
     public String getUrlQuery() {
+        //TODO community
         String urlQuery = "http://www.milanuncios.com/anuncios/";
         if (category != null) {
             urlQuery = category.getUrl();
