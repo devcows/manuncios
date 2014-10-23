@@ -16,24 +16,14 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.app.first.milanuncios.AdvancedSearchActivity">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="60dp">
 
-            <TextView
-                android:id="@+id/lbl_string_query"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="100dp"
-                android:text="Palabra:" />
+        <EditText
+            android:id="@+id/txt_string_query"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edittext"
+            android:hint="Búsqueda por palabra" />
 
-            <EditText
-                android:id="@+id/txt_string_query"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/lbl_string_query" />
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -73,7 +63,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="60dp">
 
             <TextView
@@ -87,7 +77,9 @@
                 android:id="@+id/txt_min_price"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/min_price" />
+                android:layout_toRightOf="@+id/min_price"
+                android:background="@drawable/bg_edittext"
+                android:hint="Desde" />
 
             <TextView
                 android:id="@+id/lbl_max_price"
@@ -101,7 +93,9 @@
                 android:id="@+id/txt_max_price"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/lbl_max_price" />
+                android:layout_toRightOf="@+id/lbl_max_price"
+                android:background="@drawable/bg_edittext"
+                android:hint="Hasta"/>
 
         </RelativeLayout>
 
@@ -127,8 +121,8 @@
             android:id="@+id/btn_search"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="10dp"
             android:text="Buscar" />
 
