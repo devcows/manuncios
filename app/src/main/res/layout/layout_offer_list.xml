@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:maxWidth="@dimen/activity_offer_titles_max_width"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:layout_marginRight="50dp"
         android:paddingTop="5dp"
         android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:textColor="#114411"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/firstTitle"
         android:maxWidth="@dimen/activity_offer_titles_max_width"
         android:paddingLeft="@dimen/activity_offer_normal_padding"
-        android:paddingRight="3dp"
+        android:layout_marginRight="50dp"
         android:paddingTop="5dp"
         android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:textColor="#114411"
@@ -64,6 +64,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_offer_normal_padding"
         android:paddingRight="3dp"
-        android:paddingTop="5dp" />
+        android:paddingTop="5dp"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

@@ -92,7 +92,7 @@
                     android:padding="@dimen/activity_offer_normal_padding"
                     android:text="Contact"
                     android:textColor="#114411"
-                    android:textSize="16sp" />
+                    android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/goto_url"
@@ -104,7 +104,7 @@
                     android:padding="@dimen/activity_offer_normal_padding"
                     android:text="Go to the web"
                     android:textColor="#114411"
-                    android:textSize="16sp" />
+                    android:textSize="25sp" />
             </RelativeLayout>
         </LinearLayout>
 
