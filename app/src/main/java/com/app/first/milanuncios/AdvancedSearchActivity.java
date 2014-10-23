@@ -42,7 +42,7 @@ public class AdvancedSearchActivity extends Activity {
         }
 
         ApiMilAnuncios api = ApiMilAnuncios.getInstance();
-        List<Category> categories = api.getCategories();
+        List<Category> categories = new ArrayList<Category>(api.getCategories());
         Category all = new Category();
         all.setPosition(0);
         all.setName("Todas");
@@ -72,16 +72,21 @@ public class AdvancedSearchActivity extends Activity {
         }
 
         //map_published_at
+        int selectedPublish_atPosition = 0;
         Spinner spn_publish_at = (Spinner) findViewById(R.id.spn_publish_at);
         ArrayList<String> publish_values = new ArrayList<String>();
-        for (String str : SearchQuery.map_published_at.keySet()) {
+        for (int i = 0; i < SearchQuery.map_published_at.keySet().size(); i++) {
+            String str = (String) SearchQuery.map_published_at.keySet().toArray()[i];
             publish_values.add(str);
+            if(searchQuery.map_published_at.get(str) == searchQuery.getPublish_at()){
+                selectedPublish_atPosition = i;
+            }
         }
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, publish_values); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_publish_at.setAdapter(spinnerArrayAdapter);
-
+        spn_publish_at.setSelection(selectedPublish_atPosition);
 
         //map communities
         Spinner spn_communities = (Spinner) findViewById(R.id.spn_communities);
@@ -92,7 +97,7 @@ public class AdvancedSearchActivity extends Activity {
             String str = (String) api.getCommunities().keySet().toArray()[i];
             communities_values.add(str);
 
-            if (str.compareTo(api.getCommunities().get(str)) == 0) {
+            if (searchQuery.getCommunity().compareTo(api.getCommunities().get(str)) == 0) {
                 selectedCommunityPosition = i;
             }
         }

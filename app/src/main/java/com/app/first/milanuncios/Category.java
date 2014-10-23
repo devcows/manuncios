@@ -45,6 +45,7 @@ public class Category implements Serializable {
         this.position = position;
     }
 
+    //needs for the adapter.
     @Override
     public String toString() {
         return name;

@@ -77,6 +77,10 @@ public class SearchQuery implements Serializable {
         return community;
     }
 
+    public Integer getPublish_at() {
+        return publish_at;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -176,5 +180,19 @@ public class SearchQuery implements Serializable {
 
         urlQuery = urlQuery.replace(" ", "_");
         return urlQuery;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchQuery{" +
+                "category=" + category +
+                ", string_query='" + string_query + '\'' +
+                ", community='" + community + '\'' +
+                ", page_number=" + page_number +
+                ", order_by=" + order_by +
+                ", min_price=" + min_price +
+                ", max_price=" + max_price +
+                ", publish_at=" + publish_at +
+                '}';
     }
 }

@@ -14,7 +14,8 @@ public class MainActivity extends Activity implements MainTaskListener { //, Sea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new MainGetTask().execute(this);
+        MainGetTask mainGetTask = new MainGetTask(this);
+        mainGetTask.execute(this);
     }
 
     @Override

@@ -41,9 +41,8 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
         listview.setAdapter(adapter);
 
-        Intent intent = getIntent();
         SearchQuery searchQuery = SearchQuery.getInstance();
-
+        Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
         }
