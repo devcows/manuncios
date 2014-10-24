@@ -9,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-
 public class ContactActivity extends Activity {
 
     //web view client implementation

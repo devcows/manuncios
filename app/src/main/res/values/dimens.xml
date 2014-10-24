@@ -9,4 +9,6 @@
 
     <dimen name="activity_advanced_search_margin_top_labels">10dp</dimen>
     <dimen name="activity_advanced_search_spinner_height">40dp</dimen>
+
+    <dimen name="activity_offer_top_textview">15dp</dimen>
 </resources>

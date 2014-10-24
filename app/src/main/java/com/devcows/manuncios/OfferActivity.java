@@ -3,8 +3,11 @@ package com.devcows.manuncios;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.util.Linkify;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +52,8 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         txtSecondTitle.setText(offer.getSecondTitle());
         TextView txtDescription = (TextView) findViewById(R.id.description);
         txtDescription.setText(offer.getDescription());
+        //not working ok.
+        //Linkify.addLinks(txtDescription, Linkify.PHONE_NUMBERS);
 
         TableLayout tl = (TableLayout) findViewById(R.id.othersList);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -58,17 +63,19 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         TableRow tr2 = new TableRow(this);
         tr2.setLayoutParams(layoutParams);
 
+        LayoutInflater mInflater = (LayoutInflater)
+                getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
         for (int i = 0; i < offer.getOther().size(); i++) {
             OfferOtherField other = offer.getOther().get(i);
-            TextView txtView = new TextView(this);
 
+            View view = mInflater.inflate(R.layout.layout_other_list, null);
+            TextView txtView = (TextView) view.findViewById(R.id.other_field);
             txtView.setText(other.getText());
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            params.setMargins(Utils.getPixels(getResources(), 10), 5, 5, 5); // setMargins(left, top, right, bottom);
-//            txtView.setLayoutParams(params);
 
             if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
+                GradientDrawable bgShape = (GradientDrawable)txtView.getBackground();
+                bgShape.setColor(Color.parseColor(other.getBoxColor()));
             }
 
             if (i <= 3) {
