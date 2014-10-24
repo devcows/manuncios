@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.app.first.milanuncios.R;
 import com.devcows.manuncios.other_controls.EndlessScrollListener;
 
 import java.util.ArrayList;

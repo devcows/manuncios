@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.first.milanuncios">
+    package="com.devcows.manuncios">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -22,7 +22,7 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.app.first.milanuncios.SearchOffersActivity" />
+                android:value="com.devcows.manuncios.SearchOffersActivity" />
         </activity>
         <activity
             android:name="com.devcows.manuncios.SearchOffersActivity"
@@ -37,19 +37,19 @@
         </activity>
         <activity
             android:name="com.devcows.manuncios.OfferActivity"
-            android:label="@string/title_offer_activity"></activity>
+            android:label="@string/title_offer_activity" />
         <activity
             android:name="com.devcows.manuncios.AdvancedSearchActivity"
-            android:label="@string/title_activity_advanced_search"></activity>
+            android:label="@string/title_activity_advanced_search" />
         <activity
             android:name="com.devcows.manuncios.ContactActivity"
-            android:label="@string/title_activity_contact"></activity>
+            android:label="@string/title_activity_contact" />
         <activity
             android:name="com.devcows.manuncios.other_controls.FullScreenImageActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name="com.devcows.manuncios.CategoriesActivity"
-            android:label="@string/title_activity_categories"></activity>
+            android:label="@string/title_activity_categories" />
     </application>
 
 </manifest>

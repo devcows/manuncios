@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.app.first.milanuncios.R;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

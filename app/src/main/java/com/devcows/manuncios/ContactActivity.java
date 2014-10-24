@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.app.first.milanuncios.R;
 
 
 public class ContactActivity extends Activity {

@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.app.first.milanuncios.R;
 
 import java.util.ArrayList;
 import java.util.List;
