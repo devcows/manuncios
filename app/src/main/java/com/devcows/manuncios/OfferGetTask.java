@@ -20,19 +20,19 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
         this.offer = offer;
     }
 
-    @Override
-    protected Offer doInBackground(OfferTaskListener... listeners) {
-        this.listeners = listeners;
-        List<String> images = new ArrayList<String>();
 
+    private List<String> getImages(String idOffer){
+        ApiMilAnuncios apiMilAnuncios = ApiMilAnuncios.getInstance();
+        String[] imgServers = apiMilAnuncios.getIMG_SERVERS();
+
+        List<String> images = new ArrayList<String>();
         int index = 1;
         boolean finish = false;
 
         while (!finish) {
             try {
-                String idOffer = offer.getId();
 
-                String strUrl = "http://91.229.239.8/fg/" + idOffer.substring(0, 4) + "/" + idOffer.substring(4, 6) + "/" + idOffer + "_" + index + ".jpg";
+                String strUrl = "http://" + imgServers[index % imgServers.length] + "/fg/" + idOffer.substring(0, 4) + "/" + idOffer.substring(4, 6) + "/" + idOffer + "_" + index + ".jpg";
                 URL url = new URL(strUrl);
                 HttpURLConnection huc = (HttpURLConnection) url.openConnection();
 
@@ -60,6 +60,19 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
 //                images.add(strImage);
 //            }
 //        }
+
+        return images;
+    }
+
+    @Override
+    protected Offer doInBackground(OfferTaskListener... listeners) {
+        this.listeners = listeners;
+
+        List<String> images = new ArrayList<String>();
+        String idOffer = offer.getId();
+        if(idOffer != null && !idOffer.isEmpty()){
+            images = getImages(idOffer);
+        }
 
         offer.setSecondaryImages(images);
         return offer;
