@@ -4,11 +4,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
-import com.devcows.manuncios.ApiMilAnuncios;
-import com.devcows.manuncios.Category;
-import com.devcows.manuncios.Offer;
-import com.devcows.manuncios.SearchOffersGetTask;
-
 import java.util.List;
 
 /**
@@ -28,10 +23,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         item.setName("Motor");
         item.setUrl("http://www.milanuncios.com/motor/");
 
-        SearchOffersGetTask offerTask = new SearchOffersGetTask();
-        offerTask.setCategory(item);
-        List<Offer> listOffers = offerTask.doInBackground();
+        SearchQuery searchQuery = SearchQuery.getInstance();
+        searchQuery.setCategory(item);
 
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
+        List<Offer> listOffers = offerTask.doInBackground();
 
         for(Offer o: listOffers){
             Log.d("testSearchOfferGetTask", "=> " + o.toString());
