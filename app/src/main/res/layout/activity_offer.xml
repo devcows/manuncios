@@ -20,8 +20,6 @@
                 android:id="@+id/firstTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:paddingLeft="@dimen/activity_offer_normal_padding"
                 android:paddingRight="@dimen/activity_offer_normal_padding"
                 android:text="First title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
@@ -35,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/activity_offer_top_textview"
                 android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
                 android:textColor="#114411"
                 android:textIsSelectable="true"
@@ -45,7 +43,7 @@
                 android:id="@+id/hsv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/activity_offer_top_textview"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp">
 
@@ -63,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_offer_normal_padding"
                 android:paddingRight="@dimen/activity_offer_normal_padding"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/activity_offer_top_textview"
                 android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
                 android:textColor="#114411"
                 android:textIsSelectable="true"
@@ -76,36 +74,37 @@
                 android:orientation="horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="@dimen/activity_offer_top_textview" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="@dimen/activity_offer_top_textview"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/contact"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:width="175dp"
-                    android:padding="@dimen/activity_offer_normal_padding"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
                     android:text="Contact"
                     android:textColor="#114411"
-                    android:textSize="25sp" />
+                    android:textSize="23sp" />
 
                 <Button
                     android:id="@+id/goto_url"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/contact"
-                    android:width="175dp"
-                    android:padding="@dimen/activity_offer_normal_padding"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
                     android:text="Go to the web"
                     android:textColor="#114411"
-                    android:textSize="25sp" />
-            </RelativeLayout>
+                    android:textSize="23sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <ProgressBar

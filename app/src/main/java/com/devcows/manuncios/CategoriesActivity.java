@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 
-
 public class CategoriesActivity extends Activity {
 
     @Override

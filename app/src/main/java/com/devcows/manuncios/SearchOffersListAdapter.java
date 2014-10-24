@@ -3,6 +3,7 @@ package com.devcows.manuncios;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,12 +86,13 @@ public class SearchOffersListAdapter extends BaseAdapter {
         for (int j = 0; j < rowItem.getOther().size() && j < 4; j++) {
             OfferOtherField other = rowItem.getOther().get(j);
 
-            TextView txtView = new TextView(context);
-            txtView.setPadding(3, 0, 3, 0);
-
+            View viewAux = mInflater.inflate(R.layout.layout_other_list, null);
+            TextView txtView = (TextView) viewAux.findViewById(R.id.other_field);
             txtView.setText(other.getText());
+
             if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                txtView.setBackgroundColor(Color.parseColor(other.getBoxColor()));
+                GradientDrawable bgShape = (GradientDrawable)txtView.getBackground();
+                bgShape.setColor(Color.parseColor(other.getBoxColor()));
             }
 
             holder.lLayout.addView(txtView);
