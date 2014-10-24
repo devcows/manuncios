@@ -119,6 +119,7 @@
                     android:layout_toRightOf="@+id/min_price"
                     android:background="@drawable/bg_edittext"
                     android:hint="Desde"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <TextView
@@ -139,6 +140,7 @@
                     android:layout_toRightOf="@+id/lbl_max_price"
                     android:background="@drawable/bg_edittext"
                     android:hint="Hasta"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
             </RelativeLayout>

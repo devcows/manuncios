@@ -80,7 +80,7 @@ public class AdvancedSearchActivity extends Activity {
         for (int i = 0; i < SearchQuery.map_published_at.keySet().size(); i++) {
             String str = (String) SearchQuery.map_published_at.keySet().toArray()[i];
             publish_values.add(str);
-            if(searchQuery.map_published_at.get(str) == searchQuery.getPublish_at()){
+            if (searchQuery.map_published_at.get(str) == searchQuery.getPublish_at()) {
                 selectedPublish_atPosition = i;
             }
         }

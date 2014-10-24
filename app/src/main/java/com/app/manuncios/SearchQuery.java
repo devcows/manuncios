@@ -34,16 +34,16 @@ public class SearchQuery implements Serializable {
     //PUBLISH AT
     public static final LinkedHashMap<String, Integer> map_published_at = new LinkedHashMap<String, Integer>() {{
         put("En cualquier momento", -1);
-        put("En el último dia", 1);
-        put("En los últimos 3 dias", 3);
-        put("En los últimos 5 dias", 5);
-        put("En los últimos 10 dias", 10);
-        put("En los últimos 15 dias", 15);
-        put("En los últimos 20 dias", 20);
-        put("En los últimos 30 dias", 30);
-        put("En los últimos 60 dias", 60);
-        put("En los últimos 90 dias", 90);
-        put("En los últimos 120 dias", 120);
+        put("En el último día", 1);
+        put("En los últimos 3 días", 3);
+        put("En los últimos 5 días", 5);
+        put("En los últimos 10 días", 10);
+        put("En los últimos 15 días", 15);
+        put("En los últimos 20 días", 20);
+        put("En los últimos 30 días", 30);
+        put("En los últimos 60 días", 60);
+        put("En los últimos 90 días", 90);
+        put("En los últimos 120 días", 120);
 
     }};
 

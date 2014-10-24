@@ -11,12 +11,12 @@
     <string name="title_activity_contact">Contacto</string>
 
     <string-array name="array_order_by">
-        <item>Mas nuevos</item>
-        <item>Mas antiguos</item>
-        <item>Mas caros</item>
-        <item>Mas baratos</item>
+        <item>Más nuevos</item>
+        <item>Más antiguos</item>
+        <item>Más caros</item>
+        <item>Más baratos</item>
     </string-array>
 
-    <string name="title_activity_categories">CategoriesActivity</string>
+    <string name="title_activity_categories">Categorías</string>
 
 </resources>
