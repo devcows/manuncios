@@ -1,3 +1,11 @@
+Keys:
+password same gmail
+
+Short description:
+Aplicación para consultar los anuncios de la página web (milanuncios.com).
+
+
+Large description:
 Manuncios es una app para consultar los anuncios de la página web (milanuncios.com).
 ¿Qué puedes hacer con esta App?
 -   Busquedas: podrás buscar por diferentes criterios.
