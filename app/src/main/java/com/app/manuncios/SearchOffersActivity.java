@@ -19,8 +19,6 @@ import java.util.List;
 
 
 public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
-    private SearchOffersGetTask offerTask = new SearchOffersGetTask();
-
     static final int CLICK_SEARCH_ADVANCED = 1;
 
     private SearchOffersListAdapter adapter;
@@ -71,6 +69,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             }
         });
 
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
         offerTask.execute(this);
     }
 
@@ -79,6 +78,7 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         SearchQuery searchQuery = SearchQuery.getInstance();
         searchQuery.setPage_number(page);
 
+        SearchOffersGetTask offerTask = new SearchOffersGetTask();
         offerTask.execute(this);
     }
 

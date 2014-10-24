@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.app.first.milanuncios.R;
 
 
-public class MainActivity extends Activity implements MainTaskListener { //, SearchView.OnQueryTextListener {
+public class MainActivity extends Activity implements MainTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
