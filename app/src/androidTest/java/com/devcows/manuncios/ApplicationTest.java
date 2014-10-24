@@ -1,8 +1,13 @@
-package com.app.manuncios;
+package com.devcows.manuncios;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
+
+import com.devcows.manuncios.ApiMilAnuncios;
+import com.devcows.manuncios.Category;
+import com.devcows.manuncios.Offer;
+import com.devcows.manuncios.SearchOffersGetTask;
 
 import java.util.List;
 

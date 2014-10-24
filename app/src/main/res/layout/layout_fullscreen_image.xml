@@ -9,7 +9,7 @@
     <!--android:layout_height="fill_parent"-->
     <!--android:scaleType="fitCenter" />-->
 
-    <com.app.manuncios.other_controls.TouchImageView
+    <com.devcows.manuncios.other_controls.TouchImageView
         android:id="@+id/imgDisplay"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

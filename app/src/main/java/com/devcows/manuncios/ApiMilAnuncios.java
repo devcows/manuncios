@@ -1,4 +1,4 @@
-package com.app.manuncios;
+package com.devcows.manuncios;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

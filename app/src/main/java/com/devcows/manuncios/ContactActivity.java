@@ -1,4 +1,4 @@
-package com.app.manuncios;
+package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.content.Intent;

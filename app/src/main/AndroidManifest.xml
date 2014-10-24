@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.app.manuncios.MainActivity"
+            android:name="com.devcows.manuncios.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
@@ -25,7 +25,7 @@
                 android:value="com.app.first.milanuncios.SearchOffersActivity" />
         </activity>
         <activity
-            android:name="com.app.manuncios.SearchOffersActivity"
+            android:name="com.devcows.manuncios.SearchOffersActivity"
             android:label="@string/title_search_offer_activity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -36,19 +36,19 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.app.manuncios.OfferActivity"
+            android:name="com.devcows.manuncios.OfferActivity"
             android:label="@string/title_offer_activity"></activity>
         <activity
-            android:name="com.app.manuncios.AdvancedSearchActivity"
+            android:name="com.devcows.manuncios.AdvancedSearchActivity"
             android:label="@string/title_activity_advanced_search"></activity>
         <activity
-            android:name="com.app.manuncios.ContactActivity"
+            android:name="com.devcows.manuncios.ContactActivity"
             android:label="@string/title_activity_contact"></activity>
         <activity
-            android:name="com.app.manuncios.other_controls.FullScreenImageActivity"
+            android:name="com.devcows.manuncios.other_controls.FullScreenImageActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity
-            android:name="com.app.manuncios.CategoriesActivity"
+            android:name="com.devcows.manuncios.CategoriesActivity"
             android:label="@string/title_activity_categories"></activity>
     </application>
 
