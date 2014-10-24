@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
-import com.app.first.milanuncios.R;
 
 
 public class CategoriesActivity extends Activity {
