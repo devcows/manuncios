@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

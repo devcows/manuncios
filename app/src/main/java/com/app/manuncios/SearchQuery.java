@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -4,11 +4,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
-import com.app.first.milanuncios.ApiMilAnuncios;
-import com.app.first.milanuncios.Category;
-import com.app.first.milanuncios.Offer;
-import com.app.first.milanuncios.SearchOffersGetTask;
-
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -14,13 +14,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
+import com.app.first.milanuncios.R;
+
 
 public class CategoriesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_categories);
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
 

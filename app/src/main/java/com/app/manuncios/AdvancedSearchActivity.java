@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.app.first.milanuncios.R;
 
 import java.util.ArrayList;
 import java.util.List;

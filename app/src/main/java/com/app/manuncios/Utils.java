@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;

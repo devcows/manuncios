@@ -1,4 +1,4 @@
-package com.app.first.milanuncios.other_controls;
+package com.app.manuncios.other_controls;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

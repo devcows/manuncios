@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:background="#EFFFEF">
 
     <RelativeLayout
@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.app.first.milanuncios.AdvancedSearchActivity">
+            tools:context="com.app.manuncios.AdvancedSearchActivity">
 
 
             <EditText

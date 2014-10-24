@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -11,7 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.app.first.milanuncios.other_controls.EndlessScrollListener;
+import com.app.first.milanuncios.R;
+import com.app.manuncios.other_controls.EndlessScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,12 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.app.first.milanuncios.R;
 
 
 public class MainActivity extends Activity implements MainTaskListener { //, SearchView.OnQueryTextListener {

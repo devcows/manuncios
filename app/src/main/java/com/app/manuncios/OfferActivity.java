@@ -1,4 +1,4 @@
-package com.app.first.milanuncios;
+package com.app.manuncios;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +18,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.app.first.milanuncios.other_controls.FullScreenImageActivity;
+import com.app.first.milanuncios.R;
+import com.app.manuncios.other_controls.FullScreenImageActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
