@@ -162,7 +162,7 @@ public class SearchQuery implements Serializable {
         }
 
         if (max_price != null) {
-            parameters.add("hasta=" + min_price.toString());
+            parameters.add("hasta=" + max_price.toString());
         }
 
         if (publish_at != null && publish_at > 0) {
