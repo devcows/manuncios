@@ -114,6 +114,7 @@ public class AdvancedSearchActivity extends Activity {
             @Override
             public void onClick(View view) {
                 SearchQuery searchQuery = SearchQuery.getInstance();
+                searchQuery.setDefaultsValues();
 
                 EditText txtSearch = (EditText) findViewById(R.id.txt_string_query);
                 if (!txtSearch.getText().toString().isEmpty()) {

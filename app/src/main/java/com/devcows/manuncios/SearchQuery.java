@@ -48,9 +48,22 @@ public class SearchQuery implements Serializable {
     }};
 
     public SearchQuery() {
+        setDefaultsValues();
+    }
+
+    public void setDefaultsValues(){
         //default values
-        this.order_by = SearchQuery.ORDER_BY_RECENT;
+
+        this.category = null;
+        this.string_query = null;
         this.community = ""; //en toda españa
+
+        this.page_number = null;
+        this.order_by = SearchQuery.ORDER_BY_RECENT;
+
+        this.min_price = null;
+        this.max_price = null;
+        this.publish_at = null;
     }
 
     public Category getCategory() {
