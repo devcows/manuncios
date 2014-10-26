@@ -45,6 +45,30 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
             searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
         }
 
+        String strTitle = "";
+        if(searchQuery.getCategory() != null){
+            strTitle = searchQuery.getCategory().getName();
+
+            if(searchQuery.getCategory().getName().length() > 20){
+                strTitle = searchQuery.getCategory().getName().substring(0, 20);
+                strTitle += "...";
+            }
+        }
+
+        if(searchQuery.getString_query() != null && searchQuery.getString_query().length() > 0){
+            strTitle = searchQuery.getString_query();
+
+            if(searchQuery.getString_query().length() > 20){
+                strTitle = searchQuery.getString_query().substring(0, 20);
+                strTitle += "...";
+            }
+        }
+
+        if (strTitle.length() > 0) {
+            getActionBar().setTitle(strTitle);
+        }
+
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,

@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:text="profesional"
     android:gravity="center"
-    android:background="@drawable/rounded_corner"
+    android:background="@drawable/rounded_corner_other_field"
     android:padding="3dp" />

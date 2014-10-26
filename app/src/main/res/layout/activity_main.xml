@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Version"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="450dp" />
 </RelativeLayout>
 
