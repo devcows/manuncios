@@ -2,10 +2,9 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
-public abstract class DrawerActivity extends ActionBarActivity {
+public abstract class DrawerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
