@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.devcows.manuncios.models.Favourite;
 import com.devcows.manuncios.models.Offer;
 import com.devcows.manuncios.models.OfferOtherField;
 import com.devcows.manuncios.other_controls.FullScreenImageActivity;
@@ -131,12 +132,48 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         return true;
     }
 
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MyFavourites myFavourites = MyFavourites.getInstance();
+
+        if (myFavourites.containsFavourite(offer)) {
+            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
+        }else{
+            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.favourite_offer:
+                Favourite fa = new Favourite(offer);
+                MyFavourites myFavourites = MyFavourites.getInstance();
+
+                if (myFavourites.containsFavourite(offer)) {
+                    myFavourites.delFavourite(fa);
+                    item.setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
+
+                }else{
+                    myFavourites.addFavourite(fa);
+                    item.setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
+                }
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

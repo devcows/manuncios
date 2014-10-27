@@ -3,6 +3,7 @@ package com.devcows.manuncios;
 import android.content.Context;
 
 import com.devcows.manuncios.models.Favourite;
+import com.devcows.manuncios.models.Offer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,6 +93,16 @@ public class MyFavourites {
         }
 
         dumpToFile();
+    }
+
+    public boolean containsFavourite(Offer offer){
+        boolean bok = false;
+
+        if (favourites != null && favourites.containsKey(offer.getId())){
+            bok = true;
+        }
+
+        return bok;
     }
 
 }

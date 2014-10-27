@@ -1,2 +1,10 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.devcows.manuncios.OfferActivity"></menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".OfferActivity">
+
+    <item
+        android:id="@+id/favourite_offer"
+        android:title="Favourite"
+        android:icon="@android:drawable/star_big_off"
+        android:showAsAction="always" />
+</menu>
