@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.devcows.manuncios.models.Offer;
 import com.devcows.manuncios.other_controls.EndlessScrollListener;
 
 import java.util.ArrayList;
@@ -46,19 +47,19 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
         }
 
         String strTitle = "";
-        if(searchQuery.getCategory() != null){
+        if (searchQuery.getCategory() != null) {
             strTitle = searchQuery.getCategory().getName();
 
-            if(searchQuery.getCategory().getName().length() > 20){
+            if (searchQuery.getCategory().getName().length() > 20) {
                 strTitle = searchQuery.getCategory().getName().substring(0, 20);
                 strTitle += "...";
             }
         }
 
-        if(searchQuery.getString_query() != null && searchQuery.getString_query().length() > 0){
+        if (searchQuery.getString_query() != null && searchQuery.getString_query().length() > 0) {
             strTitle = searchQuery.getString_query();
 
-            if(searchQuery.getString_query().length() > 20){
+            if (searchQuery.getString_query().length() > 20) {
                 strTitle = searchQuery.getString_query().substring(0, 20);
                 strTitle += "...";
             }

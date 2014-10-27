@@ -1,5 +1,7 @@
 package com.devcows.manuncios;
 
+import com.devcows.manuncios.models.Category;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

@@ -2,6 +2,8 @@ package com.devcows.manuncios;
 
 import android.os.AsyncTask;
 
+import com.devcows.manuncios.models.Offer;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,7 +23,7 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
     }
 
 
-    private List<String> getImages(String idOffer){
+    private List<String> getImages(String idOffer) {
         ApiMilAnuncios apiMilAnuncios = ApiMilAnuncios.getInstance();
         String[] imgServers = apiMilAnuncios.getIMG_SERVERS();
 
@@ -70,7 +72,7 @@ public class OfferGetTask extends AsyncTask<OfferTaskListener, Void, Offer> {
 
         List<String> images = new ArrayList<String>();
         String idOffer = offer.getId();
-        if(idOffer != null && !idOffer.isEmpty()){
+        if (idOffer != null && !idOffer.isEmpty()) {
             images = getImages(idOffer);
         }
 

@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
+import com.devcows.manuncios.models.Category;
+
 
 public class CategoriesActivity extends Activity {
 

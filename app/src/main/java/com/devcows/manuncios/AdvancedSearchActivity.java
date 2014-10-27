@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.devcows.manuncios.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;

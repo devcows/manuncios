@@ -2,6 +2,9 @@ package com.devcows.manuncios;
 
 import android.os.AsyncTask;
 
+import com.devcows.manuncios.models.Offer;
+import com.devcows.manuncios.models.OfferOtherField;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
