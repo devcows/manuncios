@@ -125,12 +125,6 @@ public class OfferActivity extends DrawerActivity implements OfferTaskListener {
     }
 
     @Override
-    public int getLayoutResourceId() {
-        return R.layout.activity_offer;
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_offer, menu);

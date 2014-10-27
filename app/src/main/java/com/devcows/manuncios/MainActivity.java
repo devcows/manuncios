@@ -50,7 +50,8 @@ public class MainActivity extends Activity implements MainTaskListener {
 
     @Override
     public void onMainGetResult() {
-        Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
+        //Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
+        Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
         startActivity(intent);
 
         finish();

@@ -96,12 +96,6 @@ public class SearchOffersActivity extends DrawerActivity implements SearchOffers
         offerTask.execute(this);
     }
 
-    @Override
-    public int getLayoutResourceId() {
-        return R.layout.activity_search_offers;
-    }
-
-
     private void customLoadMoreOffers(int page) {
         SearchQuery searchQuery = SearchQuery.getInstance();
         searchQuery.setPage_number(page);
