@@ -39,12 +39,6 @@ public class ContactActivity extends DrawerActivity {
     }
 
     @Override
-    public int getLayoutResourceId() {
-        return R.layout.activity_contact;
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_contact, menu);
