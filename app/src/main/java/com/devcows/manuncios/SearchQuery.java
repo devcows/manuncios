@@ -1,5 +1,7 @@
 package com.devcows.manuncios;
 
+import com.devcows.manuncios.models.Category;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -51,7 +53,7 @@ public class SearchQuery implements Serializable {
         setDefaultsValues();
     }
 
-    public void setDefaultsValues(){
+    public void setDefaultsValues() {
         //default values
 
         this.category = null;

@@ -19,10 +19,10 @@ public class MainActivity extends Activity implements MainTaskListener {
         String version = "";
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            if(pInfo.versionName != null && !pInfo.versionName.isEmpty()){
+            if (pInfo.versionName != null && !pInfo.versionName.isEmpty()) {
                 version = "Version: " + pInfo.versionName;
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 

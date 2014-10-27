@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
+import com.devcows.manuncios.models.Offer;
+import com.devcows.manuncios.models.OfferOtherField;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -91,7 +92,7 @@ public class SearchOffersListAdapter extends BaseAdapter {
             txtView.setText(other.getText());
 
             if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                GradientDrawable bgShape = (GradientDrawable)txtView.getBackground();
+                GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
                 bgShape.setColor(Color.parseColor(other.getBoxColor()));
             }
 

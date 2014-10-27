@@ -37,6 +37,8 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
         ApiMilAnuncios.getInstance();
         SearchQuery.getInstance();
 
+        MyFavourites.setContext(context);
+        MyFavourites.getInstance();
         return null;
     }
 

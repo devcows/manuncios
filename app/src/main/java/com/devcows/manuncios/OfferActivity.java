@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +20,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-
+import com.devcows.manuncios.models.Offer;
+import com.devcows.manuncios.models.OfferOtherField;
 import com.devcows.manuncios.other_controls.FullScreenImageActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -74,7 +74,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
             txtView.setText(other.getText());
 
             if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                GradientDrawable bgShape = (GradientDrawable)txtView.getBackground();
+                GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
                 bgShape.setColor(Color.parseColor(other.getBoxColor()));
             }
 

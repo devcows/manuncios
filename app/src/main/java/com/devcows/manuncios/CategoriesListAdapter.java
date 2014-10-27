@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.devcows.manuncios.models.Category;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

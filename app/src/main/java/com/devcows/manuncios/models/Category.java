@@ -1,4 +1,4 @@
-package com.devcows.manuncios;
+package com.devcows.manuncios.models;
 
 import java.io.Serializable;
 
