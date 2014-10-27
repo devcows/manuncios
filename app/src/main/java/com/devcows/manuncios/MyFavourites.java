@@ -95,10 +95,10 @@ public class MyFavourites {
         dumpToFile();
     }
 
-    public boolean containsFavourite(Offer offer){
+    public boolean containsFavourite(Offer offer) {
         boolean bok = false;
 
-        if (favourites != null && favourites.containsKey(offer.getId())){
+        if (favourites != null && favourites.containsKey(offer.getId())) {
             bok = true;
         }
 

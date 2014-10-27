@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,7 @@ import android.widget.SearchView;
 import com.devcows.manuncios.models.Category;
 
 
-public class CategoriesActivity extends Activity {
+public class CategoriesActivity extends DrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +58,11 @@ public class CategoriesActivity extends Activity {
         Utils.loadCss(assetManager, "web_style.css");
 
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public int getLayoutResourceId() {
+        return R.layout.activity_categories;
     }
 
     @Override
