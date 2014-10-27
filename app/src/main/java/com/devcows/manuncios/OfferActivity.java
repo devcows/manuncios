@@ -27,7 +27,7 @@ import com.devcows.manuncios.other_controls.FullScreenImageActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-public class OfferActivity extends Activity implements OfferTaskListener {
+public class OfferActivity extends DrawerActivity implements OfferTaskListener {
     private ProgressBar progressBar;
     private Offer offer;
 
@@ -124,6 +124,11 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         }
     }
 
+    @Override
+    public int getLayoutResourceId() {
+        return R.layout.activity_offer;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,13 +145,12 @@ public class OfferActivity extends Activity implements OfferTaskListener {
 
         if (myFavourites.containsFavourite(offer)) {
             menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
-        }else{
+        } else {
             menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
         }
 
         return super.onPrepareOptionsMenu(menu);
     }
-
 
 
     @Override
@@ -165,7 +169,7 @@ public class OfferActivity extends Activity implements OfferTaskListener {
                     myFavourites.delFavourite(fa);
                     item.setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
 
-                }else{
+                } else {
                     myFavourites.addFavourite(fa);
                     item.setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
                 }

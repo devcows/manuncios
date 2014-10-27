@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-public class ContactActivity extends Activity {
+public class ContactActivity extends DrawerActivity {
 
     //web view client implementation
     private class CustomWebViewClient extends WebViewClient {
@@ -37,6 +36,11 @@ public class ContactActivity extends Activity {
             myWebView.loadUrl(contact_url);
             myWebView.setWebViewClient(new CustomWebViewClient());
         }
+    }
+
+    @Override
+    public int getLayoutResourceId() {
+        return R.layout.activity_contact;
     }
 
 

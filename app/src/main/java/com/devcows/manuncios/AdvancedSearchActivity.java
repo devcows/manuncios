@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdvancedSearchActivity extends Activity {
+public class AdvancedSearchActivity extends DrawerActivity {
     private ProgressBar progressBar;
 
     @Override
@@ -166,6 +165,10 @@ public class AdvancedSearchActivity extends Activity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public int getLayoutResourceId() {
+        return R.layout.activity_advanced_search;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

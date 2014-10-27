@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+public class SearchOffersActivity extends DrawerActivity implements SearchOffersTaskListener {
     static final int CLICK_SEARCH_ADVANCED = 1;
 
     private SearchOffersListAdapter adapter;
@@ -95,6 +94,11 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
 
         SearchOffersGetTask offerTask = new SearchOffersGetTask();
         offerTask.execute(this);
+    }
+
+    @Override
+    public int getLayoutResourceId() {
+        return R.layout.activity_search_offers;
     }
 
 
