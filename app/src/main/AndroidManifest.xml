@@ -53,8 +53,7 @@
 
         <activity
             android:name=".CategoriesActivity"
-            android:label="@string/title_activity_categories"
-            android:theme="@style/Theme.AppCompat">
+            android:label="@string/title_activity_categories">
 
             <meta-data
                 android:name="android.app.default_searchable"
