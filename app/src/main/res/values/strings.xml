@@ -19,8 +19,8 @@
 
     <string name="title_activity_categories">Categorías</string>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
+    <string-array name="drawer_array">
+        <item>Inicio</item>
         <item>Venus</item>
         <item>Earth</item>
         <item>Mars</item>
@@ -29,6 +29,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>

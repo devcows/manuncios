@@ -49,20 +49,16 @@
 
         <activity
             android:name=".DrawerActivity"
-            android:label="Drawer" />
-
-        <activity
-            android:name=".other_controls.FullScreenImageActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar" />
-
-        <activity
-            android:name=".CategoriesActivity"
-            android:label="@string/title_activity_categories">
+            android:label="Drawer">
 
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchOffersActivity" />
         </activity>
+
+        <activity
+            android:name=".other_controls.FullScreenImageActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
     </application>
 
 </manifest>
