@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +31,9 @@ public class DrawerActivity extends Activity {
 
     public final static int DRAWER_START_POSITION = 0;
     public final static int DRAWER_FAVOURITE_POSITION = 1;
+
+    public final static int DRAWER_RATE_POSITION = 2;
+    public final static int DRAWER_SHARE_POSITION = 3;
 
     private int currentPosition;
 
@@ -134,34 +139,67 @@ public class DrawerActivity extends Activity {
         }
     }
 
-    private void selectItem(int position) {
-        // update the main content by replacing fragments
+    private void showFragment(Fragment fragment, int position) {
+        if (fragment != null) {
+            Bundle args = new Bundle();
+            args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+            fragment.setArguments(args);
 
-        Fragment fragment;
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            setTitle(mPlanetTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+    private void selectItem(int position) {
+        mDrawerLayout.closeDrawers();
+
         switch (position) {
             case DRAWER_START_POSITION:
-                fragment = new CategoriesFragment();
+                showFragment(new CategoriesFragment(), position);
                 break;
             case DRAWER_FAVOURITE_POSITION:
-                fragment = new FavouriteFragment();
+                showFragment(new FavouriteFragment(), position);
+                break;
+            case DRAWER_RATE_POSITION:
+                rateApp();
+                break;
+            case DRAWER_SHARE_POSITION:
+                shareApp();
                 break;
             default:
-                fragment = new PlanetFragment();
+                showFragment(new PlanetFragment(), position);
                 break;
         }
-
-        Bundle args = new Bundle();
-        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+    private void rateApp() {
+        Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + this.getPackageName())));
+        }
+    }
+
+    private void shareApp() {
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "Macmillan Dictionary app");
+            String sAux = "Let me recommend you this application\n\nhttps://play.google.com/store/apps/details?id=%s\n";
+            sAux = String.format(sAux, this.getPackageName());
+            i.putExtra(Intent.EXTRA_TEXT, sAux);
+            startActivity(Intent.createChooser(i, "Choose one"));
+        } catch (Exception e) {
+        }
+    }
+
 
     @Override
     public void setTitle(CharSequence title) {

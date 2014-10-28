@@ -23,6 +23,8 @@
     <string-array name="drawer_array">
         <item>Inicio</item>
         <item>Favoritos</item>
+        <item>Vota app</item>
+        <item>Comparte la app</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>

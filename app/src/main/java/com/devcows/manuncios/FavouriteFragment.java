@@ -16,23 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteFragment extends Fragment {
-    private final MyFavourites myFavourites = MyFavourites.getInstance();
-
     private SearchOffersListAdapter mAdapter;
 
     public FavouriteFragment() {
+    }
+
+    private List<Offer> getFavouritesOffers(){
+        MyFavourites myFavourites = MyFavourites.getInstance();
+        List<Offer> offers = new ArrayList<Offer>();
+        for(Favourite fa: myFavourites.getFavourites().values()) {
+            offers.add(fa.getOffer());
+        }
+
+        return offers;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<Offer> offers = new ArrayList<Offer>();
-        for(Favourite fa: myFavourites.getFavourites().values()) {
-            offers.add(fa.getOffer());
-        }
-
-        mAdapter = new SearchOffersListAdapter(getActivity(), offers);
+        mAdapter = new SearchOffersListAdapter(getActivity(), getFavouritesOffers());
     }
 
     @Override
@@ -63,4 +66,13 @@ public class FavouriteFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mAdapter.setObjects(getFavouritesOffers());
+
+        // fire the event
+        mAdapter.notifyDataSetChanged();
+    }
 }
