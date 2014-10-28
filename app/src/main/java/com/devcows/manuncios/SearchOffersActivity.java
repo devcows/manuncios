@@ -24,6 +24,13 @@ public class SearchOffersActivity extends DrawerActivity {
     static final int CLICK_SEARCH_ADVANCED = 1;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        showFragment(new SearchOffersFragment(), -1);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_search_offers, menu);
