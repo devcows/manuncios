@@ -9,6 +9,7 @@
     <string name="search_hint">Búsqueda por palabra</string>
     <string name="title_activity_advanced_search">Buscador avanzado</string>
     <string name="title_activity_contact">Contacto</string>
+    <string name="title_activity_drawer">Manuncios</string>
 
     <string-array name="array_order_by">
         <item>Más nuevos</item>
@@ -22,12 +23,6 @@
     <string-array name="drawer_array">
         <item>Inicio</item>
         <item>Favoritos</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
