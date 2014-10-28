@@ -24,7 +24,7 @@ public class CategoriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_categories, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
         final Context context = rootView.getContext();
 
         ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);

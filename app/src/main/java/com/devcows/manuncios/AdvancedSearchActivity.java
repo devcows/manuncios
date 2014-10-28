@@ -1,5 +1,6 @@
 package com.devcows.manuncios;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdvancedSearchActivity extends DrawerActivity {
+public class AdvancedSearchActivity extends Activity {
     private ProgressBar progressBar;
 
     @Override
