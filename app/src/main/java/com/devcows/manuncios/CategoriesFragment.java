@@ -3,7 +3,6 @@ package com.devcows.manuncios;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,17 @@ import com.devcows.manuncios.models.Category;
 
 
 public class CategoriesFragment extends Fragment {
+    private final ApiMilAnuncios mApi = ApiMilAnuncios.getInstance();
+    private CategoriesListAdapter mAdapter;
 
     public CategoriesFragment() {
-        // Empty constructor required for fragment subclasses
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mAdapter = new CategoriesListAdapter(getActivity(), mApi.getCategories());
     }
 
     @Override
@@ -32,13 +39,8 @@ public class CategoriesFragment extends Fragment {
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
-
-        ApiMilAnuncios api = ApiMilAnuncios.getInstance();
-
-        CategoriesListAdapter adapter = new CategoriesListAdapter(context, api.getCategories());
         ListView listview = (ListView) rootView.findViewById(R.id.category_lst);
-        listview.setAdapter(adapter);
-
+        listview.setAdapter(mAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -54,10 +56,6 @@ public class CategoriesFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        AssetManager assetManager = context.getAssets();
-        //file:///android_asset/web_style.css
-        Utils.loadCss(assetManager, "web_style.css");
 
         progressBar.setVisibility(View.INVISIBLE);
 

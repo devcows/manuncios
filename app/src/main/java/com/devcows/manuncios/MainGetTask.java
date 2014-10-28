@@ -1,6 +1,7 @@
 package com.devcows.manuncios;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -36,6 +37,10 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
 
         ApiMilAnuncios.getInstance();
         SearchQuery.getInstance();
+
+        AssetManager assetManager = context.getAssets();
+        //file:///android_asset/web_style.css
+        Utils.loadCss(assetManager, "web_style.css");
 
         MyFavourites.setContext(context);
         MyFavourites.getInstance();

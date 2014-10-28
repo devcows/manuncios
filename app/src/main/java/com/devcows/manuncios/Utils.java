@@ -7,7 +7,6 @@ import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +14,7 @@ import java.util.regex.Pattern;
 public class Utils {
     private static String contentCss = "";
     public static final String SELECTED_OFFER = "selected_offer";
+    public static final String DRAWER_POSITION = "drawer_position";
 
     public static Document getDocumentFromUrl(String url) {
         return getDocumentFromUrl(url, 3);

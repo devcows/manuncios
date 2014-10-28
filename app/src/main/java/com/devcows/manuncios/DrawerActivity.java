@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -26,7 +27,10 @@ import java.util.Locale;
 
 public class DrawerActivity extends Activity {
 
-    private final static int DRAWER_START_POSITION = 0;
+    public final static int DRAWER_START_POSITION = 0;
+    public final static int DRAWER_FAVOURITE_POSITION = 1;
+
+    private int currentPosition;
 
 
     private DrawerLayout mDrawerLayout;
@@ -50,8 +54,7 @@ public class DrawerActivity extends Activity {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -80,16 +83,16 @@ public class DrawerActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            currentPosition = DRAWER_START_POSITION;
+            Intent intent = getIntent();
+
+            if (intent.hasExtra(Utils.DRAWER_POSITION)) {
+                currentPosition = (Integer) intent.getSerializableExtra(Utils.DRAWER_POSITION);
+            }
+
+            selectItem(currentPosition);
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.drawer_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,6 +142,9 @@ public class DrawerActivity extends Activity {
         switch (position) {
             case DRAWER_START_POSITION:
                 fragment = new CategoriesFragment();
+                break;
+            case DRAWER_FAVOURITE_POSITION:
+                fragment = new FavouriteFragment();
                 break;
             default:
                 fragment = new PlanetFragment();
