@@ -32,7 +32,6 @@ public class DrawerActivity extends Activity {
 
     private int currentPosition;
 
-
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -97,12 +96,12 @@ public class DrawerActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.drawer_main, menu);
+        getMenuInflater().inflate(R.menu.activity_drawer, menu);
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        SearchView SearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        SearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }

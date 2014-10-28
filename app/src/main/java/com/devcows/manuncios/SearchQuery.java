@@ -145,7 +145,7 @@ public class SearchQuery implements Serializable {
         }
 
         if (string_query != null && !string_query.isEmpty()) {
-            urlQuery += string_query + ".htm";
+            urlQuery += string_query.replace(" ", "-") + ".htm";
         }
 
         List<String> parameters = new ArrayList<String>();
