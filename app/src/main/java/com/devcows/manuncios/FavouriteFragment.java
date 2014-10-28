@@ -1,30 +1,25 @@
 package com.devcows.manuncios;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.devcows.manuncios.dummy.DummyContent;
+import com.devcows.manuncios.models.Favourite;
+import com.devcows.manuncios.models.Offer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FavouriteFragment extends Fragment {
     private final MyFavourites myFavourites = MyFavourites.getInstance();
 
+    private SearchOffersListAdapter mAdapter;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public FavouriteFragment() {
     }
 
@@ -32,20 +27,38 @@ public class FavouriteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        List<Offer> offers = new ArrayList<Offer>();
+        for(Favourite fa: myFavourites.getFavourites().values()) {
+            offers.add(fa.getOffer());
+        }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new SearchOffersListAdapter(getActivity(), offers);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favourite, container, false);
+        View view = inflater.inflate(R.layout.fragment_favourite_list, container, false);
 
         // Set the adapter
-        ListView mListView = (ListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(mAdapter);
+        ListView listview = (ListView) view.findViewById(R.id.offer_lst);
+        listview.setAdapter(mAdapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final Offer item = (Offer) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(getActivity(), OfferActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(Utils.SELECTED_OFFER, item);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
