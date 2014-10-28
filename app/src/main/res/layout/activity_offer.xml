@@ -4,8 +4,6 @@
     android:layout_height="fill_parent"
     android:background="#EFFFEF">
 
-    <include layout="@layout/layout_navigation_drawer" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
