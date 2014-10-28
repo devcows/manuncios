@@ -1,12 +1,14 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -18,99 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchOffersActivity extends Activity implements SearchOffersTaskListener {
+public class SearchOffersActivity extends DrawerActivity {
     static final int CLICK_SEARCH_ADVANCED = 1;
-
-    private SearchOffersListAdapter adapter;
-    private ProgressBar progressBar;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_offers);
-
-        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-
-        // Set description into TextView
-        final ListView listview = (ListView) findViewById(R.id.offer_lst);
-
-        adapter = new SearchOffersListAdapter(this, new ArrayList<Offer>());
-        listview.setAdapter(adapter);
-
-        SearchQuery searchQuery = SearchQuery.getInstance();
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
-        }
-
-        String strTitle = "";
-        if (searchQuery.getCategory() != null) {
-            strTitle = searchQuery.getCategory().getName();
-
-            if (searchQuery.getCategory().getName().length() > 20) {
-                strTitle = searchQuery.getCategory().getName().substring(0, 20);
-                strTitle += "...";
-            }
-        }
-
-        if (searchQuery.getString_query() != null && searchQuery.getString_query().length() > 0) {
-            strTitle = searchQuery.getString_query();
-
-            if (searchQuery.getString_query().length() > 20) {
-                strTitle = searchQuery.getString_query().substring(0, 20);
-                strTitle += "...";
-            }
-        }
-
-        if (strTitle.length() > 0) {
-            getActionBar().setTitle(strTitle);
-        }
-
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final Offer item = (Offer) parent.getItemAtPosition(position);
-
-                Intent intent = new Intent(getBaseContext(), OfferActivity.class);
-
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable(Utils.SELECTED_OFFER, item);
-                intent.putExtras(mBundle);
-
-                startActivity(intent);
-            }
-        });
-
-        listview.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                customLoadMoreOffers(page);
-            }
-        });
-
-        SearchOffersGetTask offerTask = new SearchOffersGetTask();
-        offerTask.execute(this);
-    }
-
-    private void customLoadMoreOffers(int page) {
-        SearchQuery searchQuery = SearchQuery.getInstance();
-        searchQuery.setPage_number(page);
-
-        SearchOffersGetTask offerTask = new SearchOffersGetTask();
-        offerTask.execute(this);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_search_offers, menu);
-
         return true;
     }
 
@@ -181,15 +97,6 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
     }
 
     @Override
-    public void onOffersGetResult(List<Offer> offers) {
-        progressBar.setVisibility(View.INVISIBLE);
-        adapter.addAllObjects(offers);
-
-        // fire the event
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == CLICK_SEARCH_ADVANCED) {
@@ -198,5 +105,105 @@ public class SearchOffersActivity extends Activity implements SearchOffersTaskLi
                 finish();
             }
         }
+    }
+
+
+    public static class SearchOffersFragment extends Fragment implements SearchOffersTaskListener {
+        private SearchOffersListAdapter adapter;
+        private ProgressBar progressBar;
+
+        public SearchOffersFragment() {
+            SearchOffersGetTask offerTask = new SearchOffersGetTask();
+            offerTask.execute(this);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.activity_search_offers, container, false);
+
+            progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
+            progressBar.setIndeterminate(true);
+            progressBar.setVisibility(View.VISIBLE);
+
+            // Set description into TextView
+            final ListView listview = (ListView) rootView.findViewById(R.id.offer_lst);
+
+            adapter = new SearchOffersListAdapter(getActivity(), new ArrayList<Offer>());
+            listview.setAdapter(adapter);
+
+            SearchQuery searchQuery = SearchQuery.getInstance();
+            Intent intent = getActivity().getIntent();
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
+            }
+
+            String strTitle = "";
+            if (searchQuery.getCategory() != null) {
+                strTitle = searchQuery.getCategory().getName();
+
+                if (searchQuery.getCategory().getName().length() > 20) {
+                    strTitle = searchQuery.getCategory().getName().substring(0, 20);
+                    strTitle += "...";
+                }
+            }
+
+            if (searchQuery.getString_query() != null && searchQuery.getString_query().length() > 0) {
+                strTitle = searchQuery.getString_query();
+
+                if (searchQuery.getString_query().length() > 20) {
+                    strTitle = searchQuery.getString_query().substring(0, 20);
+                    strTitle += "...";
+                }
+            }
+
+            if (strTitle.length() > 0) {
+                getActivity().getActionBar().setTitle(strTitle);
+            }
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+                    final Offer item = (Offer) parent.getItemAtPosition(position);
+
+                    Intent intent = new Intent(getActivity(), OfferActivity.class);
+
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(Utils.SELECTED_OFFER, item);
+                    intent.putExtras(mBundle);
+
+                    startActivity(intent);
+                }
+            });
+
+            listview.setOnScrollListener(new EndlessScrollListener() {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount) {
+                    customLoadMoreOffers(page);
+                }
+            });
+
+            return rootView;
+        }
+
+        private void customLoadMoreOffers(int page) {
+            SearchQuery searchQuery = SearchQuery.getInstance();
+            searchQuery.setPage_number(page);
+
+            SearchOffersGetTask offerTask = new SearchOffersGetTask();
+            offerTask.execute(this);
+        }
+
+
+        @Override
+        public void onOffersGetResult(List<Offer> offers) {
+            progressBar.setVisibility(View.INVISIBLE);
+            adapter.addAllObjects(offers);
+
+            // fire the event
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }
