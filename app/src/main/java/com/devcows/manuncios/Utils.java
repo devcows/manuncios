@@ -29,7 +29,7 @@ public class Utils {
                     .referrer("http://www.google.com")
                     .timeout(10 * 1000) //10 seconds
                     .get();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

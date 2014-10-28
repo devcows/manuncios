@@ -1,5 +1,6 @@
 package com.devcows.manuncios;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-public class ContactActivity extends DrawerActivity {
+public class ContactActivity extends Activity {
 
     //web view client implementation
     private class CustomWebViewClient extends WebViewClient {

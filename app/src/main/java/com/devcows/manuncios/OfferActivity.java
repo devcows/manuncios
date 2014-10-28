@@ -27,7 +27,7 @@ import com.devcows.manuncios.other_controls.FullScreenImageActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-public class OfferActivity extends DrawerActivity implements OfferTaskListener {
+public class OfferActivity extends Activity implements OfferTaskListener {
     private ProgressBar progressBar;
     private Offer offer;
 
