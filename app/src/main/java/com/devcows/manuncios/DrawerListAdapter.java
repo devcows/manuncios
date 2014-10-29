@@ -73,12 +73,23 @@ public class DrawerListAdapter extends BaseAdapter {
             }
 
             String rowItem = (String) getItem(i);
-
             holder.txtTitle.setText(rowItem);
 
             switch (i) {
+                case DrawerActivity.DRAWER_START_POSITION:
+                    holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.ic_input_get));
+                    break;
+
                 case DrawerActivity.DRAWER_FAVOURITE_POSITION:
                     holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.btn_star));
+                    break;
+
+                case DrawerActivity.DRAWER_RATE_POSITION:
+                    holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_edit_holo_light));
+                    break;
+
+                case DrawerActivity.DRAWER_SHARE_POSITION:
+                    holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_share_holo_light));
                     break;
 
                 default:
