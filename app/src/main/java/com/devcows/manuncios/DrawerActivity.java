@@ -85,6 +85,8 @@ public class DrawerActivity extends Activity {
                 currentPosition = (Integer) intent.getSerializableExtra(Utils.DRAWER_POSITION);
             }
 
+            mDrawerList.clearChoices();
+            mDrawerList.setItemChecked(currentPosition, true);
             //selectItem(currentPosition);
         }
     }
@@ -137,20 +139,19 @@ public class DrawerActivity extends Activity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+            if (currentPosition != position) {
+                selectItem(position);
+            }
         }
     }
 
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
-            currentPosition = position;
-
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
             if (position == DRAWER_FAVOURITE_POSITION) {
                 // update selected item and title, then close the drawer
-                mDrawerList.setItemChecked(position, true);
                 setTitle(mOptionsTitles[position]);
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
@@ -159,6 +160,7 @@ public class DrawerActivity extends Activity {
 
     private void selectItem(int position) {
         if (position == DRAWER_IMG_POSITION) {
+            mDrawerList.setItemChecked(position, false);
             return;
         }
 
@@ -166,24 +168,30 @@ public class DrawerActivity extends Activity {
 
         switch (position) {
             case DRAWER_START_POSITION:
+                currentPosition = position;
                 Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
                 startActivity(intent);
 
                 finish();
                 break;
             case DRAWER_FAVOURITE_POSITION:
+                currentPosition = position;
                 showFragment(new FavouriteFragment(), position);
                 break;
             case DRAWER_RATE_POSITION:
                 rateApp();
+                mDrawerList.clearChoices();
                 break;
             case DRAWER_SHARE_POSITION:
                 shareApp();
+                mDrawerList.clearChoices();
                 break;
             default:
                 //TODO what do?
                 break;
         }
+
+        mDrawerList.setItemChecked(currentPosition, true);
     }
 
     private void rateApp() {
