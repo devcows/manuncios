@@ -193,11 +193,11 @@ public class DrawerActivity extends Activity {
         try {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_SUBJECT, "Macmillan Dictionary app");
-            String sAux = "Let me recommend you this application\n\nhttps://play.google.com/store/apps/details?id=%s\n";
+            i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name) + " aplicación android");
+            String sAux = "Te recomiendo esta aplicación\nhttps://play.google.com/store/apps/details?id=%s\n";
             sAux = String.format(sAux, this.getPackageName());
             i.putExtra(Intent.EXTRA_TEXT, sAux);
-            startActivity(Intent.createChooser(i, "Choose one"));
+            startActivity(Intent.createChooser(i, "Elige uno"));
         } catch (Exception e) {
         }
     }
