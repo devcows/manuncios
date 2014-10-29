@@ -35,7 +35,7 @@ public class DrawerActivity extends Activity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mPlanetTitles;
+    private String[] mOptionsTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +43,14 @@ public class DrawerActivity extends Activity {
         setContentView(R.layout.activity_main_drawer);
 
         mTitle = mDrawerTitle = getTitle();
-        mPlanetTitles = getResources().getStringArray(R.array.drawer_array);
+        mOptionsTitles = getResources().getStringArray(R.array.drawer_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mOptionsTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -86,7 +86,7 @@ public class DrawerActivity extends Activity {
                 currentPosition = (Integer) intent.getSerializableExtra(Utils.DRAWER_POSITION);
             }
 
-            selectItem(currentPosition);
+            //selectItem(currentPosition);
         }
     }
 
@@ -149,10 +149,10 @@ public class DrawerActivity extends Activity {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            if (position > -1) {
+            if (position == DRAWER_FAVOURITE_POSITION) {
                 // update selected item and title, then close the drawer
                 mDrawerList.setItemChecked(position, true);
-                setTitle(mPlanetTitles[position]);
+                setTitle(mOptionsTitles[position]);
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         }
@@ -163,7 +163,10 @@ public class DrawerActivity extends Activity {
 
         switch (position) {
             case DRAWER_START_POSITION:
-                showFragment(new CategoriesActivity.CategoriesFragment(), position);
+                Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
+                startActivity(intent);
+
+                finish();
                 break;
             case DRAWER_FAVOURITE_POSITION:
                 showFragment(new FavouriteFragment(), position);
@@ -215,7 +218,11 @@ public class DrawerActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getActionBar().setTitle(title);
+    }
+
+    public void setDrawerTitle(CharSequence title){
+        mDrawerTitle = title;
     }
 
     /**
