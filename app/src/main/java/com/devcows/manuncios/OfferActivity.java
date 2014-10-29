@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devcows.manuncios.models.Favourite;
 import com.devcows.manuncios.models.Offer;
@@ -60,14 +61,18 @@ public class OfferActivity extends DrawerActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         MyFavourites myFavourites = MyFavourites.getInstance();
 
+        Toast toast;
         if (myFavourites.containsFavourite(offer)) {
-            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
+            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_on));
+            toast = Toast.makeText(this, "Anuncio añadido a la lista de favoritos.", Toast.LENGTH_SHORT);
         } else {
-            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
+            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_off));
+            toast = Toast.makeText(this, "Anuncio borrado de la lista de favoritos.", Toast.LENGTH_SHORT);
         }
+
+        toast.show();
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -148,7 +153,7 @@ public class OfferActivity extends DrawerActivity {
             for (int i = 0; i < offer.getOther().size(); i++) {
                 OfferOtherField other = offer.getOther().get(i);
 
-                View view = mInflater.inflate(R.layout.layout_other_list, null);
+                View view = mInflater.inflate(R.layout.layout_other_list_item, null);
                 TextView txtView = (TextView) view.findViewById(R.id.other_field);
                 txtView.setText(other.getText());
 
