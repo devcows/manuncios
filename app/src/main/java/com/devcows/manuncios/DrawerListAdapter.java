@@ -2,31 +2,37 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.devcows.manuncios.models.Category;
+import com.devcows.manuncios.models.Offer;
+import com.devcows.manuncios.models.OfferOtherField;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoriesListAdapter extends BaseAdapter {
+public class DrawerListAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Category> objects;
+    private List<String> objects;
 
-    public void setObjects(List<Category> objects) {
-        this.objects = objects;
-    }
-
-    public CategoriesListAdapter(Context context, List<Category> objects) {
+    public DrawerListAdapter(Context context, String[] objects) {
         this.context = context;
-        this.objects = objects;
+
+        this.objects = new ArrayList<String>();
+        for (int i = 0; i < objects.length; i++) {
+            this.objects.add(objects[i]);
+        }
     }
 
     @Override
@@ -56,21 +62,30 @@ public class CategoriesListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
-            view = mInflater.inflate(R.layout.layout_category_item, null);
+            view = mInflater.inflate(R.layout.layout_drawer_list_item, null);
             holder = new ViewHolder();
 
             holder.txtTitle = (TextView) view.findViewById(R.id.title);
             holder.imageView = (ImageView) view.findViewById(R.id.icon);
+
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        Category rowItem = (Category) getItem(i);
-        holder.txtTitle.setText(rowItem.getName());
+        String rowItem = (String) getItem(i);
 
-        ImageLoader imgLoader = ImageLoader.getInstance();
-        imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
+        holder.txtTitle.setText(rowItem);
+
+        switch (i) {
+            case DrawerActivity.DRAWER_FAVOURITE_POSITION:
+                holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.btn_star));
+                break;
+
+            default:
+                holder.imageView.setVisibility(View.GONE);
+                break;
+        }
 
         return view;
     }
