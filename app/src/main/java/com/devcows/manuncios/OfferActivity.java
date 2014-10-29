@@ -1,6 +1,7 @@
 package com.devcows.manuncios;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -11,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -27,101 +30,23 @@ import com.devcows.manuncios.other_controls.FullScreenImageActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-public class OfferActivity extends Activity implements OfferTaskListener {
-    private ProgressBar progressBar;
+public class OfferActivity extends DrawerActivity {
     private Offer offer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer);
-
-        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
         this.offer = (Offer) intent.getSerializableExtra(Utils.SELECTED_OFFER);
 
-        OfferGetTask offerGetTask = new OfferGetTask();
-        offerGetTask.setOffer(offer);
-        offerGetTask.execute(this);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Utils.SELECTED_OFFER, offer);
 
-        TextView txtFirstTitle = (TextView) findViewById(R.id.firstTitle);
-        txtFirstTitle.setText(offer.getFirstTitle());
-        TextView txtSecondTitle = (TextView) findViewById(R.id.secondTitle);
-        txtSecondTitle.setText(offer.getSecondTitle());
-        TextView txtDescription = (TextView) findViewById(R.id.description);
-        txtDescription.setText(offer.getDescription());
-        //not working ok.
-        //Linkify.addLinks(txtDescription, Linkify.PHONE_NUMBERS);
+        Fragment fragment = new OfferFragment();
+        fragment.setArguments(bundle);
 
-        TableLayout tl = (TableLayout) findViewById(R.id.othersList);
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TableRow tr1 = new TableRow(this);
-        tr1.setLayoutParams(layoutParams);
-
-        TableRow tr2 = new TableRow(this);
-        tr2.setLayoutParams(layoutParams);
-
-        LayoutInflater mInflater = (LayoutInflater)
-                getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-
-        for (int i = 0; i < offer.getOther().size(); i++) {
-            OfferOtherField other = offer.getOther().get(i);
-
-            View view = mInflater.inflate(R.layout.layout_other_list, null);
-            TextView txtView = (TextView) view.findViewById(R.id.other_field);
-            txtView.setText(other.getText());
-
-            if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
-                bgShape.setColor(Color.parseColor(other.getBoxColor()));
-            }
-
-            if (i <= 3) {
-                tr1.addView(txtView);
-            } else {
-                tr2.addView(txtView);
-            }
-        }
-
-        tl.addView(tr1, layoutParams);
-        if (offer.getOther().size() > 3) {
-            tl.addView(tr2, layoutParams);
-        }
-
-        Button btnLink = (Button) findViewById(R.id.goto_url);
-        btnLink.setText("Ir a la web");
-        btnLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri uriUrl = Uri.parse(offer.getUrl());
-                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                startActivity(launchBrowser);
-            }
-        });
-
-        btnLink = (Button) findViewById(R.id.contact);
-        btnLink.setText("Contactar");
-        btnLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ContactActivity.class);
-
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("contact_url", "http://www.milanuncios.com/datos-contacto/?id=" + offer.getId());
-                intent.putExtras(mBundle);
-
-                startActivity(intent);
-
-            }
-        });
-
-        if (offer.getSecondaryImages().isEmpty()) {
-            HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
-            hsv.setVisibility(View.GONE);
-        }
+        showFragment(fragment, -1);
     }
 
     @Override
@@ -174,42 +99,159 @@ public class OfferActivity extends Activity implements OfferTaskListener {
         }
     }
 
-    @Override
-    public void onOfferGetResult(Offer offer) {
-        progressBar.setVisibility(View.INVISIBLE);
+    public static class OfferFragment extends Fragment implements OfferTaskListener {
+        private ProgressBar progressBar;
+        private Offer offer;
+        private View rootView;
 
-        if (!offer.getSecondaryImages().isEmpty()) {
-            HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.hsv1);
-            hsv.setVisibility(View.VISIBLE);
+        public OfferFragment() {
         }
 
-        for (String imageUri : offer.getSecondaryImages()) {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            rootView = inflater.inflate(R.layout.activity_offer, container, false);
 
-            LinearLayout lLayout = (LinearLayout) findViewById(R.id.images_layout);
-            ImageView imgView = new ImageView(this);
+            progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
+            progressBar.setIndeterminate(true);
+            progressBar.setVisibility(View.VISIBLE);
 
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
-            imgView.setLayoutParams(layoutParams);
-            imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+            this.offer = (Offer) getArguments().getSerializable(Utils.SELECTED_OFFER);
 
-            final Offer selectedOffer = offer;
-            imgView.setOnClickListener(new View.OnClickListener() {
+            OfferGetTask offerGetTask = new OfferGetTask();
+            offerGetTask.setOffer(offer);
+            offerGetTask.execute(this);
+
+            TextView txtFirstTitle = (TextView) rootView.findViewById(R.id.firstTitle);
+            txtFirstTitle.setText(offer.getFirstTitle());
+            TextView txtSecondTitle = (TextView) rootView.findViewById(R.id.secondTitle);
+            txtSecondTitle.setText(offer.getSecondTitle());
+            TextView txtDescription = (TextView) rootView.findViewById(R.id.description);
+            txtDescription.setText(offer.getDescription());
+            //not working ok.
+            //Linkify.addLinks(txtDescription, Linkify.PHONE_NUMBERS);
+
+            TableLayout tl = (TableLayout) rootView.findViewById(R.id.othersList);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            TableRow tr1 = new TableRow(getActivity());
+            tr1.setLayoutParams(layoutParams);
+
+            TableRow tr2 = new TableRow(getActivity());
+            tr2.setLayoutParams(layoutParams);
+
+            LayoutInflater mInflater = (LayoutInflater)
+                    getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+            for (int i = 0; i < offer.getOther().size(); i++) {
+                OfferOtherField other = offer.getOther().get(i);
+
+                View view = mInflater.inflate(R.layout.layout_other_list, null);
+                TextView txtView = (TextView) view.findViewById(R.id.other_field);
+                txtView.setText(other.getText());
+
+                if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
+                    GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
+                    bgShape.setColor(Color.parseColor(other.getBoxColor()));
+                }
+
+                if (i <= 3) {
+                    tr1.addView(txtView);
+                } else {
+                    tr2.addView(txtView);
+                }
+            }
+
+            tl.addView(tr1, layoutParams);
+            if (offer.getOther().size() > 3) {
+                tl.addView(tr2, layoutParams);
+            }
+
+            Button btnLink = (Button) rootView.findViewById(R.id.goto_url);
+            btnLink.setText("Ir a la web");
+            btnLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getBaseContext(), FullScreenImageActivity.class);
-
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable("selected_offer", selectedOffer);
-                    intent.putExtras(mBundle);
-
-                    startActivity(intent);
+                    Uri uriUrl = Uri.parse(offer.getUrl());
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    startActivity(launchBrowser);
                 }
             });
 
-            ImageLoader imgLoader = ImageLoader.getInstance();
-            imgLoader.displayImage(imageUri, imgView);
+            btnLink = (Button) rootView.findViewById(R.id.contact);
+            btnLink.setText("Contactar");
+            btnLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), ContactActivity.class);
 
-            lLayout.addView(imgView);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("contact_url", "http://www.milanuncios.com/datos-contacto/?id=" + offer.getId());
+                    intent.putExtras(mBundle);
+
+                    startActivity(intent);
+
+                }
+            });
+
+            if (offer.getSecondaryImages().isEmpty()) {
+                HorizontalScrollView hsv = (HorizontalScrollView) rootView.findViewById(R.id.hsv1);
+                hsv.setVisibility(View.GONE);
+            }
+
+
+            return rootView;
+        }
+
+        //web view client implementation
+        private class CustomWebViewClient extends WebViewClient {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //do whatever you want with the url that is clicked inside the webview.
+                //for example tell the webview to load that url.
+                view.loadUrl(url);
+                //return true if this method handled the link event
+                //or false otherwise
+                return true;
+            }
+        }
+
+
+        @Override
+        public void onOfferGetResult(Offer offer) {
+            progressBar.setVisibility(View.INVISIBLE);
+
+            if (!offer.getSecondaryImages().isEmpty()) {
+                HorizontalScrollView hsv = (HorizontalScrollView) rootView.findViewById(R.id.hsv1);
+                hsv.setVisibility(View.VISIBLE);
+            }
+
+            for (String imageUri : offer.getSecondaryImages()) {
+
+                LinearLayout lLayout = (LinearLayout) rootView.findViewById(R.id.images_layout);
+                ImageView imgView = new ImageView(getActivity());
+
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
+                imgView.setLayoutParams(layoutParams);
+                imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                final Offer selectedOffer = offer;
+                imgView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), FullScreenImageActivity.class);
+
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable("selected_offer", selectedOffer);
+                        intent.putExtras(mBundle);
+
+                        startActivity(intent);
+                    }
+                });
+
+                ImageLoader imgLoader = ImageLoader.getInstance();
+                imgLoader.displayImage(imageUri, imgView);
+
+                lLayout.addView(imgView);
+            }
         }
     }
 }
