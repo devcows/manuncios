@@ -141,9 +141,9 @@ public class DrawerActivity extends Activity {
 
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
-            Bundle args = new Bundle();
-            args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-            fragment.setArguments(args);
+//            Bundle args = new Bundle();
+//            args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+//            fragment.setArguments(args);
 
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -174,18 +174,24 @@ public class DrawerActivity extends Activity {
                 shareApp();
                 break;
             default:
-                showFragment(new PlanetFragment(), position);
+                //TODO what do?
                 break;
         }
     }
 
     private void rateApp() {
-        Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+        String sAux = "market://details?id=%s";
+        sAux = String.format(sAux, this.getPackageName());
+
+        Uri uri = Uri.parse(sAux);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + this.getPackageName())));
+            sAux = "http://play.google.com/store/apps/details?id=%s&hl=es";
+            sAux = String.format(sAux, this.getPackageName());
+
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sAux)));
         }
     }
 
@@ -194,11 +200,13 @@ public class DrawerActivity extends Activity {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name) + " aplicación android");
-            String sAux = "Te recomiendo esta aplicación\nhttps://play.google.com/store/apps/details?id=%s\n";
+
+            String sAux = "Te recomiendo esta aplicación\nhttps://play.google.com/store/apps/details?id=%s&hl=es\n";
             sAux = String.format(sAux, this.getPackageName());
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             startActivity(Intent.createChooser(i, "Elige uno"));
         } catch (Exception e) {
+            //TODO what do?
         }
     }
 
@@ -226,30 +234,5 @@ public class DrawerActivity extends Activity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    public static class PlanetFragment extends Fragment {
-        public static final String ARG_PLANET_NUMBER = "planet_number";
-
-        public PlanetFragment() {
-            // Empty constructor required for fragment subclasses
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-            String planet = getResources().getStringArray(R.array.drawer_array)[i];
-
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-                    "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
-            return rootView;
-        }
     }
 }
