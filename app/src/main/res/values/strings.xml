@@ -21,6 +21,7 @@
     <string name="title_activity_categories">Categorías</string>
 
     <string-array name="drawer_array">
+        <item>Imagen-logo</item>
         <item>Inicio</item>
         <item>Favoritos</item>
         <item>Vota app</item>

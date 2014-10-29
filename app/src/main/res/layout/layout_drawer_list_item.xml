@@ -1,9 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/general_background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="?android:attr/activatedBackgroundIndicator">
 
     <ImageView
         android:id="@+id/icon"
@@ -23,6 +23,5 @@
         android:textColor="#000"
         android:text="item in list"
         android:layout_toRightOf="@+id/icon"
-        android:background="?android:attr/activatedBackgroundIndicator"
         android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 </RelativeLayout>
