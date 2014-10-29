@@ -2,6 +2,7 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -103,6 +104,7 @@ public class OfferActivity extends DrawerActivity {
         private ProgressBar progressBar;
         private Offer offer;
         private View rootView;
+        private Context context;
 
         public OfferFragment() {
         }
@@ -110,7 +112,8 @@ public class OfferActivity extends DrawerActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            rootView = inflater.inflate(R.layout.activity_offer, container, false);
+            this.rootView = inflater.inflate(R.layout.activity_offer, container, false);
+            this.context = getActivity();
 
             progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
@@ -133,14 +136,14 @@ public class OfferActivity extends DrawerActivity {
 
             TableLayout tl = (TableLayout) rootView.findViewById(R.id.othersList);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            TableRow tr1 = new TableRow(getActivity());
+            TableRow tr1 = new TableRow(context);
             tr1.setLayoutParams(layoutParams);
 
-            TableRow tr2 = new TableRow(getActivity());
+            TableRow tr2 = new TableRow(context);
             tr2.setLayoutParams(layoutParams);
 
             LayoutInflater mInflater = (LayoutInflater)
-                    getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
             for (int i = 0; i < offer.getOther().size(); i++) {
                 OfferOtherField other = offer.getOther().get(i);
@@ -182,7 +185,7 @@ public class OfferActivity extends DrawerActivity {
             btnLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), ContactActivity.class);
+                    Intent intent = new Intent(context, ContactActivity.class);
 
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable("contact_url", "http://www.milanuncios.com/datos-contacto/?id=" + offer.getId());
@@ -227,7 +230,7 @@ public class OfferActivity extends DrawerActivity {
             for (String imageUri : offer.getSecondaryImages()) {
 
                 LinearLayout lLayout = (LinearLayout) rootView.findViewById(R.id.images_layout);
-                ImageView imgView = new ImageView(getActivity());
+                ImageView imgView = new ImageView(context);
 
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
                 imgView.setLayoutParams(layoutParams);
@@ -237,7 +240,7 @@ public class OfferActivity extends DrawerActivity {
                 imgView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), FullScreenImageActivity.class);
+                        Intent intent = new Intent(context, FullScreenImageActivity.class);
 
                         Bundle mBundle = new Bundle();
                         mBundle.putSerializable("selected_offer", selectedOffer);
