@@ -15,17 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
 public class DrawerActivity extends Activity {
+    public final static int DRAWER_IMG_POSITION = 0;
+    public final static int DRAWER_START_POSITION = 1;
+    public final static int DRAWER_FAVOURITE_POSITION = 2;
 
-    public final static int DRAWER_START_POSITION = 0;
-    public final static int DRAWER_FAVOURITE_POSITION = 1;
-
-    public final static int DRAWER_RATE_POSITION = 2;
-    public final static int DRAWER_SHARE_POSITION = 3;
+    public final static int DRAWER_RATE_POSITION = 3;
+    public final static int DRAWER_SHARE_POSITION = 4;
 
     private int currentPosition;
 
@@ -127,9 +126,9 @@ public class DrawerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
-        } else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -159,6 +158,10 @@ public class DrawerActivity extends Activity {
     }
 
     private void selectItem(int position) {
+        if (position == DRAWER_IMG_POSITION) {
+            return;
+        }
+
         mDrawerLayout.closeDrawers();
 
         switch (position) {
@@ -221,7 +224,7 @@ public class DrawerActivity extends Activity {
         getActionBar().setTitle(title);
     }
 
-    public void setDrawerTitle(CharSequence title){
+    public void setDrawerTitle(CharSequence title) {
         mDrawerTitle = title;
     }
 

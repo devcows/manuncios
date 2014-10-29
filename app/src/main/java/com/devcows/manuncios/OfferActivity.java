@@ -63,16 +63,11 @@ public class OfferActivity extends DrawerActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MyFavourites myFavourites = MyFavourites.getInstance();
 
-        Toast toast;
         if (myFavourites.containsFavourite(offer)) {
             menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_on));
-            toast = Toast.makeText(this, "Anuncio añadido a la lista de favoritos.", Toast.LENGTH_SHORT);
         } else {
             menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_off));
-            toast = Toast.makeText(this, "Anuncio borrado de la lista de favoritos.", Toast.LENGTH_SHORT);
         }
-
-        toast.show();
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -90,15 +85,18 @@ public class OfferActivity extends DrawerActivity {
                 Favourite fa = new Favourite(offer);
                 MyFavourites myFavourites = MyFavourites.getInstance();
 
+                Toast toast;
                 if (myFavourites.containsFavourite(offer)) {
                     myFavourites.delFavourite(fa);
                     item.setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
-
+                    toast = Toast.makeText(this, "Anuncio borrado de la lista de favoritos.", Toast.LENGTH_SHORT);
                 } else {
                     myFavourites.addFavourite(fa);
                     item.setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
+                    toast = Toast.makeText(this, "Anuncio añadido a la lista de favoritos.", Toast.LENGTH_SHORT);
                 }
 
+                toast.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
