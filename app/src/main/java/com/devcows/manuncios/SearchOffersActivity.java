@@ -165,7 +165,8 @@ public class SearchOffersActivity extends DrawerActivity {
             }
 
             if (strTitle.length() > 0) {
-                getActivity().getActionBar().setTitle(strTitle);
+                super.getActivity().setTitle(strTitle);
+                ((DrawerActivity) super.getActivity()).setDrawerTitle(strTitle);
             }
 
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
