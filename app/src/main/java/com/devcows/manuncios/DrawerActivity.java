@@ -3,9 +3,7 @@ package com.devcows.manuncios;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 
 public class DrawerActivity extends Activity {
@@ -105,10 +102,10 @@ public class DrawerActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+//        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
 
-        if(fragment instanceof FavouriteFragment){
-            for(int i = 0; i< menu.size(); i++){
+        if (currentPosition > DRAWER_START_POSITION) {
+            for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
                 item.setVisible(false);
             }
@@ -128,6 +125,15 @@ public class DrawerActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+        } else{
+            super.onBackPressed();
+        }
+    }
+
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -137,12 +143,8 @@ public class DrawerActivity extends Activity {
     }
 
     protected void showFragment(Fragment fragment, int position) {
-        invalidateOptionsMenu();
-
         if (fragment != null) {
-//            Bundle args = new Bundle();
-//            args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-//            fragment.setArguments(args);
+            currentPosition = position;
 
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
