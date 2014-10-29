@@ -1,42 +1,24 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-public class ContactActivity extends Activity {
-
-    //web view client implementation
-    private class CustomWebViewClient extends WebViewClient {
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //do whatever you want with the url that is clicked inside the webview.
-            //for example tell the webview to load that url.
-            view.loadUrl(url);
-            //return true if this method handled the link event
-            //or false otherwise
-            return true;
-        }
-    }
-
+public class ContactActivity extends DrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
 
-        Intent intent = getIntent();
-        if (intent.hasExtra("contact_url")) {
-            String contact_url = (String) intent.getSerializableExtra("contact_url");
-
-            WebView myWebView = (WebView) findViewById(R.id.web_view);
-            myWebView.loadUrl(contact_url);
-            myWebView.setWebViewClient(new CustomWebViewClient());
-        }
+        showFragment(new ContactFragment(), -1);
     }
 
     @Override
@@ -52,5 +34,40 @@ public class ContactActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class ContactFragment extends Fragment {
+
+        public ContactFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.activity_contact, container, false);
+
+            Intent intent = getActivity().getIntent();
+            if (intent.hasExtra("contact_url")) {
+                String contact_url = (String) intent.getSerializableExtra("contact_url");
+
+                WebView myWebView = (WebView) rootView.findViewById(R.id.web_view);
+                myWebView.loadUrl(contact_url);
+                myWebView.setWebViewClient(new CustomWebViewClient());
+            }
+
+            return rootView;
+        }
+
+        //web view client implementation
+        private class CustomWebViewClient extends WebViewClient {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //do whatever you want with the url that is clicked inside the webview.
+                //for example tell the webview to load that url.
+                view.loadUrl(url);
+                //return true if this method handled the link event
+                //or false otherwise
+                return true;
+            }
+        }
     }
 }
