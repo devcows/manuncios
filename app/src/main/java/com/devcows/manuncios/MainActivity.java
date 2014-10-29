@@ -50,12 +50,12 @@ public class MainActivity extends Activity implements MainTaskListener {
 
     @Override
     public void onMainGetResult() {
-        //Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
-        Intent intent = new Intent(getBaseContext(), DrawerActivity.class);
+        Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
 
-        Bundle mBundle = new Bundle();
-        mBundle.putSerializable(Utils.DRAWER_POSITION, DrawerActivity.DRAWER_START_POSITION);
-        intent.putExtras(mBundle);
+
+//        Bundle mBundle = new Bundle();
+//        mBundle.putSerializable(Utils.DRAWER_POSITION, DrawerActivity.DRAWER_START_POSITION);
+//        intent.putExtras(mBundle);
 
         startActivity(intent);
 

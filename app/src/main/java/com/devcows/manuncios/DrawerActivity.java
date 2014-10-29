@@ -98,20 +98,22 @@ public class DrawerActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_drawer, menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView SearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        SearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
-    /* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+
+        if(fragment instanceof FavouriteFragment){
+            for(int i = 0; i< menu.size(); i++){
+                MenuItem item = menu.getItem(i);
+                item.setVisible(false);
+            }
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -135,6 +137,8 @@ public class DrawerActivity extends Activity {
     }
 
     protected void showFragment(Fragment fragment, int position) {
+        invalidateOptionsMenu();
+
         if (fragment != null) {
 //            Bundle args = new Bundle();
 //            args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
@@ -157,7 +161,7 @@ public class DrawerActivity extends Activity {
 
         switch (position) {
             case DRAWER_START_POSITION:
-                showFragment(new CategoriesFragment(), position);
+                showFragment(new CategoriesActivity.CategoriesFragment(), position);
                 break;
             case DRAWER_FAVOURITE_POSITION:
                 showFragment(new FavouriteFragment(), position);
