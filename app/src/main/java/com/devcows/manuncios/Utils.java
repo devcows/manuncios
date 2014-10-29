@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Utils {
     private static String contentCss = "";
     public static final String SELECTED_OFFER = "selected_offer";
+    public static final String CONTACT_URL = "contact_url";
     public static final String DRAWER_POSITION = "drawer_position";
 
     public static Document getDocumentFromUrl(String url) {

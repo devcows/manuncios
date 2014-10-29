@@ -18,7 +18,16 @@ public class ContactActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showFragment(new ContactFragment(), -1);
+        Intent intent = getIntent();
+        String contact_url = intent.getStringExtra(Utils.CONTACT_URL);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Utils.CONTACT_URL, contact_url);
+
+        Fragment fragment = new ContactFragment();
+        fragment.setArguments(bundle);
+
+        showFragment(fragment, -1);
     }
 
     @Override
@@ -46,14 +55,11 @@ public class ContactActivity extends DrawerActivity {
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.activity_contact, container, false);
 
-            Intent intent = getActivity().getIntent();
-            if (intent.hasExtra("contact_url")) {
-                String contact_url = (String) intent.getSerializableExtra("contact_url");
+            String contact_url = getArguments().getString(Utils.CONTACT_URL);
 
-                WebView myWebView = (WebView) rootView.findViewById(R.id.web_view);
-                myWebView.loadUrl(contact_url);
-                myWebView.setWebViewClient(new CustomWebViewClient());
-            }
+            WebView myWebView = (WebView) rootView.findViewById(R.id.web_view);
+            myWebView.loadUrl(contact_url);
+            myWebView.setWebViewClient(new CustomWebViewClient());
 
             return rootView;
         }
