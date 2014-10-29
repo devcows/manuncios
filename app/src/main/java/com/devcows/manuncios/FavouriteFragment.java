@@ -21,10 +21,10 @@ public class FavouriteFragment extends Fragment {
     public FavouriteFragment() {
     }
 
-    private List<Offer> getFavouritesOffers(){
+    private List<Offer> getFavouritesOffers() {
         MyFavourites myFavourites = MyFavourites.getInstance();
         List<Offer> offers = new ArrayList<Offer>();
-        for(Favourite fa: myFavourites.getFavourites().values()) {
+        for (Favourite fa : myFavourites.getFavourites().values()) {
             offers.add(fa.getOffer());
         }
 
