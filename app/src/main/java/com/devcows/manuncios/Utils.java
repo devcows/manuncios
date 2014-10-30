@@ -8,6 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,5 +81,17 @@ public class Utils {
 
     public static String getContentCss() {
         return contentCss;
+    }
+
+    public static List<String> getStringList(String[] strings) {
+        List<String> arrayList = new ArrayList<String>();
+
+        if (strings != null) {
+            for (int i = 0; i < strings.length; i++) {
+                arrayList.add(strings[i]);
+            }
+        }
+
+        return arrayList;
     }
 }

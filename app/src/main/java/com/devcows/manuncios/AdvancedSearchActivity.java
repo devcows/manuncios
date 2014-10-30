@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,10 +54,15 @@ public class AdvancedSearchActivity extends DrawerActivity {
     }
 
 
-    public static class AdvancedSearchFragment extends Fragment {
+    public static class AdvancedSearchFragment extends FragmentReturn {
         private ProgressBar progressBar;
 
         public AdvancedSearchFragment() {
+        }
+
+        @Override
+        public String getReturnName() {
+            return "al buscador";
         }
 
         @Override

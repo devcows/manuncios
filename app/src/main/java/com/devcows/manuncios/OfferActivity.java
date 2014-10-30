@@ -103,13 +103,18 @@ public class OfferActivity extends DrawerActivity {
         }
     }
 
-    public static class OfferFragment extends Fragment implements OfferTaskListener {
+    public static class OfferFragment extends FragmentReturn implements OfferTaskListener {
         private ProgressBar progressBar;
         private Offer offer;
         private View rootView;
         private Context context;
 
         public OfferFragment() {
+        }
+
+        @Override
+        public String getReturnName() {
+            return "al anuncio";
         }
 
         @Override

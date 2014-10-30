@@ -10,6 +10,7 @@
     <string name="title_activity_advanced_search">Buscador avanzado</string>
     <string name="title_activity_contact">Contacto</string>
     <string name="title_activity_drawer">Manuncios</string>
+    <string name="title_activity_favourite">Favoritos</string>
 
     <string name="menuSortDateRecent">Más nuevos</string>
     <string name="menuSortDateOld">Más antiguos</string>
@@ -25,10 +26,13 @@
 
     <string name="title_activity_categories">Categorías</string>
 
-    <string-array name="drawer_array">
+    <string-array name="drawer_array_first">
         <item>Imagen-logo</item>
         <item>Inicio</item>
         <item>Favoritos</item>
+    </string-array>
+
+    <string-array name="drawer_array_second">
         <item>Vota app</item>
         <item>Comparte la app</item>
     </string-array>

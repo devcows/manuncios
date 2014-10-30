@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +14,15 @@ import com.devcows.manuncios.models.Offer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteFragment extends Fragment {
+public class FavouriteFragment extends FragmentReturn {
     private SearchOffersListAdapter mAdapter;
 
     public FavouriteFragment() {
+    }
+
+    @Override
+    public String getReturnName() {
+        return "a favoritos";
     }
 
     private List<Offer> getFavouritesOffers() {
