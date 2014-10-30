@@ -13,24 +13,23 @@
         android:showAsAction="ifRoom"
         android:title="Sort by">
         <menu>
-
             <item
                 android:id="@+id/menuSortDateRecent"
-                android:title="Mas nuevos"
+                android:title="@string/menuSortDateRecent"
                 android:checkable="true" />
             <item
                 android:id="@+id/menuSortDateOld"
-                android:title="Mas antiguos"
+                android:title="@string/menuSortDateOld"
                 android:checkable="true" />
 
             <item
                 android:id="@+id/menuSortPriceExpensive"
-                android:title="Mas caros"
+                android:title="@string/menuSortPriceCheap"
                 android:checkable="true" />
 
             <item
                 android:id="@+id/menuSortPriceCheap"
-                android:title="Mas baratos"
+                android:title="@string/menuSortPriceExpensive"
                 android:checkable="true" />
 
         </menu>
