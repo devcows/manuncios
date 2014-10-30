@@ -158,8 +158,8 @@ public class DrawerActivity extends Activity {
                 // update selected item and title, then close the drawer
 
                 if (position > mOptionsTitlesFirst.size() - 1) {
-                    int j = position - mOptionsTitlesFirst.size();
-                    setTitle(mOptionsTitlesSecond.get(j));
+                    int newPosition = position - mOptionsTitlesFirst.size();
+                    setTitle(mOptionsTitlesSecond.get(newPosition));
                 } else {
                     setTitle(mOptionsTitlesFirst.get(position));
                 }
@@ -178,7 +178,9 @@ public class DrawerActivity extends Activity {
         mDrawerLayout.closeDrawers();
 
         if (position > mOptionsTitlesFirst.size() - 1) {
-            switch (position) {
+            int newPosition = position - mOptionsTitlesFirst.size();
+
+            switch (newPosition) {
                 case DRAWER_RATE_POSITION:
                     rateApp();
                     mDrawerList.clearChoices();

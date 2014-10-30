@@ -2,7 +2,6 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,8 +33,8 @@ public class DrawerListAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
         if (i > objectsFirst.size()-1){
-            int j = i - objectsFirst.size();
-            return objectsSecond.get(i);
+            int newI = i - objectsFirst.size();
+            return objectsSecond.get(newI);
         } else {
             return objectsFirst.get(i);
         }
@@ -88,7 +86,9 @@ public class DrawerListAdapter extends BaseAdapter {
             holder.txtTitle.setText(rowItem);
 
             if (i > objectsFirst.size() - 1) {
-                switch (i) {
+                int newI = i - objectsFirst.size();
+
+                switch (newI) {
                     case DrawerActivity.DRAWER_RATE_POSITION:
                         holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_edit_holo_light));
                         break;
