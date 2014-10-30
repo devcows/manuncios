@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -22,15 +23,18 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
         this.listeners = listeners;
 
         //initializers
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .threadPriority(Thread.NORM_PRIORITY - 1)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCacheSize(50 * 1024 * 1024) // 50 Mb
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .writeDebugLogs() // Remove for release app
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
                 .build();
 
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .defaultDisplayImageOptions(defaultOptions)
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCacheSize(20 * 1024 * 1024) // 20 Mb
+                .tasksProcessingOrder(QueueProcessingType.FIFO)
+                .build();
 
         ImageLoader imgLoader = ImageLoader.getInstance();
         imgLoader.init(config);
