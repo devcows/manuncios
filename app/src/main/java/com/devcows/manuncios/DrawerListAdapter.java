@@ -85,16 +85,17 @@ public class DrawerListAdapter extends BaseAdapter {
             String rowItem = (String) getItem(i);
             holder.txtTitle.setText(rowItem);
 
+            //set icon.
             if (i > objectsFirst.size() - 1) {
                 int newI = i - objectsFirst.size();
 
                 switch (newI) {
                     case DrawerActivity.DRAWER_RATE_POSITION:
-                        holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_edit_holo_light));
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_edit_holo_light);
                         break;
 
                     case DrawerActivity.DRAWER_SHARE_POSITION:
-                        holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_share_holo_light));
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_share_holo_light);
                         break;
 
                     default:
@@ -104,11 +105,11 @@ public class DrawerListAdapter extends BaseAdapter {
             } else {
                 switch (i) {
                     case DrawerActivity.DRAWER_START_POSITION:
-                        holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.ic_input_get));
+                        holder.imageView.setBackgroundResource(android.R.drawable.ic_input_get);
                         break;
 
                     case DrawerActivity.DRAWER_FAVOURITE_POSITION:
-                        holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.btn_star));
+                        holder.imageView.setBackgroundResource(android.R.drawable.btn_star);
                         break;
 
                     default:
@@ -116,8 +117,6 @@ public class DrawerListAdapter extends BaseAdapter {
                         break;
                 }
             }
-
-
         }
 
         return view;
