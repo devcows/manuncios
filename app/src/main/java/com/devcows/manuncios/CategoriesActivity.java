@@ -85,6 +85,7 @@ public class CategoriesActivity extends DrawerActivity {
                     final Category item = (Category) parent.getItemAtPosition(position);
 
                     SearchQuery searchQuery = SearchQuery.getInstance();
+                    searchQuery.setDefaultsValues();
                     searchQuery.setCategory(item);
 
                     Intent intent = new Intent(context, SearchOffersActivity.class);
