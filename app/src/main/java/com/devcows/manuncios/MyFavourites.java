@@ -11,8 +11,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class MyFavourites {
     private final String FILE_NAME = "favourites.bin";
@@ -26,8 +28,16 @@ public class MyFavourites {
         MyFavourites.context = context;
     }
 
-    public HashMap<String, Favourite> getFavourites() {
-        return favourites;
+    public List<Offer> getFavouriteOffersList() {
+        List<Offer> offers = new ArrayList<Offer>();
+
+        Object[] array = favourites.values().toArray();
+        for (int i = array.length - 1; i >= 0; i--) {
+            Favourite fa = (Favourite) array[i];
+            offers.add(fa.getOffer());
+        }
+
+        return offers;
     }
 
     public MyFavourites() {

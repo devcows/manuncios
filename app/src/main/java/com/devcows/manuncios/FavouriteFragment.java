@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.devcows.manuncios.models.Favourite;
 import com.devcows.manuncios.models.Offer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteFragment extends FragmentReturn {
@@ -27,10 +25,7 @@ public class FavouriteFragment extends FragmentReturn {
 
     private List<Offer> getFavouritesOffers() {
         MyFavourites myFavourites = MyFavourites.getInstance();
-        List<Offer> offers = new ArrayList<Offer>();
-        for (Favourite fa : myFavourites.getFavourites().values()) {
-            offers.add(fa.getOffer());
-        }
+        List<Offer> offers = myFavourites.getFavouriteOffersList();
 
         return offers;
     }
