@@ -120,8 +120,6 @@ public class SearchOffersActivity extends DrawerActivity {
         private ProgressBar progressBar;
 
         public SearchOffersFragment() {
-            SearchOffersGetTask offerTask = new SearchOffersGetTask();
-            offerTask.execute(this);
         }
 
         @Override
@@ -142,8 +140,12 @@ public class SearchOffersActivity extends DrawerActivity {
             SearchQuery searchQuery = SearchQuery.getInstance();
             Intent intent = getActivity().getIntent();
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                searchQuery.setDefaultsValues();
                 searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
             }
+
+            SearchOffersGetTask offerTask = new SearchOffersGetTask();
+            offerTask.execute(this);
 
             String strTitle = "";
             if (searchQuery.getCategory() != null) {
