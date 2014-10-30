@@ -17,14 +17,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.List;
+
 
 public class DrawerActivity extends Activity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
 
-    public final static int DRAWER_RATE_POSITION = 3;
-    public final static int DRAWER_SHARE_POSITION = 4;
+    public final static int DRAWER_RATE_POSITION = 0;
+    public final static int DRAWER_SHARE_POSITION = 1;
 
     private int currentPosition;
 
@@ -34,7 +36,8 @@ public class DrawerActivity extends Activity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mOptionsTitles;
+    private List<String> mOptionsTitlesFirst;
+    private List<String> mOptionsTitlesSecond;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +45,16 @@ public class DrawerActivity extends Activity {
         setContentView(R.layout.activity_main_drawer);
 
         mTitle = mDrawerTitle = getTitle();
-        mOptionsTitles = getResources().getStringArray(R.array.drawer_array);
+        mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
+        mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new DrawerListAdapter(this, mOptionsTitles));
+        mDrawerList.setAdapter(new DrawerListAdapter(this, mOptionsTitlesFirst, mOptionsTitlesSecond));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -87,7 +92,6 @@ public class DrawerActivity extends Activity {
 
             mDrawerList.clearChoices();
             mDrawerList.setItemChecked(currentPosition, true);
-            //selectItem(currentPosition);
         }
     }
 
@@ -152,7 +156,14 @@ public class DrawerActivity extends Activity {
 
             if (position == DRAWER_FAVOURITE_POSITION) {
                 // update selected item and title, then close the drawer
-                setTitle(mOptionsTitles[position]);
+
+                if (position > mOptionsTitlesFirst.size() - 1) {
+                    int j = position - mOptionsTitlesFirst.size();
+                    setTitle(mOptionsTitlesSecond.get(j));
+                } else {
+                    setTitle(mOptionsTitlesFirst.get(position));
+                }
+
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         }
@@ -166,29 +177,31 @@ public class DrawerActivity extends Activity {
 
         mDrawerLayout.closeDrawers();
 
-        switch (position) {
-            case DRAWER_START_POSITION:
-                currentPosition = position;
-                Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
-                startActivity(intent);
+        if (position > mOptionsTitlesFirst.size() - 1) {
+            switch (position) {
+                case DRAWER_RATE_POSITION:
+                    rateApp();
+                    mDrawerList.clearChoices();
+                    break;
+                case DRAWER_SHARE_POSITION:
+                    shareApp();
+                    mDrawerList.clearChoices();
+                    break;
+            }
+        } else {
+            currentPosition = position;
 
-                finish();
-                break;
-            case DRAWER_FAVOURITE_POSITION:
-                currentPosition = position;
-                showFragment(new FavouriteFragment(), position);
-                break;
-            case DRAWER_RATE_POSITION:
-                rateApp();
-                mDrawerList.clearChoices();
-                break;
-            case DRAWER_SHARE_POSITION:
-                shareApp();
-                mDrawerList.clearChoices();
-                break;
-            default:
-                //TODO what do?
-                break;
+            switch (position) {
+                case DRAWER_START_POSITION:
+                    Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
+                    startActivity(intent);
+
+                    finish();
+                    break;
+                case DRAWER_FAVOURITE_POSITION:
+                    showFragment(new FavouriteFragment(), position);
+                    break;
+            }
         }
 
         mDrawerList.setItemChecked(currentPosition, true);

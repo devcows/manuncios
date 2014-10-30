@@ -2,6 +2,7 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,30 +17,41 @@ import java.util.List;
 public class DrawerListAdapter extends BaseAdapter {
 
     private Context context;
-    private List<String> objects;
+    private List<String> objectsFirst;
+    private List<String> objectsSecond;
 
-    public DrawerListAdapter(Context context, String[] objects) {
+    public DrawerListAdapter(Context context, List<String> objectsFirst, List<String> objectsSecond) {
         this.context = context;
 
-        this.objects = new ArrayList<String>();
-        for (int i = 0; i < objects.length; i++) {
-            this.objects.add(objects[i]);
-        }
+        this.objectsFirst = objectsFirst;
+        this.objectsSecond = objectsSecond;
     }
 
     @Override
     public int getCount() {
-        return objects.size();
+        return objectsFirst.size() + objectsSecond.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return objects.get(i);
+        if (i > objectsFirst.size()-1){
+            int j = i - objectsFirst.size();
+            return objectsSecond.get(i);
+        } else {
+            return objectsFirst.get(i);
+        }
     }
 
     @Override
     public long getItemId(int position) {
-        return objects.indexOf(getItem(position));
+        if (position > objectsFirst.size() - 1) {
+            long j = objectsFirst.indexOf(getItem(objectsFirst.size() - 1));
+            j += objectsSecond.indexOf(getItem(position));
+
+            return j;
+        } else {
+            return objectsFirst.indexOf(getItem(position));
+        }
     }
 
     @Override
@@ -75,27 +87,37 @@ public class DrawerListAdapter extends BaseAdapter {
             String rowItem = (String) getItem(i);
             holder.txtTitle.setText(rowItem);
 
-            switch (i) {
-                case DrawerActivity.DRAWER_START_POSITION:
-                    holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.ic_input_get));
-                    break;
+            if (i > objectsFirst.size() - 1) {
+                switch (i) {
+                    case DrawerActivity.DRAWER_RATE_POSITION:
+                        holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_edit_holo_light));
+                        break;
 
-                case DrawerActivity.DRAWER_FAVOURITE_POSITION:
-                    holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.btn_star));
-                    break;
+                    case DrawerActivity.DRAWER_SHARE_POSITION:
+                        holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_share_holo_light));
+                        break;
 
-                case DrawerActivity.DRAWER_RATE_POSITION:
-                    holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_edit_holo_light));
-                    break;
+                    default:
+                        holder.imageView.setVisibility(View.GONE);
+                        break;
+                }
+            } else {
+                switch (i) {
+                    case DrawerActivity.DRAWER_START_POSITION:
+                        holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.ic_input_get));
+                        break;
 
-                case DrawerActivity.DRAWER_SHARE_POSITION:
-                    holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_action_share_holo_light));
-                    break;
+                    case DrawerActivity.DRAWER_FAVOURITE_POSITION:
+                        holder.imageView.setBackground(context.getResources().getDrawable(android.R.drawable.btn_star));
+                        break;
 
-                default:
-                    holder.imageView.setVisibility(View.GONE);
-                    break;
+                    default:
+                        holder.imageView.setVisibility(View.GONE);
+                        break;
+                }
             }
+
+
         }
 
         return view;
