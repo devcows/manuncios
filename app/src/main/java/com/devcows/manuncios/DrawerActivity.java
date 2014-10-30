@@ -30,6 +30,7 @@ public class DrawerActivity extends Activity {
     public final static int DRAWER_SHARE_POSITION = 1;
 
     private int currentPosition;
+    private int orginalTitlesFirstLength;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -40,7 +41,7 @@ public class DrawerActivity extends Activity {
     private CharSequence mTitle;
     private List<String> mOptionsTitlesFirst;
     private List<String> mOptionsTitlesSecond;
-    private Fragment mReturnFragment;
+    private FragmentReturn mReturnFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class DrawerActivity extends Activity {
         mTitle = mDrawerTitle = getTitle();
         mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
         mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
+        orginalTitlesFirstLength = mOptionsTitlesFirst.size();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -174,24 +176,26 @@ public class DrawerActivity extends Activity {
     }
 
     private void setReturnFragment() {
-        mReturnFragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        mReturnFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
 
-        mOptionsTitlesFirst.add("Volver a");
+        mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
 
         // fire the event
         mDrawerListAdapter.notifyDataSetChanged();
     }
 
     private void unsetReturnFragment() {
-        if (mReturnFragment != null) {
+        if (mReturnFragment != null && orginalTitlesFirstLength != mOptionsTitlesFirst.size()) {
             showFragment(mReturnFragment, -1);
+
+            currentPosition = -1;
+            mReturnFragment = null;
+            mOptionsTitlesFirst.remove(mOptionsTitlesFirst.size() - 1);
+
+            // fire the event
+            mDrawerListAdapter.notifyDataSetChanged();
+            mDrawerList.clearChoices();
         }
-
-        mOptionsTitlesFirst.remove(mOptionsTitlesFirst.size() - 1);
-
-        // fire the event
-        mDrawerListAdapter.notifyDataSetChanged();
-        mDrawerList.clearChoices();
     }
 
     private void selectItem(int position) {
@@ -220,6 +224,10 @@ public class DrawerActivity extends Activity {
 
             switch (position) {
                 case DRAWER_START_POSITION:
+                    if (mReturnFragment != null) {
+                        unsetReturnFragment();
+                    }
+
                     Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
                     startActivity(intent);
 
@@ -236,7 +244,9 @@ public class DrawerActivity extends Activity {
             }
         }
 
-        mDrawerList.setItemChecked(currentPosition, true);
+        if (currentPosition > -1) {
+            mDrawerList.setItemChecked(currentPosition, true);
+        }
     }
 
     private void rateApp() {

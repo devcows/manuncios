@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -49,11 +48,16 @@ public class CategoriesActivity extends DrawerActivity {
     }
 
 
-    public static class CategoriesFragment extends Fragment {
+    public static class CategoriesFragment extends FragmentReturn {
         private final ApiMilAnuncios mApi = ApiMilAnuncios.getInstance();
         private CategoriesListAdapter mAdapter;
 
         public CategoriesFragment() {
+        }
+
+        @Override
+        public String getReturnName() {
+            return "a inicio";
         }
 
         @Override
