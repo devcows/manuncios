@@ -17,24 +17,32 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.List;
+
 
 public class DrawerActivity extends Activity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
+    public final static int DRAWER_RETURN_POSITION = 3;
 
-    public final static int DRAWER_RATE_POSITION = 3;
-    public final static int DRAWER_SHARE_POSITION = 4;
+    public final static int DRAWER_RATE_POSITION = 0;
+    public final static int DRAWER_SHARE_POSITION = 1;
 
-    private int currentPosition;
+    private int currentPosition = -1;
+    private int mReturnPosition = -1;
+    private int orginalTitlesFirstLength;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private DrawerListAdapter mDrawerListAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mOptionsTitles;
+    private List<String> mOptionsTitlesFirst;
+    private List<String> mOptionsTitlesSecond;
+    private FragmentReturn mReturnFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +50,19 @@ public class DrawerActivity extends Activity {
         setContentView(R.layout.activity_main_drawer);
 
         mTitle = mDrawerTitle = getTitle();
-        mOptionsTitles = getResources().getStringArray(R.array.drawer_array);
+        mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
+        mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
+        orginalTitlesFirstLength = mOptionsTitlesFirst.size();
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new DrawerListAdapter(this, mOptionsTitles));
+
+        mDrawerListAdapter = new DrawerListAdapter(this, mOptionsTitlesFirst, mOptionsTitlesSecond);
+        mDrawerList.setAdapter(mDrawerListAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -84,10 +97,6 @@ public class DrawerActivity extends Activity {
             if (intent.hasExtra(Utils.DRAWER_POSITION)) {
                 currentPosition = (Integer) intent.getSerializableExtra(Utils.DRAWER_POSITION);
             }
-
-            mDrawerList.clearChoices();
-            mDrawerList.setItemChecked(currentPosition, true);
-            //selectItem(currentPosition);
         }
     }
 
@@ -103,9 +112,8 @@ public class DrawerActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 
-//        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
-
-        if (currentPosition > DRAWER_START_POSITION) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        if (fragment instanceof FavouriteFragment) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
                 item.setVisible(false);
@@ -131,7 +139,13 @@ public class DrawerActivity extends Activity {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
         } else {
-            super.onBackPressed();
+
+            //remove return fragment.
+            if(mReturnFragment != null){
+                unsetReturnFragment();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -145,16 +159,57 @@ public class DrawerActivity extends Activity {
         }
     }
 
+    private void markOption(int position){
+        mDrawerList.clearChoices();
+
+        if (position > -1 && position < mOptionsTitlesFirst.size()) {
+            // update selected item and title, then close the drawer
+
+            if (position > mOptionsTitlesFirst.size() - 1) {
+                int newPosition = position - mOptionsTitlesFirst.size();
+                setTitle(mOptionsTitlesSecond.get(newPosition));
+            } else {
+                setTitle(mOptionsTitlesFirst.get(position));
+
+                mDrawerList.setItemChecked(position, true);
+            }
+        }
+    }
+
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            if (position == DRAWER_FAVOURITE_POSITION) {
-                // update selected item and title, then close the drawer
-                setTitle(mOptionsTitles[position]);
-                mDrawerLayout.closeDrawer(mDrawerList);
-            }
+            //mark is is needed
+            markOption(position);
+        }
+
+        currentPosition = position;
+    }
+
+    private void setReturnFragment() {
+        mReturnFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
+        mReturnPosition = currentPosition;
+
+        mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
+
+        // fire the event
+        mDrawerListAdapter.notifyDataSetChanged();
+    }
+
+    private void unsetReturnFragment() {
+        if (mReturnFragment != null && orginalTitlesFirstLength != mOptionsTitlesFirst.size()) {
+            currentPosition = mReturnPosition;
+            mOptionsTitlesFirst.remove(mOptionsTitlesFirst.size() - 1);
+
+            // fire the event
+            mDrawerListAdapter.notifyDataSetChanged();
+
+            showFragment(mReturnFragment, currentPosition);
+
+            mReturnFragment = null;
+            mReturnPosition = -1;
         }
     }
 
@@ -166,32 +221,44 @@ public class DrawerActivity extends Activity {
 
         mDrawerLayout.closeDrawers();
 
-        switch (position) {
-            case DRAWER_START_POSITION:
-                currentPosition = position;
-                Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
-                startActivity(intent);
+        if (position > mOptionsTitlesFirst.size() - 1) {
+            int newPosition = position - mOptionsTitlesFirst.size();
 
-                finish();
-                break;
-            case DRAWER_FAVOURITE_POSITION:
-                currentPosition = position;
-                showFragment(new FavouriteFragment(), position);
-                break;
-            case DRAWER_RATE_POSITION:
-                rateApp();
-                mDrawerList.clearChoices();
-                break;
-            case DRAWER_SHARE_POSITION:
-                shareApp();
-                mDrawerList.clearChoices();
-                break;
-            default:
-                //TODO what do?
-                break;
+            switch (newPosition) {
+                case DRAWER_RATE_POSITION:
+                    rateApp();
+                    break;
+                case DRAWER_SHARE_POSITION:
+                    shareApp();
+                    break;
+            }
+
+            //I don't know but second list is checked
+            markOption(currentPosition);
+        } else {
+            Intent intent;
+
+            switch (position) {
+                case DRAWER_START_POSITION:
+                    if (mReturnFragment != null) {
+                        unsetReturnFragment();
+                    }
+
+                    intent = new Intent(getBaseContext(), CategoriesActivity.class);
+                    startActivity(intent);
+
+                    finish();
+                    break;
+                case DRAWER_FAVOURITE_POSITION:
+                    setReturnFragment();
+                    showFragment(new FavouriteFragment(), DRAWER_FAVOURITE_POSITION);
+                    break;
+
+                case DRAWER_RETURN_POSITION:
+                    unsetReturnFragment();
+                    break;
+            }
         }
-
-        mDrawerList.setItemChecked(currentPosition, true);
     }
 
     private void rateApp() {

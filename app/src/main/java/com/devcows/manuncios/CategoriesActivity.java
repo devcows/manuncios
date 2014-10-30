@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +23,7 @@ public class CategoriesActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showFragment(new CategoriesFragment(), 0);
+        showFragment(new CategoriesFragment(), DrawerActivity.DRAWER_START_POSITION);
     }
 
     @Override
@@ -49,11 +48,16 @@ public class CategoriesActivity extends DrawerActivity {
     }
 
 
-    public static class CategoriesFragment extends Fragment {
+    public static class CategoriesFragment extends FragmentReturn {
         private final ApiMilAnuncios mApi = ApiMilAnuncios.getInstance();
         private CategoriesListAdapter mAdapter;
 
         public CategoriesFragment() {
+        }
+
+        @Override
+        public String getReturnName() {
+            return "a inicio";
         }
 
         @Override
