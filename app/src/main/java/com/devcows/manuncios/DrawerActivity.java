@@ -29,7 +29,8 @@ public class DrawerActivity extends Activity {
     public final static int DRAWER_RATE_POSITION = 0;
     public final static int DRAWER_SHARE_POSITION = 1;
 
-    private int currentPosition;
+    private int currentPosition = -1;
+    private int mReturnPosition = -1;
     private int orginalTitlesFirstLength;
 
     private DrawerLayout mDrawerLayout;
@@ -138,7 +139,13 @@ public class DrawerActivity extends Activity {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
         } else {
-            super.onBackPressed();
+
+            //remove return fragment.
+            if(mReturnFragment != null){
+                unsetReturnFragment();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -152,31 +159,38 @@ public class DrawerActivity extends Activity {
         }
     }
 
+    private void markOption(int position){
+        mDrawerList.clearChoices();
+
+        if (position > -1 && position < mOptionsTitlesFirst.size()) {
+            // update selected item and title, then close the drawer
+
+            if (position > mOptionsTitlesFirst.size() - 1) {
+                int newPosition = position - mOptionsTitlesFirst.size();
+                setTitle(mOptionsTitlesSecond.get(newPosition));
+            } else {
+                setTitle(mOptionsTitlesFirst.get(position));
+
+                mDrawerList.setItemChecked(position, true);
+            }
+        }
+    }
+
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            if (position == DRAWER_FAVOURITE_POSITION) {
-                // update selected item and title, then close the drawer
-
-                if (position > mOptionsTitlesFirst.size() - 1) {
-                    int newPosition = position - mOptionsTitlesFirst.size();
-                    setTitle(mOptionsTitlesSecond.get(newPosition));
-                } else {
-                    setTitle(mOptionsTitlesFirst.get(position));
-
-                    mDrawerList.clearChoices();
-                    mDrawerList.setItemChecked(currentPosition, true);
-                }
-
-                mDrawerLayout.closeDrawer(mDrawerList);
-            }
+            //mark is is needed
+            markOption(position);
         }
+
+        currentPosition = position;
     }
 
     private void setReturnFragment() {
         mReturnFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
+        mReturnPosition = currentPosition;
 
         mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
 
@@ -186,15 +200,16 @@ public class DrawerActivity extends Activity {
 
     private void unsetReturnFragment() {
         if (mReturnFragment != null && orginalTitlesFirstLength != mOptionsTitlesFirst.size()) {
-            showFragment(mReturnFragment, -1);
-
-            currentPosition = -1;
-            mReturnFragment = null;
+            currentPosition = mReturnPosition;
             mOptionsTitlesFirst.remove(mOptionsTitlesFirst.size() - 1);
 
             // fire the event
             mDrawerListAdapter.notifyDataSetChanged();
-            mDrawerList.clearChoices();
+
+            showFragment(mReturnFragment, currentPosition);
+
+            mReturnFragment = null;
+            mReturnPosition = -1;
         }
     }
 
@@ -212,15 +227,16 @@ public class DrawerActivity extends Activity {
             switch (newPosition) {
                 case DRAWER_RATE_POSITION:
                     rateApp();
-                    mDrawerList.clearChoices();
                     break;
                 case DRAWER_SHARE_POSITION:
                     shareApp();
-                    mDrawerList.clearChoices();
                     break;
             }
+
+            //I don't know but second list is checked
+            markOption(currentPosition);
         } else {
-            currentPosition = position;
+            Intent intent;
 
             switch (position) {
                 case DRAWER_START_POSITION:
@@ -228,24 +244,20 @@ public class DrawerActivity extends Activity {
                         unsetReturnFragment();
                     }
 
-                    Intent intent = new Intent(getBaseContext(), CategoriesActivity.class);
+                    intent = new Intent(getBaseContext(), CategoriesActivity.class);
                     startActivity(intent);
 
                     finish();
                     break;
                 case DRAWER_FAVOURITE_POSITION:
                     setReturnFragment();
-                    showFragment(new FavouriteFragment(), position);
+                    showFragment(new FavouriteFragment(), DRAWER_FAVOURITE_POSITION);
                     break;
 
                 case DRAWER_RETURN_POSITION:
                     unsetReturnFragment();
                     break;
             }
-        }
-
-        if (currentPosition > -1) {
-            mDrawerList.setItemChecked(currentPosition, true);
         }
     }
 
