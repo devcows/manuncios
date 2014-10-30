@@ -141,7 +141,7 @@ public class DrawerActivity extends Activity {
         } else {
 
             //remove return fragment.
-            if(mReturnFragment != null){
+            if (mReturnFragment != null) {
                 unsetReturnFragment();
             } else {
                 super.onBackPressed();
@@ -159,7 +159,7 @@ public class DrawerActivity extends Activity {
         }
     }
 
-    private void markOption(int position){
+    private void markOption(int position) {
         mDrawerList.clearChoices();
 
         if (position > -1 && position < mOptionsTitlesFirst.size()) {
