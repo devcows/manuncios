@@ -24,6 +24,7 @@ public class DrawerActivity extends Activity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
+    public final static int DRAWER_RETURN_POSITION = 3;
 
     public final static int DRAWER_RATE_POSITION = 0;
     public final static int DRAWER_SHARE_POSITION = 1;
@@ -32,12 +33,14 @@ public class DrawerActivity extends Activity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private DrawerListAdapter mDrawerListAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private List<String> mOptionsTitlesFirst;
     private List<String> mOptionsTitlesSecond;
+    private Fragment mReturnFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,9 @@ public class DrawerActivity extends Activity {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new DrawerListAdapter(this, mOptionsTitlesFirst, mOptionsTitlesSecond));
+
+        mDrawerListAdapter = new DrawerListAdapter(this, mOptionsTitlesFirst, mOptionsTitlesSecond);
+        mDrawerList.setAdapter(mDrawerListAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -89,9 +94,6 @@ public class DrawerActivity extends Activity {
             if (intent.hasExtra(Utils.DRAWER_POSITION)) {
                 currentPosition = (Integer) intent.getSerializableExtra(Utils.DRAWER_POSITION);
             }
-
-            mDrawerList.clearChoices();
-            mDrawerList.setItemChecked(currentPosition, true);
         }
     }
 
@@ -107,9 +109,8 @@ public class DrawerActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 
-//        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
-
-        if (currentPosition > DRAWER_START_POSITION) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        if (fragment instanceof FavouriteFragment) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
                 item.setVisible(false);
@@ -162,11 +163,35 @@ public class DrawerActivity extends Activity {
                     setTitle(mOptionsTitlesSecond.get(newPosition));
                 } else {
                     setTitle(mOptionsTitlesFirst.get(position));
+
+                    mDrawerList.clearChoices();
+                    mDrawerList.setItemChecked(currentPosition, true);
                 }
 
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         }
+    }
+
+    private void setReturnFragment() {
+        mReturnFragment = getFragmentManager().findFragmentById(R.id.content_frame);
+
+        mOptionsTitlesFirst.add("Volver a");
+
+        // fire the event
+        mDrawerListAdapter.notifyDataSetChanged();
+    }
+
+    private void unsetReturnFragment() {
+        if (mReturnFragment != null) {
+            showFragment(mReturnFragment, -1);
+        }
+
+        mOptionsTitlesFirst.remove(mOptionsTitlesFirst.size() - 1);
+
+        // fire the event
+        mDrawerListAdapter.notifyDataSetChanged();
+        mDrawerList.clearChoices();
     }
 
     private void selectItem(int position) {
@@ -201,7 +226,12 @@ public class DrawerActivity extends Activity {
                     finish();
                     break;
                 case DRAWER_FAVOURITE_POSITION:
+                    setReturnFragment();
                     showFragment(new FavouriteFragment(), position);
+                    break;
+
+                case DRAWER_RETURN_POSITION:
+                    unsetReturnFragment();
                     break;
             }
         }

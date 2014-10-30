@@ -83,7 +83,7 @@ public class Utils {
         return contentCss;
     }
 
-    public static List<String> getStringList(String[] strings){
+    public static List<String> getStringList(String[] strings) {
         List<String> arrayList = new ArrayList<String>();
 
         if (strings != null) {

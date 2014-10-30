@@ -24,7 +24,7 @@ public class CategoriesActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showFragment(new CategoriesFragment(), 0);
+        showFragment(new CategoriesFragment(), DrawerActivity.DRAWER_START_POSITION);
     }
 
     @Override
