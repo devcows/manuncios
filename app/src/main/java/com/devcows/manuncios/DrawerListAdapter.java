@@ -32,7 +32,7 @@ public class DrawerListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        if (i > objectsFirst.size()-1){
+        if (i > objectsFirst.size() - 1) {
             int newI = i - objectsFirst.size();
             return objectsSecond.get(newI);
         } else {
@@ -64,7 +64,7 @@ public class DrawerListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        if(i == DrawerActivity.DRAWER_IMG_POSITION){
+        if (i == DrawerActivity.DRAWER_IMG_POSITION) {
             if (view == null) {
                 view = mInflater.inflate(R.layout.layout_drawer_list_item_img, null);
             }
