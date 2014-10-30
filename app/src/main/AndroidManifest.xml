@@ -48,6 +48,10 @@
             android:label="@string/title_activity_contact" />
 
         <activity
+            android:name=".FavouriteFragment"
+            android:label="@string/title_activity_favourite" />
+
+        <activity
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_drawer">
 

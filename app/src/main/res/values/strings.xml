@@ -10,6 +10,7 @@
     <string name="title_activity_advanced_search">Buscador avanzado</string>
     <string name="title_activity_contact">Contacto</string>
     <string name="title_activity_drawer">Manuncios</string>
+    <string name="title_activity_favourite">Favoritos</string>
 
     <string-array name="array_order_by">
         <item>Más nuevos</item>
