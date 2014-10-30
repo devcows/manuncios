@@ -19,8 +19,8 @@ public class SearchQuery implements Serializable {
     //ORDER BY
     public static final int ORDER_BY_RECENT = 0;
     public static final int ORDER_BY_OLD = 1;
-    public static final int ORDER_BY_EXPENSIVE = 2;
-    public static final int ORDER_BY_CHEAP = 3;
+    public static final int ORDER_BY_CHEAP = 2;
+    public static final int ORDER_BY_EXPENSIVE = 3;
 
     private static SearchQuery instance;
 
