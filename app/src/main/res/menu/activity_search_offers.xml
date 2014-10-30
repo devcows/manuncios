@@ -23,12 +23,12 @@
                 android:checkable="true" />
 
             <item
-                android:id="@+id/menuSortPriceExpensive"
+                android:id="@+id/menuSortPriceCheap"
                 android:title="@string/menuSortPriceCheap"
                 android:checkable="true" />
 
             <item
-                android:id="@+id/menuSortPriceCheap"
+                android:id="@+id/menuSortPriceExpensive"
                 android:title="@string/menuSortPriceExpensive"
                 android:checkable="true" />
 

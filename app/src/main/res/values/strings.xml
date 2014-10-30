@@ -19,8 +19,8 @@
     <string-array name="array_order_by">
         <item>@string/menuSortDateRecent</item>
         <item>@string/menuSortDateOld</item>
-        <item>@string/menuSortPriceExpensive</item>
         <item>@string/menuSortPriceCheap</item>
+        <item>@string/menuSortPriceExpensive</item>
     </string-array>
 
     <string name="title_activity_categories">Categorías</string>
