@@ -1,6 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -115,13 +114,16 @@ public class SearchOffersActivity extends DrawerActivity {
     }
 
 
-    public static class SearchOffersFragment extends Fragment implements SearchOffersTaskListener {
+    public static class SearchOffersFragment extends FragmentReturn implements SearchOffersTaskListener {
         private SearchOffersListAdapter adapter;
         private ProgressBar progressBar;
 
         public SearchOffersFragment() {
-            SearchOffersGetTask offerTask = new SearchOffersGetTask();
-            offerTask.execute(this);
+        }
+
+        @Override
+        public String getReturnName() {
+            return "al listado";
         }
 
         @Override
@@ -132,6 +134,9 @@ public class SearchOffersActivity extends DrawerActivity {
             progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
             progressBar.setVisibility(View.VISIBLE);
+
+            SearchOffersGetTask offerTask = new SearchOffersGetTask();
+            offerTask.execute(this);
 
             // Set description into TextView
             final ListView listview = (ListView) rootView.findViewById(R.id.offer_lst);

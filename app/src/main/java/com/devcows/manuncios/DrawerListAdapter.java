@@ -113,6 +113,9 @@ public class DrawerListAdapter extends BaseAdapter {
                         holder.imageView.setBackgroundResource(android.R.drawable.btn_star);
                         break;
 
+                    case DrawerActivity.DRAWER_RETURN_POSITION:
+                        holder.imageView.setBackgroundResource(R.drawable.ic_arrow_undo);
+                        break;
                     default:
                         holder.imageView.setVisibility(View.GONE);
                         break;

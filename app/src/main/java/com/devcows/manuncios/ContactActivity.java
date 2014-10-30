@@ -45,9 +45,14 @@ public class ContactActivity extends DrawerActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class ContactFragment extends Fragment {
+    public static class ContactFragment extends FragmentReturn {
 
         public ContactFragment() {
+        }
+
+        @Override
+        public String getReturnName() {
+            return "a contactar";
         }
 
         @Override
