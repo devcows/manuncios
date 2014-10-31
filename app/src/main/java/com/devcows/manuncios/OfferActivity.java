@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,9 +36,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class OfferActivity extends DrawerActivity {
     private Offer offer;
 
+    private Drawable iconStarOn, iconStarOff;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        iconStarOn = getResources().getDrawable(android.R.drawable.btn_star_big_on);
+        iconStarOff = getResources().getDrawable(android.R.drawable.btn_star_big_off);
 
         Intent intent = getIntent();
         this.offer = (Offer) intent.getSerializableExtra(Utils.SELECTED_OFFER);
@@ -64,9 +70,9 @@ public class OfferActivity extends DrawerActivity {
         MyFavourites myFavourites = MyFavourites.getInstance();
 
         if (myFavourites.containsFavourite(offer)) {
-            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_on));
+            menu.findItem(R.id.favourite_offer).setIcon(iconStarOn);
         } else {
-            menu.findItem(R.id.favourite_offer).setIcon(getResources().getDrawable(android.R.drawable.btn_star_big_off));
+            menu.findItem(R.id.favourite_offer).setIcon(iconStarOff);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -88,11 +94,11 @@ public class OfferActivity extends DrawerActivity {
                 Toast toast;
                 if (myFavourites.containsFavourite(offer)) {
                     myFavourites.delFavourite(fa);
-                    item.setIcon(getResources().getDrawable(android.R.drawable.star_big_off));
+                    item.setIcon(iconStarOff);
                     toast = Toast.makeText(this, "Anuncio borrado de la lista de favoritos.", Toast.LENGTH_SHORT);
                 } else {
                     myFavourites.addFavourite(fa);
-                    item.setIcon(getResources().getDrawable(android.R.drawable.star_big_on));
+                    item.setIcon(iconStarOn);
                     toast = Toast.makeText(this, "Anuncio añadido a la lista de favoritos.", Toast.LENGTH_SHORT);
                 }
 
@@ -240,7 +246,7 @@ public class OfferActivity extends DrawerActivity {
                 LinearLayout lLayout = (LinearLayout) rootView.findViewById(R.id.images_layout);
                 ImageView imgView = new ImageView(context);
 
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(Utils.getPixels(context.getResources(), 300), ViewGroup.LayoutParams.FILL_PARENT);
                 imgView.setLayoutParams(layoutParams);
                 imgView.setScaleType(ImageView.ScaleType.FIT_XY);
 
