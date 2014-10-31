@@ -67,14 +67,25 @@
                 android:textIsSelectable="true"
                 android:textSize="16sp" />
 
-            <TableLayout
-                android:id="@+id/othersList"
+            <LinearLayout
+                android:id="@+id/othersListRow1"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/description"
                 android:orientation="horizontal"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="@dimen/activity_offer_normal_padding"
+                android:paddingRight="@dimen/activity_offer_normal_padding"
                 android:layout_marginTop="@dimen/activity_offer_top_textview" />
+
+            <LinearLayout
+                android:id="@+id/othersListRow2"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/othersListRow1"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_offer_normal_padding"
+                android:paddingRight="@dimen/activity_offer_normal_padding"
+                android:layout_marginTop="3dp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -88,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:text="Contact"
                     android:textColor="#114411"
@@ -100,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="5dp"
                     android:text="Go to the web"
                     android:textColor="#114411"
                     android:textSize="23sp" />

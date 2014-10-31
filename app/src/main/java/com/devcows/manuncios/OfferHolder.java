@@ -18,7 +18,7 @@ public class OfferHolder {
         this.txtFirstTitle = (TextView) view.findViewById(R.id.firstTitle);
         this.txtSecondTitle = (TextView) view.findViewById(R.id.secondTitle);
         this.txtDescription = (TextView) view.findViewById(R.id.description);
-        this.lLayoutRow1 = (LinearLayout) view.findViewById(R.id.othersList);
-        this.lLayoutRow2 = null;
+        this.lLayoutRow1 = (LinearLayout) view.findViewById(R.id.othersListRow1);
+        this.lLayoutRow2 = (LinearLayout) view.findViewById(R.id.othersListRow2);;
     }
 }
