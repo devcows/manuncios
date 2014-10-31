@@ -31,18 +31,13 @@ public class FavouriteFragment extends FragmentReturn {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mAdapter = new SearchOffersListAdapter(getActivity(), getFavouritesOffers());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favourite_list, container, false);
+        this.context = getActivity();
 
         // Set the adapter
+        mAdapter = new SearchOffersListAdapter(context, getFavouritesOffers());
         ListView listview = (ListView) view.findViewById(R.id.offer_lst);
         listview.setAdapter(mAdapter);
 
@@ -52,7 +47,7 @@ public class FavouriteFragment extends FragmentReturn {
                                     int position, long id) {
                 final Offer item = (Offer) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getActivity(), OfferActivity.class);
+                Intent intent = new Intent(context, OfferActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable(Utils.SELECTED_OFFER, item);

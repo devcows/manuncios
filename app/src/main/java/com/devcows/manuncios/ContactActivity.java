@@ -59,6 +59,7 @@ public class ContactActivity extends DrawerActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.activity_contact, container, false);
+            this.context = getActivity();
 
             String contact_url = getArguments().getString(Utils.CONTACT_URL);
 

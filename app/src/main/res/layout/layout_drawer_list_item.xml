@@ -8,7 +8,7 @@
         android:layout_height="25dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="?android:attr/activatedBackgroundIndicator"/>
+        android:background="?android:attr/activatedBackgroundIndicator" />
 
     <TextView
         android:id="@+id/title"

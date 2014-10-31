@@ -2,7 +2,6 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -113,7 +112,6 @@ public class OfferActivity extends DrawerActivity {
         private ProgressBar progressBar;
         private Offer offer;
         private View rootView;
-        private Context context;
 
         public OfferFragment() {
         }

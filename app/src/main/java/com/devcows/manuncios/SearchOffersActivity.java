@@ -1,5 +1,6 @@
 package com.devcows.manuncios;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -130,6 +131,7 @@ public class SearchOffersActivity extends DrawerActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.activity_search_offers, container, false);
+            this.context = getActivity();
 
             progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
@@ -138,11 +140,11 @@ public class SearchOffersActivity extends DrawerActivity {
             // Set description into TextView
             final ListView listview = (ListView) rootView.findViewById(R.id.offer_lst);
 
-            adapter = new SearchOffersListAdapter(getActivity(), new ArrayList<Offer>());
+            adapter = new SearchOffersListAdapter(context, new ArrayList<Offer>());
             listview.setAdapter(adapter);
 
             SearchQuery searchQuery = SearchQuery.getInstance();
-            Intent intent = getActivity().getIntent();
+            Intent intent = ((Activity) context).getIntent();
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 searchQuery.setDefaultsValues();
                 searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
@@ -181,7 +183,7 @@ public class SearchOffersActivity extends DrawerActivity {
                                         int position, long id) {
                     final Offer item = (Offer) parent.getItemAtPosition(position);
 
-                    Intent intent = new Intent(getActivity(), OfferActivity.class);
+                    Intent intent = new Intent(context, OfferActivity.class);
 
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Utils.SELECTED_OFFER, item);

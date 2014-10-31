@@ -1,5 +1,6 @@
 package com.devcows.manuncios;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,13 +70,16 @@ public class AdvancedSearchActivity extends DrawerActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.activity_advanced_search, container, false);
+            this.context = getActivity();
 
             progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
             progressBar.setVisibility(View.VISIBLE);
 
             SearchQuery searchQuery = SearchQuery.getInstance();
-            Intent intent = getActivity().getIntent();
+
+            //TODO change the arguments to receive activity and pass fragment arguments.
+            Intent intent = ((Activity) context).getIntent();
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 searchQuery.setString_query(intent.getStringExtra(SearchManager.QUERY));
             }
@@ -92,7 +96,7 @@ public class AdvancedSearchActivity extends DrawerActivity {
             all.setName("Todas");
             categories.add(0, all);
 
-            final ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_spinner_dropdown_item, categories);
+            final ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(context, android.R.layout.simple_spinner_dropdown_item, categories);
 
             Spinner spn_categories = (Spinner) rootView.findViewById(R.id.spn_categories);
             spn_categories.setAdapter(categoryArrayAdapter);
@@ -127,7 +131,7 @@ public class AdvancedSearchActivity extends DrawerActivity {
                 }
             }
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, publish_values); //selected item will look like a spinner set from XML
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, publish_values); //selected item will look like a spinner set from XML
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spn_publish_at.setAdapter(spinnerArrayAdapter);
             spn_publish_at.setSelection(selectedPublish_atPosition);
@@ -146,7 +150,7 @@ public class AdvancedSearchActivity extends DrawerActivity {
                 }
             }
 
-            ArrayAdapter<String> spinnerCommunitiesArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, communities_values); //selected item will look like a spinner set from XML
+            ArrayAdapter<String> spinnerCommunitiesArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, communities_values); //selected item will look like a spinner set from XML
             spinnerCommunitiesArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spn_communities.setAdapter(spinnerCommunitiesArrayAdapter);
             spn_communities.setSelection(selectedCommunityPosition);
@@ -195,13 +199,13 @@ public class AdvancedSearchActivity extends DrawerActivity {
                     searchQuery.setCommunity(community);
 
 
-                    Intent intent = new Intent(getActivity(), SearchOffersActivity.class);
+                    Intent intent = new Intent(context, SearchOffersActivity.class);
                     startActivity(intent);
 
                     Intent returnIntent = new Intent();
-                    getActivity().setResult(RESULT_OK, returnIntent);
+                    ((Activity) context).setResult(RESULT_OK, returnIntent);
 
-                    getActivity().finish();
+                    ((Activity) context).finish();
                 }
             });
 

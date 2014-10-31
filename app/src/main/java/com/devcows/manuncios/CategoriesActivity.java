@@ -50,7 +50,6 @@ public class CategoriesActivity extends DrawerActivity {
 
     public static class CategoriesFragment extends FragmentReturn {
         private final ApiMilAnuncios mApi = ApiMilAnuncios.getInstance();
-        private CategoriesListAdapter mAdapter;
 
         public CategoriesFragment() {
         }
@@ -61,22 +60,17 @@ public class CategoriesActivity extends DrawerActivity {
         }
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            mAdapter = new CategoriesListAdapter(getActivity(), mApi.getCategories());
-        }
-
-        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.activity_categories, container, false);
-            final Context context = rootView.getContext();
+            this.context = getActivity();
 
             ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
 
             progressBar.setIndeterminate(true);
             progressBar.setVisibility(View.VISIBLE);
+
+            CategoriesListAdapter mAdapter = new CategoriesListAdapter(context, mApi.getCategories());
 
             ListView listview = (ListView) rootView.findViewById(R.id.category_lst);
             listview.setAdapter(mAdapter);
