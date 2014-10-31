@@ -24,7 +24,24 @@ public class OfferAdapter {
         this.context = context;
     }
 
+    private TextView setOtherField(LayoutInflater mInflater, OfferOtherField other){
+        View viewAux = mInflater.inflate(R.layout.layout_other_list_item, null);
+        TextView txtView = (TextView) viewAux.findViewById(R.id.other_field);
+        txtView.setText(other.getText());
+
+        if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
+            GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
+            bgShape.setColor(Color.parseColor(other.getBoxColor()));
+        }
+
+        return txtView;
+    }
+
     public void fillOffer() {
+        fillOffer(false);
+    }
+
+    public void fillOffer(boolean setOtherFieldsOneRow) {
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
@@ -48,31 +65,41 @@ public class OfferAdapter {
                 for (int j = 0; j < offer.getOther().size() && j < 4; j++) {
                     OfferOtherField other = offer.getOther().get(j);
 
-                    View viewAux = mInflater.inflate(R.layout.layout_other_list_item, null);
-                    TextView txtView = (TextView) viewAux.findViewById(R.id.other_field);
-                    txtView.setText(other.getText());
+                    TextView txtView = setOtherField(mInflater, other);
+                    holderOffer.lLayoutRow1.addView(txtView);
+                }
 
-                    if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                        GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
-                        bgShape.setColor(Color.parseColor(other.getBoxColor()));
+                if (setOtherFieldsOneRow) {
+                    if (offer.getOther().size() >= 4) {
+                        TextView txtView = new TextView(context);
+                        txtView.setPadding(3, 0, 3, 0);
+
+                        txtView.setText("...");
+
+                        holderOffer.lLayoutRow1.addView(txtView);
                     }
 
-                    holderOffer.lLayoutRow1.addView(txtView);
+                    if (holderOffer.lLayoutRow2 != null){
+                        holderOffer.lLayoutRow2.setVisibility(View.GONE);
+                    }
+
+                } else{
+
+                    if (holderOffer.lLayoutRow2 != null){
+                        if (offer.getOther().size() < 4){
+                            holderOffer.lLayoutRow2.setVisibility(View.GONE);
+                        } else {
+
+                            for (int j = 4; j < offer.getOther().size(); j++) {
+                                OfferOtherField other = offer.getOther().get(j);
+
+                                TextView txtView = setOtherField(mInflater, other);
+                                holderOffer.lLayoutRow2.addView(txtView);
+                            }
+                        }
+                    }
                 }
-
-                if (offer.getOther().size() >= 4) {
-                    TextView txtView = new TextView(context);
-                    txtView.setPadding(3, 0, 3, 0);
-
-                    txtView.setText("...");
-
-                    holderOffer.lLayoutRow1.addView(txtView);
-                }
-
             }
-
-            //TODO lLayoutRow2
-
 
             if (holderOffer.imageView != null) {
                 if (offer.getImageUri() != null && !offer.getImageUri().isEmpty()) {

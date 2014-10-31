@@ -16,9 +16,14 @@ public class OfferOtherField implements Serializable {
         return text;
     }
 
+    private String capitalize(String line)
+    {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    }
+
     //setters
     public void setText(String text) {
-        this.text = text;
+        this.text = capitalize(text);
     }
 
     public String getTextColor() {

@@ -126,60 +126,19 @@ public class OfferActivity extends DrawerActivity {
                                  Bundle savedInstanceState) {
             this.rootView = inflater.inflate(R.layout.activity_offer, container, false);
             this.context = getActivity();
+            this.offer = (Offer) getArguments().getSerializable(Utils.SELECTED_OFFER);
 
             progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
             progressBar.setVisibility(View.VISIBLE);
 
-            this.offer = (Offer) getArguments().getSerializable(Utils.SELECTED_OFFER);
-
             OfferGetTask offerGetTask = new OfferGetTask();
             offerGetTask.setOffer(offer);
             offerGetTask.execute(this);
 
-            TextView txtFirstTitle = (TextView) rootView.findViewById(R.id.firstTitle);
-            txtFirstTitle.setText(offer.getFirstTitle());
-            TextView txtSecondTitle = (TextView) rootView.findViewById(R.id.secondTitle);
-            txtSecondTitle.setText(offer.getSecondTitle());
-            TextView txtDescription = (TextView) rootView.findViewById(R.id.description);
-            txtDescription.setText(offer.getDescription());
-            //not working ok.
-            //Linkify.addLinks(txtDescription, Linkify.PHONE_NUMBERS);
-
-            TableLayout tl = (TableLayout) rootView.findViewById(R.id.othersList);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            TableRow tr1 = new TableRow(context);
-            tr1.setLayoutParams(layoutParams);
-
-            TableRow tr2 = new TableRow(context);
-            tr2.setLayoutParams(layoutParams);
-
-            LayoutInflater mInflater = (LayoutInflater)
-                    context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-
-            for (int i = 0; i < offer.getOther().size(); i++) {
-                OfferOtherField other = offer.getOther().get(i);
-
-                View view = mInflater.inflate(R.layout.layout_other_list_item, null);
-                TextView txtView = (TextView) view.findViewById(R.id.other_field);
-                txtView.setText(other.getText());
-
-                if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
-                    GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
-                    bgShape.setColor(Color.parseColor(other.getBoxColor()));
-                }
-
-                if (i <= 3) {
-                    tr1.addView(txtView);
-                } else {
-                    tr2.addView(txtView);
-                }
-            }
-
-            tl.addView(tr1, layoutParams);
-            if (offer.getOther().size() > 3) {
-                tl.addView(tr2, layoutParams);
-            }
+            OfferHolder holder = new OfferHolder(rootView);
+            OfferAdapter adapter = new OfferAdapter(holder, offer, context);
+            adapter.fillOffer();
 
             Button btnLink = (Button) rootView.findViewById(R.id.goto_url);
             btnLink.setText("Ir a la web");
@@ -212,7 +171,6 @@ public class OfferActivity extends DrawerActivity {
                 HorizontalScrollView hsv = (HorizontalScrollView) rootView.findViewById(R.id.hsv1);
                 hsv.setVisibility(View.GONE);
             }
-
 
             return rootView;
         }

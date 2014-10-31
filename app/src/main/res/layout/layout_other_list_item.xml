@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="profesional"
+    android:minWidth="80dp"
     android:gravity="center"
     android:background="@drawable/rounded_corner_other_field"
     android:padding="3dp" />

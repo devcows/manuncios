@@ -37,7 +37,7 @@
         android:paddingLeft="@dimen/activity_offer_normal_padding"
         android:paddingRight="@dimen/activity_offer_normal_padding"
         android:layout_marginRight="50dp"
-        android:paddingTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="Second title dasd as dasd asd as da dsa dasd asd asd asd sad dasd asdasd dad ada sda"
         android:textColor="#114411"
         android:textSize="18sp" />
@@ -50,23 +50,22 @@
         android:layout_below="@+id/secondTitle"
         android:paddingLeft="@dimen/activity_offer_normal_padding"
         android:paddingRight="@dimen/activity_offer_normal_padding"
-        android:paddingTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="Large description dsad asdsa das d asda sdas das das das das das asd asdasd asdasada dsd as dada"
         android:textColor="#114411"
         android:textSize="16sp" />
 
 
     <LinearLayout
-        android:id="@+id/othersList"
+        android:id="@+id/othersListRow1"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/description"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_offer_normal_padding"
         android:paddingRight="@dimen/activity_offer_normal_padding"
         android:paddingTop="5dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
 
 </RelativeLayout>
