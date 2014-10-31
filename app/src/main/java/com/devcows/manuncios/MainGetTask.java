@@ -24,7 +24,6 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
 
         //initializers
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .build();
 
@@ -33,7 +32,6 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
                 .denyCacheImageMultipleSizesInMemory()
                 .defaultDisplayImageOptions(defaultOptions)
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .memoryCacheSize(5 * 1024 * 1024) // 1 Mb
                 .diskCacheSize(20 * 1024 * 1024) // 20 Mb
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .build();

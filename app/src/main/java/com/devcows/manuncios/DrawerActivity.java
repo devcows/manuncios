@@ -44,6 +44,8 @@ public class DrawerActivity extends Activity {
     private List<String> mOptionsTitlesSecond;
     private FragmentReturn mReturnFragment;
 
+    private String shareAppTitle = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,10 @@ public class DrawerActivity extends Activity {
         mTitle = mDrawerTitle = getTitle();
         mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
         mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
+
+
+        shareAppTitle = getResources().getString(R.string.app_name) + " aplicación android";
+
         orginalTitlesFirstLength = mOptionsTitlesFirst.size();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,11 +119,13 @@ public class DrawerActivity extends Activity {
         // If the nav drawer is open, hide action items related to the content view
 
         Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
-        if (fragment instanceof FavouriteFragment) {
-            for (int i = 0; i < menu.size(); i++) {
-                MenuItem item = menu.getItem(i);
-                item.setVisible(false);
-            }
+
+        //conditions to set visible
+        boolean visible = !(fragment instanceof FavouriteFragment);
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            item.setVisible(visible);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -210,6 +218,8 @@ public class DrawerActivity extends Activity {
 
             mReturnFragment = null;
             mReturnPosition = -1;
+
+            setTitle(mDrawerTitle);
         }
     }
 
@@ -281,7 +291,7 @@ public class DrawerActivity extends Activity {
         try {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name) + " aplicación android");
+            i.putExtra(Intent.EXTRA_SUBJECT, shareAppTitle);
 
             String sAux = "Te recomiendo esta aplicación\nhttps://play.google.com/store/apps/details?id=%s&hl=es\n";
             sAux = String.format(sAux, this.getPackageName());
