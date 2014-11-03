@@ -19,6 +19,7 @@ public class OfferHolder {
         this.txtSecondTitle = (TextView) view.findViewById(R.id.secondTitle);
         this.txtDescription = (TextView) view.findViewById(R.id.description);
         this.lLayoutRow1 = (LinearLayout) view.findViewById(R.id.othersListRow1);
-        this.lLayoutRow2 = (LinearLayout) view.findViewById(R.id.othersListRow2);;
+        this.lLayoutRow2 = (LinearLayout) view.findViewById(R.id.othersListRow2);
+        ;
     }
 }

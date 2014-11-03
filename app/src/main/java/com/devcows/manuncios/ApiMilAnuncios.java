@@ -71,7 +71,7 @@ public class ApiMilAnuncios {
         return c;
     }
 
-    private void loadCategories() {
+    public void loadCategories() {
         categories.clear();
 
         Document doc = Utils.getDocumentFromUrl("http://www.milanuncios.com");

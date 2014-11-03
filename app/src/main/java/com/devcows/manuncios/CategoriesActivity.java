@@ -10,11 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.devcows.manuncios.models.Category;
+
+import java.util.List;
 
 
 public class CategoriesActivity extends DrawerActivity {
@@ -48,8 +52,11 @@ public class CategoriesActivity extends DrawerActivity {
     }
 
 
-    public static class CategoriesFragment extends FragmentReturn {
+    public static class CategoriesFragment extends FragmentReturn implements CategoriesTaskListener {
         private final ApiMilAnuncios mApi = ApiMilAnuncios.getInstance();
+        private CategoriesListAdapter mAdapter;
+        private View rootView;
+        private ProgressBar progressBar;
 
         public CategoriesFragment() {
         }
@@ -62,15 +69,18 @@ public class CategoriesActivity extends DrawerActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.activity_categories, container, false);
+            final CategoriesTaskListener self = this;
             this.context = getActivity();
+            this.rootView = inflater.inflate(R.layout.activity_categories, container, false);
 
-            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
+            LinearLayout empty = (LinearLayout) rootView.findViewById(R.id.empty_list);
+            empty.setVisibility(View.GONE);
 
+            progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
             progressBar.setIndeterminate(true);
             progressBar.setVisibility(View.VISIBLE);
 
-            CategoriesListAdapter mAdapter = new CategoriesListAdapter(context, mApi.getCategories());
+            mAdapter = new CategoriesListAdapter(context, mApi.getCategories());
 
             ListView listview = (ListView) rootView.findViewById(R.id.category_lst);
             listview.setAdapter(mAdapter);
@@ -91,11 +101,40 @@ public class CategoriesActivity extends DrawerActivity {
                 }
             });
 
-            progressBar.setVisibility(View.INVISIBLE);
+            Button btn_retry = (Button) rootView.findViewById(R.id.btn_retry);
+            btn_retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout empty = (LinearLayout) rootView.findViewById(R.id.empty_list);
+                    empty.setVisibility(View.GONE);
+
+                    progressBar = (ProgressBar) rootView.findViewById(R.id.pbHeaderProgress);
+                    progressBar.setIndeterminate(true);
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    CategoriesGetTask task = new CategoriesGetTask();
+                    task.execute(self);
+                }
+            });
+
+            CategoriesGetTask task = new CategoriesGetTask();
+            task.execute(self);
 
             return rootView;
         }
 
+        @Override
+        public void onCategoriesGetResult(List<Category> categories) {
+            progressBar.setVisibility(View.INVISIBLE);
+
+            mAdapter.setObjects(categories);
+            mAdapter.notifyDataSetChanged();
+
+            if (mAdapter.isEmpty()) {
+                LinearLayout empty = (LinearLayout) rootView.findViewById(R.id.empty_list);
+                empty.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
 
