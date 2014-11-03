@@ -24,7 +24,7 @@ public class OfferAdapter {
         this.context = context;
     }
 
-    private TextView setOtherField(LayoutInflater mInflater, OfferOtherField other){
+    private TextView setOtherField(LayoutInflater mInflater, OfferOtherField other) {
         View viewAux = mInflater.inflate(R.layout.layout_other_list_item, null);
         TextView txtView = (TextView) viewAux.findViewById(R.id.other_field);
         txtView.setText(other.getText());
@@ -79,14 +79,14 @@ public class OfferAdapter {
                         holderOffer.lLayoutRow1.addView(txtView);
                     }
 
-                    if (holderOffer.lLayoutRow2 != null){
+                    if (holderOffer.lLayoutRow2 != null) {
                         holderOffer.lLayoutRow2.setVisibility(View.GONE);
                     }
 
-                } else{
+                } else {
 
-                    if (holderOffer.lLayoutRow2 != null){
-                        if (offer.getOther().size() < 4){
+                    if (holderOffer.lLayoutRow2 != null) {
+                        if (offer.getOther().size() < 4) {
                             holderOffer.lLayoutRow2.setVisibility(View.GONE);
                         } else {
 
