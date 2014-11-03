@@ -102,6 +102,9 @@ public class SearchQuery implements Serializable {
 
     public void setString_query(String string_query) {
         this.string_query = string_query;
+        
+        MyHistory myHistory = MyHistory.getInstance();
+        myHistory.addQuery(string_query);
     }
 
     public void setOrder_by(Integer order_by) {

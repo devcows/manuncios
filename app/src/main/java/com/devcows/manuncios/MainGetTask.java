@@ -48,6 +48,9 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
 
         MyFavourites.setContext(context);
         MyFavourites.getInstance();
+
+        MyHistory.setContext(context);
+        MyHistory.getInstance();
         return null;
     }
 

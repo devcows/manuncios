@@ -67,7 +67,7 @@ public class OfferAdapter {
 
             int totalElements = 4;
 
-            if (setOtherFieldsOneRow){
+            if (setOtherFieldsOneRow) {
                 totalElements = 3;
             }
 
