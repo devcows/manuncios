@@ -97,6 +97,7 @@ public class DrawerListAdapter extends BaseAdapter {
 
                     case DrawerActivity.DRAWER_SHARE_POSITION:
                         holder.imageView.setBackgroundResource(R.drawable.ic_action_share_holo_light);
+                        view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
                         break;
 
                     default:

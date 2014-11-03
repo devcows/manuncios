@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:background="@color/general_background">
+    android:background="@drawable/rounded_corner_offer_list">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -73,8 +73,8 @@
                 android:layout_height="30dp"
                 android:layout_below="@+id/description"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/activity_offer_normal_padding"
-                android:paddingRight="@dimen/activity_offer_normal_padding"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:layout_marginTop="@dimen/activity_offer_top_textview" />
 
             <LinearLayout
@@ -83,9 +83,9 @@
                 android:layout_height="30dp"
                 android:layout_below="@+id/othersListRow1"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/activity_offer_normal_padding"
-                android:paddingRight="@dimen/activity_offer_normal_padding"
-                android:layout_marginTop="3dp" />
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:layout_marginTop="1dp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
