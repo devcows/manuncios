@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.devcows.manuncios.models.Offer;
@@ -28,6 +30,10 @@ public class OfferAdapter {
         View viewAux = mInflater.inflate(R.layout.layout_other_list_item, null);
         TextView txtView = (TextView) viewAux.findViewById(R.id.other_field);
         txtView.setText(other.getText());
+
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        llp.setMargins(1, 0, 1, 0); // llp.setMargins(left, top, right, bottom);
+        txtView.setLayoutParams(llp);
 
         if (other.getBoxColor() != null && other.getBoxColor().length() > 0) {
             GradientDrawable bgShape = (GradientDrawable) txtView.getBackground();
@@ -59,10 +65,16 @@ public class OfferAdapter {
                 holderOffer.txtDescription.setText(offer.getDescription());
             }
 
+            int totalElements = 4;
+
+            if (setOtherFieldsOneRow){
+                totalElements = 3;
+            }
+
             if (holderOffer.lLayoutRow1 != null) {
                 holderOffer.lLayoutRow1.removeAllViews();
 
-                for (int j = 0; j < offer.getOther().size() && j < 4; j++) {
+                for (int j = 0; j < offer.getOther().size() && j < totalElements; j++) {
                     OfferOtherField other = offer.getOther().get(j);
 
                     TextView txtView = setOtherField(mInflater, other);
@@ -70,7 +82,7 @@ public class OfferAdapter {
                 }
 
                 if (setOtherFieldsOneRow) {
-                    if (offer.getOther().size() >= 4) {
+                    if (offer.getOther().size() >= totalElements) {
                         TextView txtView = new TextView(context);
                         txtView.setPadding(3, 0, 3, 0);
 
@@ -86,11 +98,11 @@ public class OfferAdapter {
                 } else {
 
                     if (holderOffer.lLayoutRow2 != null) {
-                        if (offer.getOther().size() < 4) {
+                        if (offer.getOther().size() < totalElements) {
                             holderOffer.lLayoutRow2.setVisibility(View.GONE);
                         } else {
 
-                            for (int j = 4; j < offer.getOther().size(); j++) {
+                            for (int j = totalElements; j < offer.getOther().size(); j++) {
                                 OfferOtherField other = offer.getOther().get(j);
 
                                 TextView txtView = setOtherField(mInflater, other);
