@@ -154,6 +154,8 @@ public class DrawerActivity extends Activity {
             } else {
                 super.onBackPressed();
             }
+
+            invalidateOptionsMenu();
         }
     }
 
@@ -188,6 +190,7 @@ public class DrawerActivity extends Activity {
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            fragmentManager.executePendingTransactions();
 
             //mark is is needed
             markOption(position);
