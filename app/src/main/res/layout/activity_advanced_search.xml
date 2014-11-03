@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="100dp"
-                    android:text="Localidad:"
+                    android:text="Ubicación:"
                     android:textSize="16sp"
                     android:layout_marginTop="@dimen/activity_advanced_search_margin_top_labels" />
 
