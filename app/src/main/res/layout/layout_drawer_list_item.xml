@@ -2,24 +2,42 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <!--<ImageView-->
+        <!--android:id="@+id/icon"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@style/activated_background" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="@style/text_apperance_small"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingLeft="16dp"-->
+        <!--android:paddingRight="16dp"-->
+        <!--android:textColor="#000"-->
+        <!--android:text="item in list"-->
+        <!--android:layout_toRightOf="@+id/icon"-->
+        <!--android:minHeight="@style/text_apperance_small_height" />-->
+
     <ImageView
         android:id="@+id/icon"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/activatedBackgroundIndicator" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="#000"
         android:text="item in list"
-        android:layout_toRightOf="@+id/icon"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+        android:layout_toRightOf="@+id/icon" />
 </RelativeLayout>

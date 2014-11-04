@@ -2,6 +2,8 @@ package com.devcows.manuncios;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +72,7 @@ public class DrawerListAdapter extends BaseAdapter {
             }
         } else {
 
-            if (view == null) {
+            if (view == null ) {
                 view = mInflater.inflate(R.layout.layout_drawer_list_item, null);
                 holder = new ViewHolder();
 
@@ -80,6 +82,15 @@ public class DrawerListAdapter extends BaseAdapter {
                 view.setTag(holder);
             } else {
                 holder = (ViewHolder) view.getTag();
+
+                if(holder == null){
+                    holder = new ViewHolder();
+
+                    holder.txtTitle = (TextView) view.findViewById(R.id.title);
+                    holder.imageView = (ImageView) view.findViewById(R.id.icon);
+
+                    view.setTag(holder);
+                }
             }
 
             String rowItem = (String) getItem(i);
