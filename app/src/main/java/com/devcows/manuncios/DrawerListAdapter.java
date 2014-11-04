@@ -82,55 +82,49 @@ public class DrawerListAdapter extends BaseAdapter {
                 view.setTag(holder);
             } else {
                 holder = (ViewHolder) view.getTag();
-
-                if(holder == null){
-                    holder = new ViewHolder();
-
-                    holder.txtTitle = (TextView) view.findViewById(R.id.title);
-                    holder.imageView = (ImageView) view.findViewById(R.id.icon);
-
-                    view.setTag(holder);
-                }
             }
 
-            String rowItem = (String) getItem(i);
-            holder.txtTitle.setText(rowItem);
+            if(view != null && holder != null) {
 
-            //set icon.
-            if (i > objectsFirst.size() - 1) {
-                int newI = i - objectsFirst.size();
+                String rowItem = (String) getItem(i);
+                holder.txtTitle.setText(rowItem);
 
-                switch (newI) {
-                    case DrawerActivity.DRAWER_RATE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_edit_holo_light);
-                        view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
-                        break;
+                //set icon.
+                if (i > objectsFirst.size() - 1) {
+                    int newI = i - objectsFirst.size();
 
-                    case DrawerActivity.DRAWER_SHARE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_share_holo_light);
-                        view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
-                        break;
+                    switch (newI) {
+                        case DrawerActivity.DRAWER_RATE_POSITION:
+                            holder.imageView.setBackgroundResource(R.drawable.ic_action_edit_holo_light);
+                            view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
+                            break;
 
-                    default:
-                        holder.imageView.setVisibility(View.GONE);
-                        break;
-                }
-            } else {
-                switch (i) {
-                    case DrawerActivity.DRAWER_START_POSITION:
-                        holder.imageView.setBackgroundResource(android.R.drawable.ic_input_get);
-                        break;
+                        case DrawerActivity.DRAWER_SHARE_POSITION:
+                            holder.imageView.setBackgroundResource(R.drawable.ic_action_share_holo_light);
+                            view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
+                            break;
 
-                    case DrawerActivity.DRAWER_FAVOURITE_POSITION:
-                        holder.imageView.setBackgroundResource(android.R.drawable.btn_star);
-                        break;
+                        default:
+                            holder.imageView.setVisibility(View.GONE);
+                            break;
+                    }
+                } else {
+                    switch (i) {
+                        case DrawerActivity.DRAWER_START_POSITION:
+                            holder.imageView.setBackgroundResource(android.R.drawable.ic_input_get);
+                            break;
 
-                    case DrawerActivity.DRAWER_RETURN_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_arrow_undo);
-                        break;
-                    default:
-                        holder.imageView.setVisibility(View.GONE);
-                        break;
+                        case DrawerActivity.DRAWER_FAVOURITE_POSITION:
+                            holder.imageView.setBackgroundResource(android.R.drawable.btn_star);
+                            break;
+
+                        case DrawerActivity.DRAWER_RETURN_POSITION:
+                            holder.imageView.setBackgroundResource(R.drawable.ic_arrow_undo);
+                            break;
+                        default:
+                            holder.imageView.setVisibility(View.GONE);
+                            break;
+                    }
                 }
             }
         }
