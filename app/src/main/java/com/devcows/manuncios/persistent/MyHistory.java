@@ -1,4 +1,4 @@
-package com.devcows.manuncios;
+package com.devcows.manuncios.persistent;
 
 import java.util.ArrayList;
 import java.util.List;

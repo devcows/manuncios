@@ -24,7 +24,9 @@ public class DrawerActivity extends Activity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
-    public final static int DRAWER_RETURN_POSITION = 3;
+    public final static int DRAWER_HISTORY_POSITION = 3;
+    public final static int DRAWER_RETURN_POSITION = 4;
+
 
     public final static int DRAWER_RATE_POSITION = 0;
     public final static int DRAWER_SHARE_POSITION = 1;
@@ -265,6 +267,11 @@ public class DrawerActivity extends Activity {
                 case DRAWER_FAVOURITE_POSITION:
                     setReturnFragment();
                     showFragment(new FavouriteFragment(), DRAWER_FAVOURITE_POSITION);
+                    break;
+
+                case DRAWER_HISTORY_POSITION:
+                    setReturnFragment();
+                    showFragment(new HistoryFragment(), DRAWER_HISTORY_POSITION);
                     break;
 
                 case DRAWER_RETURN_POSITION:
