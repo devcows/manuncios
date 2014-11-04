@@ -1,16 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AdvancedSearchActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_search"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
-        android:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="Sort by">
         <menu>
             <item

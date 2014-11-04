@@ -1,9 +1,9 @@
 package com.devcows.manuncios;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +14,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.devcows.manuncios.models.Category;
 
 import java.util.List;
 
 
-public class CategoriesActivity extends DrawerActivity {
+public class CategoriesActivity extends DrawerActivity implements SearchView.OnQueryTextListener {
+
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,34 @@ public class CategoriesActivity extends DrawerActivity {
     }
 
     @Override
+    public boolean onQueryTextSubmit(String s) {
+        SearchQuery searchQuery = SearchQuery.getInstance();
+        searchQuery.setDefaultsValues();
+
+        searchQuery.setString_query(s);
+
+        Intent intent = new Intent(this, SearchOffersActivity.class);
+        startActivity(intent);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_category, menu);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView SearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        SearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        SearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         return true;
     }
@@ -48,7 +69,14 @@ public class CategoriesActivity extends DrawerActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                mSearchView.setIconified(false);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

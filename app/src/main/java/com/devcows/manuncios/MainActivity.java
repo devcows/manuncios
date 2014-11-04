@@ -1,15 +1,15 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 
-public class MainActivity extends Activity implements MainTaskListener {
+public class MainActivity extends ActionBarActivity implements MainTaskListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

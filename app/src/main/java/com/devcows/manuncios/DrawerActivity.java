@@ -1,8 +1,5 @@
 package com.devcows.manuncios;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,6 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +20,7 @@ import android.widget.ListView;
 import java.util.List;
 
 
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends ActionBarActivity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
@@ -72,8 +72,8 @@ public class DrawerActivity extends Activity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -85,13 +85,13 @@ public class DrawerActivity extends Activity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getSupportActionBar().setTitle(mTitle);
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getSupportActionBar().setTitle(mDrawerTitle);
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -118,7 +118,7 @@ public class DrawerActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
         //conditions to set visible
         boolean visible = !(fragment instanceof FavouriteFragment);
@@ -155,7 +155,7 @@ public class DrawerActivity extends Activity {
                 super.onBackPressed();
             }
 
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
         }
     }
 
@@ -188,7 +188,7 @@ public class DrawerActivity extends Activity {
 
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             fragmentManager.executePendingTransactions();
 
@@ -200,7 +200,7 @@ public class DrawerActivity extends Activity {
     }
 
     private void setReturnFragment() {
-        mReturnFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
+        mReturnFragment = (FragmentReturn) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         mReturnPosition = currentPosition;
 
         mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
@@ -309,7 +309,7 @@ public class DrawerActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(title);
+        getSupportActionBar().setTitle(title);
     }
 
     public void setDrawerTitle(CharSequence title) {
