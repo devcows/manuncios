@@ -1,4 +1,4 @@
-package com.devcows.manuncios;
+package com.devcows.manuncios.persistent;
 
 import android.content.Context;
 

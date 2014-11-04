@@ -30,6 +30,7 @@
         <item>Imagen-logo</item>
         <item>Inicio</item>
         <item>Favoritos</item>
+        <item>Historial</item>
     </string-array>
 
     <string-array name="drawer_array_second">

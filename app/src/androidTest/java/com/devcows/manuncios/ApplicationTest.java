@@ -8,6 +8,7 @@ import android.util.Log;
 import com.devcows.manuncios.models.Category;
 import com.devcows.manuncios.models.Favourite;
 import com.devcows.manuncios.models.Offer;
+import com.devcows.manuncios.persistent.MyFavourites;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         item.setUrl("http://www.milanuncios.com/motor/");
 
         SearchQuery searchQuery = SearchQuery.getInstance();
+        searchQuery.setDefaultsValues();
         searchQuery.setCategory(item);
 
         SearchOffersGetTask offerTask = new SearchOffersGetTask();

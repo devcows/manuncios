@@ -1,6 +1,7 @@
 package com.devcows.manuncios;
 
 import com.devcows.manuncios.models.Category;
+import com.devcows.manuncios.persistent.MyHistory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class SearchQuery implements Serializable {
 
     public void setString_query(String string_query) {
         this.string_query = string_query;
-        
+
         MyHistory myHistory = MyHistory.getInstance();
         myHistory.addQuery(string_query);
     }
