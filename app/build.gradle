@@ -7,8 +7,8 @@ android {
         applicationId 'com.devcows.manuncios'
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 8
-        versionName "1.06"
+        versionCode 9
+        versionName "1.07"
     }
     buildTypes {
         release {
