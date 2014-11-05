@@ -14,16 +14,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp" />
+        android:layout_above="@+id/txtVersion"
+        android:layout_marginBottom="50dp"/>
 
     <TextView
         android:id="@+id/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:text="Versión"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="450dp" />
+        android:layout_marginBottom="20dp" />
 </RelativeLayout>
 
 

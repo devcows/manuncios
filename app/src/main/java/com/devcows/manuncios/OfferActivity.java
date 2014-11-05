@@ -214,7 +214,7 @@ public class OfferActivity extends DrawerActivity {
                     }
                 });
 
-                ImageLoader imgLoader = ImageLoader.getInstance();
+                ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
                 imgLoader.displayImage(imageUri, imgView);
 
                 lLayout.addView(imgView);

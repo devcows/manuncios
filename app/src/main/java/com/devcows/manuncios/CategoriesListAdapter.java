@@ -69,7 +69,7 @@ public class CategoriesListAdapter extends BaseAdapter {
         Category rowItem = (Category) getItem(i);
         holder.txtTitle.setText(rowItem.getName());
 
-        ImageLoader imgLoader = ImageLoader.getInstance();
+        ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
         imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
 
         return view;

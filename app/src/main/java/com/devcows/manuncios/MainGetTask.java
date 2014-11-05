@@ -25,21 +25,7 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
         this.listeners = listeners;
 
         //initializers
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisk(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .defaultDisplayImageOptions(defaultOptions)
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCacheSize(20 * 1024 * 1024) // 20 Mb
-                .tasksProcessingOrder(QueueProcessingType.FIFO)
-                .build();
-
-        ImageLoader imgLoader = ImageLoader.getInstance();
-        imgLoader.init(config);
+        Utils.getImageLoaderInstance(context);
 
         ApiMilAnuncios.getInstance();
         SearchQuery.getInstance();

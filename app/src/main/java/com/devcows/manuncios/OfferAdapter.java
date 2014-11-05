@@ -115,7 +115,7 @@ public class OfferAdapter {
 
             if (holderOffer.imageView != null) {
                 if (offer.getImageUri() != null && !offer.getImageUri().isEmpty()) {
-                    ImageLoader imgLoader = ImageLoader.getInstance();
+                    ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
                     imgLoader.displayImage(offer.getImageUri(), holderOffer.imageView);
                 } else {
                     holderOffer.imageView.setVisibility(View.GONE);
