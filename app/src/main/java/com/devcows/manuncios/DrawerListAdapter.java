@@ -91,12 +91,12 @@ public class DrawerListAdapter extends BaseAdapter {
 
                 switch (newI) {
                     case DrawerActivity.DRAWER_RATE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_edit_holo_light);
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_edit);
                         view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
                         break;
 
                     case DrawerActivity.DRAWER_SHARE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_share_holo_light);
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_share);
                         view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
                         break;
 
@@ -111,11 +111,15 @@ public class DrawerListAdapter extends BaseAdapter {
                         break;
 
                     case DrawerActivity.DRAWER_FAVOURITE_POSITION:
-                        holder.imageView.setBackgroundResource(android.R.drawable.btn_star);
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_important);
+                        break;
+
+                    case DrawerActivity.DRAWER_HISTORY_POSITION:
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_time);
                         break;
 
                     case DrawerActivity.DRAWER_RETURN_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_arrow_undo);
+                        holder.imageView.setBackgroundResource(R.drawable.ic_action_undo);
                         break;
                     default:
                         holder.imageView.setVisibility(View.GONE);

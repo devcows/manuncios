@@ -22,7 +22,7 @@ public class MyFavourites extends MyObjects<Favourite> {
     }
 
     public MyFavourites() {
-        super();
+        super("favourites.bin");
     }
 
     public static MyFavourites getInstance() {
@@ -48,11 +48,11 @@ public class MyFavourites extends MyObjects<Favourite> {
         }
     }
 
-    public boolean containsFavourite(Favourite favourite) {
+    public boolean containsFavourite(Offer offer) {
         boolean bok = false;
 
-        if (favourite != null && favourite.getOffer() != null) {
-            String offerId = favourite.getOffer().getId();
+        if (offer != null) {
+            String offerId = offer.getId();
             bok = containsObject(offerId);
         }
 
