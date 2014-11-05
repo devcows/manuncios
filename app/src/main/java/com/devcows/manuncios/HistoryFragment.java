@@ -25,7 +25,7 @@ public class HistoryFragment extends FragmentReturn {
         return "a historial";
     }
 
-    private List<String> getFavouritesOffers() {
+    private List<String> getHistoryList() {
         MyHistory myHistory = MyHistory.getInstance();
         List<String> list = myHistory.getHistoryList();
 
@@ -33,14 +33,13 @@ public class HistoryFragment extends FragmentReturn {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favourite_list, container, false);
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
         this.context = getActivity();
 
         // Set the adapter
-        //mAdapter = new ArrayAdapter<String>(context, getFavouritesOffers());
-        ListView listview = (ListView) view.findViewById(R.id.offer_lst);
+        mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getHistoryList());
+        ListView listview = (ListView) view.findViewById(R.id.history_lst);
         listview.setAdapter(mAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,7 +65,8 @@ public class HistoryFragment extends FragmentReturn {
     public void onResume() {
         super.onResume();
 
-        //mAdapter.setObjects(getFavouritesOffers());
+        mAdapter.clear();
+        mAdapter.addAll(getHistoryList());
 
         // fire the event
         mAdapter.notifyDataSetChanged();

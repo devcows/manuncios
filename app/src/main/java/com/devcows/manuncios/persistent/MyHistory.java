@@ -20,7 +20,7 @@ public class MyHistory extends MyObjects<String> {
     }
 
     public MyHistory() {
-        super();
+        super("history.bin");
     }
 
     public static MyHistory getInstance() {
@@ -35,6 +35,11 @@ public class MyHistory extends MyObjects<String> {
     public void addQuery(String query) {
         if (query != null && !query.isEmpty()) {
             addObject(query, query);
+        }
+
+        if (getObjects().size() > 20){
+            String key = (String) getObjects().keySet().toArray()[0];
+            delQuery(key);
         }
     }
 

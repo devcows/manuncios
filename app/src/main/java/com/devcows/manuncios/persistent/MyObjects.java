@@ -13,9 +13,7 @@ import java.util.LinkedHashMap;
 
 public class MyObjects<T> {
     private HashMap<String, T> objects;
-    private T tType;
-
-    private final String FILE_NAME = tType.getClass().getName() + ".bin";
+    private String FILE_NAME;
 
     private static Context context = null;
 
@@ -24,13 +22,14 @@ public class MyObjects<T> {
     }
 
     public HashMap<String, T> getObjects() {
-        return objects;
+        return this.objects;
     }
 
-    public MyObjects() {
+    public MyObjects(String file_name) {
         //search and save to file.
+        this.FILE_NAME = file_name;
 
-        objects = new LinkedHashMap<String, T>();
+        this.objects = new LinkedHashMap<String, T>();
         try {
             readFile();
         } catch (Exception ex) {
@@ -46,7 +45,7 @@ public class MyObjects<T> {
         if (file.exists()) {
             FileInputStream fis = context.openFileInput(FILE_NAME);
             ObjectInputStream is = new ObjectInputStream(fis);
-            objects = (HashMap<String, T>) is.readObject();
+            this.objects = (HashMap<String, T>) is.readObject();
             is.close();
         }
     }
