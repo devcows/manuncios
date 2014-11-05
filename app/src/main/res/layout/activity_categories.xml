@@ -33,6 +33,7 @@
             android:id="@+id/label_empty_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="Parece que no hay conexión a internet." />
 
         <Button

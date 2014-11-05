@@ -123,7 +123,7 @@ public class DrawerActivity extends Activity {
         Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
 
         //conditions to set visible
-        boolean visible = !(fragment instanceof FavouriteFragment);
+        boolean visible = !(fragment instanceof FavouriteFragment || fragment instanceof HistoryFragment);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

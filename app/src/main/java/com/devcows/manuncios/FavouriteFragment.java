@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.devcows.manuncios.models.Offer;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class FavouriteFragment extends FragmentReturn {
     private SearchOffersListAdapter mAdapter;
+    private View rootView;
 
     public FavouriteFragment() {
     }
@@ -31,15 +33,25 @@ public class FavouriteFragment extends FragmentReturn {
         return offers;
     }
 
+    private void setVisibleEmptyList() {
+        LinearLayout empty_list = (LinearLayout) rootView.findViewById(R.id.empty_list);
+
+        if (mAdapter.isEmpty()) {
+            empty_list.setVisibility(View.VISIBLE);
+        } else {
+            empty_list.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favourite_list, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_favourite_list, container, false);
         this.context = getActivity();
 
         // Set the adapter
         mAdapter = new SearchOffersListAdapter(context, getFavouritesOffers());
-        ListView listview = (ListView) view.findViewById(R.id.offer_lst);
+        ListView listview = (ListView) rootView.findViewById(R.id.offer_lst);
         listview.setAdapter(mAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +70,9 @@ public class FavouriteFragment extends FragmentReturn {
             }
         });
 
-        return view;
+        setVisibleEmptyList();
+
+        return rootView;
     }
 
     @Override
@@ -69,5 +83,7 @@ public class FavouriteFragment extends FragmentReturn {
 
         // fire the event
         mAdapter.notifyDataSetChanged();
+
+        setVisibleEmptyList();
     }
 }

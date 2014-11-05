@@ -37,7 +37,7 @@ public class MyHistory extends MyObjects<String> {
             addObject(query, query);
         }
 
-        if (getObjects().size() > 20){
+        if (getObjects().size() > 20) {
             String key = (String) getObjects().keySet().toArray()[0];
             delQuery(key);
         }
