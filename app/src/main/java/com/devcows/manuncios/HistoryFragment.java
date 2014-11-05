@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.devcows.manuncios.persistent.MyHistory;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class HistoryFragment extends FragmentReturn {
     private ArrayAdapter mAdapter;
+    private View rootView;
 
     public HistoryFragment() {
     }
@@ -32,14 +34,24 @@ public class HistoryFragment extends FragmentReturn {
         return list;
     }
 
+    private void setVisibleEmptyList() {
+        LinearLayout empty_list = (LinearLayout) rootView.findViewById(R.id.empty_list);
+
+        if (mAdapter.isEmpty()) {
+            empty_list.setVisibility(View.VISIBLE);
+        } else {
+            empty_list.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_history_list, container, false);
         this.context = getActivity();
 
         // Set the adapter
         mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getHistoryList());
-        ListView listview = (ListView) view.findViewById(R.id.history_lst);
+        ListView listview = (ListView) rootView.findViewById(R.id.history_lst);
         listview.setAdapter(mAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +70,9 @@ public class HistoryFragment extends FragmentReturn {
             }
         });
 
-        return view;
+        setVisibleEmptyList();
+
+        return rootView;
     }
 
     @Override
@@ -70,5 +84,7 @@ public class HistoryFragment extends FragmentReturn {
 
         // fire the event
         mAdapter.notifyDataSetChanged();
+
+        setVisibleEmptyList();
     }
 }
