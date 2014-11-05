@@ -202,13 +202,17 @@ public class DrawerActivity extends Activity {
     }
 
     private void setReturnFragment() {
-        mReturnFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
-        mReturnPosition = currentPosition;
+        FragmentReturn currentFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
 
-        mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
+        if (!(currentFragment instanceof FavouriteFragment || currentFragment instanceof HistoryFragment)) {
+            mReturnFragment = currentFragment;
+            mReturnPosition = currentPosition;
 
-        // fire the event
-        mDrawerListAdapter.notifyDataSetChanged();
+            mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
+
+            // fire the event
+            mDrawerListAdapter.notifyDataSetChanged();
+        }
     }
 
     private void unsetReturnFragment() {
