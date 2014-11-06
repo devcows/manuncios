@@ -1,5 +1,7 @@
 package com.devcows.manuncios.models;
 
+import com.devcows.manuncios.Utils;
+
 import java.io.Serializable;
 
 
@@ -16,19 +18,9 @@ public class OfferOtherField implements Serializable {
         return text;
     }
 
-    private String capitalize(String line) {
-        String returnStr = "";
-
-        if (line != null) {
-            returnStr = Character.toUpperCase(line.charAt(0)) + line.substring(1);
-        }
-
-        return returnStr;
-    }
-
     //setters
     public void setText(String text) {
-        this.text = capitalize(text);
+        this.text = Utils.capitalizeString(text);
     }
 
     public String getTextColor() {

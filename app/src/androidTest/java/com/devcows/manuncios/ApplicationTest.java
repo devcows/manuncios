@@ -37,14 +37,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         myFavourites.addFavourite(f);
 
         Log.d("testFavourites", "Element added");
-        for (Favourite favorite : myFavourites.getFavourites().values()) {
-            Log.d("testFavourites", "=> " + favorite.toString());
+        for (Offer offer : myFavourites.getFavouriteOffersList()) {
+            Log.d("testFavourites", "=> " + offer.toString());
         }
 
         myFavourites.delFavourite(f);
         Log.d("testFavourites", "Element removed");
-        for (Favourite favorite : myFavourites.getFavourites().values()) {
-            Log.d("testFavourites", "=> " + favorite.toString());
+        for (Offer offer : myFavourites.getFavouriteOffersList()) {
+            Log.d("testFavourites", "=> " + offer.toString());
         }
 
     }
@@ -66,5 +66,21 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         }
 
         Log.d("testSearchOfferGetTask", "Finish!");
+    }
+
+    public void testCapitalizeString() throws Exception{
+
+        String text = Utils.capitalizeString(null);
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("h");
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("hola");
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("ébola");
+        Log.d("testCapitalizeString", "=> " + text);
+
     }
 }

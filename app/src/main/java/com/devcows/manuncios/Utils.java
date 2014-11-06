@@ -102,6 +102,20 @@ public class Utils {
         return arrayList;
     }
 
+    public static String capitalizeString(String line) {
+        String returnStr = "";
+
+        if (line != null && !line.isEmpty()) {
+            returnStr = String.valueOf(Character.toUpperCase(line.charAt(0)));
+
+            if (line.length() > 1){
+                returnStr += line.substring(1);
+            }
+        }
+
+        return returnStr;
+    }
+
     public static ImageLoader getImageLoaderInstance(Context context) {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
