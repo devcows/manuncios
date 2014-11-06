@@ -6,11 +6,6 @@ import android.os.AsyncTask;
 
 import com.devcows.manuncios.persistent.MyFavourites;
 import com.devcows.manuncios.persistent.MyHistory;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
     private Context context;

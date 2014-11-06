@@ -102,11 +102,11 @@ public class Utils {
         return arrayList;
     }
 
-    public static ImageLoader getImageLoaderInstance(Context context){
+    public static ImageLoader getImageLoaderInstance(Context context) {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
 
-        if(!imageLoader.isInited()) {
+        if (!imageLoader.isInited()) {
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheOnDisk(true)
                     .build();
