@@ -17,7 +17,13 @@ public class OfferOtherField implements Serializable {
     }
 
     private String capitalize(String line) {
-        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+        String returnStr = "";
+
+        if (line != null) {
+            returnStr = Character.toUpperCase(line.charAt(0)) + line.substring(1);
+        }
+
+        return returnStr;
     }
 
     //setters
