@@ -48,10 +48,6 @@
             android:label="@string/title_activity_contact" />
 
         <activity
-            android:name=".FavouriteFragment"
-            android:label="@string/title_activity_favourite" />
-
-        <activity
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_drawer">
 
@@ -62,7 +58,7 @@
 
         <activity
             android:name=".other_controls.FullScreenImageActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 
 </manifest>
