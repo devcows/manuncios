@@ -1,3 +1,18 @@
+//Copyright (C) 2014  Guillermo G. (info@devcows.com)
+//
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.devcows.manuncios;
 
 import android.app.Application;
@@ -37,14 +52,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         myFavourites.addFavourite(f);
 
         Log.d("testFavourites", "Element added");
-        for (Favourite favorite : myFavourites.getFavourites().values()) {
-            Log.d("testFavourites", "=> " + favorite.toString());
+        for (Offer offer : myFavourites.getFavouriteOffersList()) {
+            Log.d("testFavourites", "=> " + offer.toString());
         }
 
         myFavourites.delFavourite(f);
         Log.d("testFavourites", "Element removed");
-        for (Favourite favorite : myFavourites.getFavourites().values()) {
-            Log.d("testFavourites", "=> " + favorite.toString());
+        for (Offer offer : myFavourites.getFavouriteOffersList()) {
+            Log.d("testFavourites", "=> " + offer.toString());
         }
 
     }
@@ -66,5 +81,21 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         }
 
         Log.d("testSearchOfferGetTask", "Finish!");
+    }
+
+    public void testCapitalizeString() throws Exception {
+
+        String text = Utils.capitalizeString(null);
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("h");
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("hola");
+        Log.d("testCapitalizeString", "=> " + text);
+
+        text = Utils.capitalizeString("ébola");
+        Log.d("testCapitalizeString", "=> " + text);
+
     }
 }

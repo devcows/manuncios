@@ -1,3 +1,18 @@
+//Copyright (C) 2014  Guillermo G. (info@devcows.com)
+//
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.devcows.manuncios;
 
 import android.app.Activity;
@@ -59,72 +74,69 @@ public class DrawerListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        LayoutInflater mInflater = (LayoutInflater)
-                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        if (view == null) {
+            view = mInflater.inflate(R.layout.layout_drawer_list_item, null);
+        }
 
-        if (i == DrawerActivity.DRAWER_IMG_POSITION) {
-            if (view == null) {
-                view = mInflater.inflate(R.layout.layout_drawer_list_item_img, null);
+        ViewHolder holder = new ViewHolder(view);
+
+        String rowItem = (String) getItem(i);
+        holder.txtTitle.setText(rowItem);
+
+        //set icon.
+        if (i > objectsFirst.size() - 1) {
+            int newI = i - objectsFirst.size();
+
+            switch (newI) {
+                case DrawerActivity.DRAWER_RATE_POSITION:
+                    holder.imageView.setBackgroundResource(R.drawable.ic_action_edit);
+
+                    if (android.os.Build.VERSION.SDK_INT >= 15) {
+                        view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
+                    }
+                    break;
+
+                case DrawerActivity.DRAWER_SHARE_POSITION:
+                    holder.imageView.setBackgroundResource(R.drawable.ic_action_share);
+
+                    if (android.os.Build.VERSION.SDK_INT >= 15) {
+                        view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
+                    }
+                    break;
+
+                default:
+                    holder.imageView.setVisibility(View.GONE);
+                    break;
             }
         } else {
+            switch (i) {
+                case DrawerActivity.DRAWER_IMG_POSITION:
 
-            if (view == null) {
-                view = mInflater.inflate(R.layout.layout_drawer_list_item, null);
-                holder = new ViewHolder();
+                    holder.txtTitle.setVisibility(View.GONE);
+                    holder.imageView.setVisibility(View.GONE);
+                    holder.appIcon.setVisibility(View.VISIBLE);
+                    break;
 
-                holder.txtTitle = (TextView) view.findViewById(R.id.title);
-                holder.imageView = (ImageView) view.findViewById(R.id.icon);
+                case DrawerActivity.DRAWER_START_POSITION:
+                    holder.imageView.setBackgroundResource(android.R.drawable.ic_input_get);
+                    break;
 
-                view.setTag(holder);
-            } else {
-                holder = (ViewHolder) view.getTag();
-            }
+                case DrawerActivity.DRAWER_FAVOURITE_POSITION:
+                    holder.imageView.setBackgroundResource(R.drawable.ic_action_important);
+                    break;
 
-            String rowItem = (String) getItem(i);
-            holder.txtTitle.setText(rowItem);
+                case DrawerActivity.DRAWER_HISTORY_POSITION:
+                    holder.imageView.setBackgroundResource(R.drawable.ic_action_time);
+                    break;
 
-            //set icon.
-            if (i > objectsFirst.size() - 1) {
-                int newI = i - objectsFirst.size();
-
-                switch (newI) {
-                    case DrawerActivity.DRAWER_RATE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_edit);
-                        view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
-                        break;
-
-                    case DrawerActivity.DRAWER_SHARE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_share);
-                        view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
-                        break;
-
-                    default:
-                        holder.imageView.setVisibility(View.GONE);
-                        break;
-                }
-            } else {
-                switch (i) {
-                    case DrawerActivity.DRAWER_START_POSITION:
-                        holder.imageView.setBackgroundResource(android.R.drawable.ic_input_get);
-                        break;
-
-                    case DrawerActivity.DRAWER_FAVOURITE_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_important);
-                        break;
-
-                    case DrawerActivity.DRAWER_HISTORY_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_time);
-                        break;
-
-                    case DrawerActivity.DRAWER_RETURN_POSITION:
-                        holder.imageView.setBackgroundResource(R.drawable.ic_action_undo);
-                        break;
-                    default:
-                        holder.imageView.setVisibility(View.GONE);
-                        break;
-                }
+                case DrawerActivity.DRAWER_RETURN_POSITION:
+                    holder.imageView.setBackgroundResource(R.drawable.ic_action_undo);
+                    break;
+                default:
+                    holder.imageView.setVisibility(View.GONE);
+                    break;
             }
         }
 
@@ -134,7 +146,18 @@ public class DrawerListAdapter extends BaseAdapter {
     /*private view holder class*/
     private class ViewHolder {
         ImageView imageView;
+        ImageView appIcon;
         TextView txtTitle;
+
+        public ViewHolder(View view) {
+            this.txtTitle = (TextView) view.findViewById(R.id.title);
+            this.imageView = (ImageView) view.findViewById(R.id.icon);
+            this.appIcon = (ImageView) view.findViewById(R.id.app_icon);
+
+            this.txtTitle.setVisibility(View.VISIBLE);
+            this.imageView.setVisibility(View.VISIBLE);
+            this.appIcon.setVisibility(View.GONE);
+        }
     }
 
 }

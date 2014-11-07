@@ -1,26 +1,42 @@
+//Copyright (C) 2014  Guillermo G. (info@devcows.com)
+//
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.devcows.manuncios;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends ActionBarActivity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
@@ -56,7 +72,7 @@ public class DrawerActivity extends Activity {
         mTitle = mDrawerTitle = getTitle();
         mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
         mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
-
+        mOptionsTitlesSecond = new ArrayList<String>();
 
         shareAppTitle = getResources().getString(R.string.app_name) + " aplicación android";
 
@@ -74,8 +90,8 @@ public class DrawerActivity extends Activity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -87,13 +103,13 @@ public class DrawerActivity extends Activity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getSupportActionBar().setTitle(mTitle);
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getSupportActionBar().setTitle(mDrawerTitle);
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -120,7 +136,7 @@ public class DrawerActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
         //conditions to set visible
         boolean visible = !(fragment instanceof FavouriteFragment || fragment instanceof HistoryFragment);
@@ -157,7 +173,7 @@ public class DrawerActivity extends Activity {
                 super.onBackPressed();
             }
 
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
         }
     }
 
@@ -190,7 +206,7 @@ public class DrawerActivity extends Activity {
 
     protected void showFragment(Fragment fragment, int position) {
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             fragmentManager.executePendingTransactions();
 
@@ -202,7 +218,7 @@ public class DrawerActivity extends Activity {
     }
 
     private void setReturnFragment() {
-        FragmentReturn currentFragment = (FragmentReturn) getFragmentManager().findFragmentById(R.id.content_frame);
+        FragmentReturn currentFragment = (FragmentReturn) getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
         if (!(currentFragment instanceof FavouriteFragment || currentFragment instanceof HistoryFragment)) {
             mReturnFragment = currentFragment;
@@ -320,7 +336,7 @@ public class DrawerActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(title);
+        getSupportActionBar().setTitle(title);
     }
 
     public void setDrawerTitle(CharSequence title) {
