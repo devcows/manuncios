@@ -80,7 +80,11 @@ public class HistoryFragment extends FragmentReturn {
         super.onResume();
 
         mAdapter.clear();
-        mAdapter.addAll(getHistoryList());
+        for(String text: getHistoryList()){
+            mAdapter.add(text);
+        }
+
+        //mAdapter.addAll(getHistoryList());
 
         // fire the event
         mAdapter.notifyDataSetChanged();
