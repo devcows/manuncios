@@ -95,7 +95,7 @@ public class HistoryFragment extends FragmentReturn {
         super.onResume();
 
         mAdapter.clear();
-        for(String text: getHistoryList()){
+        for (String text : getHistoryList()) {
             mAdapter.add(text);
         }
 

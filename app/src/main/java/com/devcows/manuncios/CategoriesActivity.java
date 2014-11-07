@@ -76,6 +76,10 @@ public class CategoriesActivity extends DrawerActivity implements SearchView.OnQ
         MenuItem searchItem = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        if (mSearchView != null) {
+            mSearchView.setOnQueryTextListener(this);
+        }
+
         return true;
     }
 

@@ -83,7 +83,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         Log.d("testSearchOfferGetTask", "Finish!");
     }
 
-    public void testCapitalizeString() throws Exception{
+    public void testCapitalizeString() throws Exception {
 
         String text = Utils.capitalizeString(null);
         Log.d("testCapitalizeString", "=> " + text);
