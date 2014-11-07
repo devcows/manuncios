@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -71,7 +72,7 @@ public class DrawerActivity extends ActionBarActivity {
         mTitle = mDrawerTitle = getTitle();
         mOptionsTitlesFirst = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_first));
         mOptionsTitlesSecond = Utils.getStringList(getResources().getStringArray(R.array.drawer_array_second));
-
+        mOptionsTitlesSecond = new ArrayList<String>();
 
         shareAppTitle = getResources().getString(R.string.app_name) + " aplicación android";
 
