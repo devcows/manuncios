@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.devcows.manuncios.models.Favourite;
 import com.devcows.manuncios.models.Offer;
 import com.devcows.manuncios.other_controls.FullScreenImageActivity;
+import com.devcows.manuncios.persistent.MyFavourites;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
@@ -213,7 +214,7 @@ public class OfferActivity extends DrawerActivity {
                     }
                 });
 
-                ImageLoader imgLoader = ImageLoader.getInstance();
+                ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
                 imgLoader.displayImage(imageUri, imgView);
 
                 lLayout.addView(imgView);

@@ -51,25 +51,17 @@ public class CategoriesListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
-
-        LayoutInflater mInflater = (LayoutInflater)
-                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
             view = mInflater.inflate(R.layout.layout_category_item, null);
-            holder = new ViewHolder();
-
-            holder.txtTitle = (TextView) view.findViewById(R.id.title);
-            holder.imageView = (ImageView) view.findViewById(R.id.icon);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
         }
+
+        ViewHolder holder = new ViewHolder(view);
 
         Category rowItem = (Category) getItem(i);
         holder.txtTitle.setText(rowItem.getName());
 
-        ImageLoader imgLoader = ImageLoader.getInstance();
+        ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
         imgLoader.displayImage(rowItem.getImageUri(), holder.imageView);
 
         return view;
@@ -79,6 +71,11 @@ public class CategoriesListAdapter extends BaseAdapter {
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
+
+        public ViewHolder(View view) {
+            this.txtTitle = (TextView) view.findViewById(R.id.title);
+            this.imageView = (ImageView) view.findViewById(R.id.icon);
+        }
     }
 
 }

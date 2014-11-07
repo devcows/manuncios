@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.devcows.manuncios.persistent.MyFavourites;
+import com.devcows.manuncios.persistent.MyHistory;
 
 public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
     private Context context;
@@ -23,21 +20,7 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
         this.listeners = listeners;
 
         //initializers
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisk(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .defaultDisplayImageOptions(defaultOptions)
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCacheSize(20 * 1024 * 1024) // 20 Mb
-                .tasksProcessingOrder(QueueProcessingType.FIFO)
-                .build();
-
-        ImageLoader imgLoader = ImageLoader.getInstance();
-        imgLoader.init(config);
+        Utils.getImageLoaderInstance(context);
 
         ApiMilAnuncios.getInstance();
         SearchQuery.getInstance();
@@ -48,6 +31,9 @@ public class MainGetTask extends AsyncTask<MainTaskListener, Void, Void> {
 
         MyFavourites.setContext(context);
         MyFavourites.getInstance();
+
+        MyHistory.setContext(context);
+        MyHistory.getInstance();
         return null;
     }
 

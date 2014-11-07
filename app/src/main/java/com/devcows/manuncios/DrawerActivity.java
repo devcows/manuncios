@@ -24,7 +24,9 @@ public class DrawerActivity extends ActionBarActivity {
     public final static int DRAWER_IMG_POSITION = 0;
     public final static int DRAWER_START_POSITION = 1;
     public final static int DRAWER_FAVOURITE_POSITION = 2;
-    public final static int DRAWER_RETURN_POSITION = 3;
+    public final static int DRAWER_HISTORY_POSITION = 3;
+    public final static int DRAWER_RETURN_POSITION = 4;
+
 
     public final static int DRAWER_RATE_POSITION = 0;
     public final static int DRAWER_SHARE_POSITION = 1;
@@ -121,7 +123,7 @@ public class DrawerActivity extends ActionBarActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
         //conditions to set visible
-        boolean visible = !(fragment instanceof FavouriteFragment);
+        boolean visible = !(fragment instanceof FavouriteFragment || fragment instanceof HistoryFragment);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
@@ -200,13 +202,17 @@ public class DrawerActivity extends ActionBarActivity {
     }
 
     private void setReturnFragment() {
-        mReturnFragment = (FragmentReturn) getSupportFragmentManager().findFragmentById(R.id.content_frame);
-        mReturnPosition = currentPosition;
+        FragmentReturn currentFragment = (FragmentReturn) getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
-        mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
+        if (!(currentFragment instanceof FavouriteFragment || currentFragment instanceof HistoryFragment)) {
+            mReturnFragment = currentFragment;
+            mReturnPosition = currentPosition;
 
-        // fire the event
-        mDrawerListAdapter.notifyDataSetChanged();
+            mOptionsTitlesFirst.add("Volver " + mReturnFragment.getReturnName());
+
+            // fire the event
+            mDrawerListAdapter.notifyDataSetChanged();
+        }
     }
 
     private void unsetReturnFragment() {
@@ -265,6 +271,11 @@ public class DrawerActivity extends ActionBarActivity {
                 case DRAWER_FAVOURITE_POSITION:
                     setReturnFragment();
                     showFragment(new FavouriteFragment(), DRAWER_FAVOURITE_POSITION);
+                    break;
+
+                case DRAWER_HISTORY_POSITION:
+                    setReturnFragment();
+                    showFragment(new HistoryFragment(), DRAWER_HISTORY_POSITION);
                     break;
 
                 case DRAWER_RETURN_POSITION:

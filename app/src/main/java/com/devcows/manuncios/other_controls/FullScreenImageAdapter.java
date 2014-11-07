@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.devcows.manuncios.R;
+import com.devcows.manuncios.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
         TouchImageView imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.imgDisplay);
 
-        ImageLoader imgLoader = ImageLoader.getInstance();
+        ImageLoader imgLoader = Utils.getImageLoaderInstance(context);
         imgLoader.displayImage(images.get(position), imgDisplay);
 
         container.addView(viewLayout);

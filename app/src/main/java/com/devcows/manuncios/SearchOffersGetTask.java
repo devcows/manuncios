@@ -92,11 +92,13 @@ public class SearchOffersGetTask extends AsyncTask<SearchOffersTaskListener, Voi
                         }
                     }
 
-                    OfferOtherField fields = new OfferOtherField();
-                    fields.setText(text);
-                    fields.setBoxColor(backgroundColor);
+                    if (text != null) {
+                        OfferOtherField field = new OfferOtherField();
+                        field.setText(text);
+                        field.setBoxColor(backgroundColor);
 
-                    othersLst.add(fields);
+                        othersLst.add(field);
+                    }
                 }
             }
         }

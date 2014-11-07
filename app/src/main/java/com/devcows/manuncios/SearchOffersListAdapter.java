@@ -58,14 +58,10 @@ public class SearchOffersListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
             view = mInflater.inflate(R.layout.layout_offer_list_item, null);
-
-            OfferHolder holder = new OfferHolder(view);
-            adapter = new OfferAdapter(holder, rowItem, context);
-
-            view.setTag(adapter);
-        } else {
-            adapter = (OfferAdapter) view.getTag();
         }
+
+        OfferHolder holder = new OfferHolder(view);
+        adapter = new OfferAdapter(holder, rowItem, context);
 
         adapter.fillOffer(true);
 
