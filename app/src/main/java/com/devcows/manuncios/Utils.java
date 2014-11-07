@@ -108,7 +108,7 @@ public class Utils {
         if (line != null && !line.isEmpty()) {
             returnStr = String.valueOf(Character.toUpperCase(line.charAt(0)));
 
-            if (line.length() > 1){
+            if (line.length() > 1) {
                 returnStr += line.substring(1);
             }
         }
