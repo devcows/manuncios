@@ -1,6 +1,3 @@
-Keys:
-password same gmail
-
 Short description:
 Aplicación para consultar los anuncios de la página web (milanuncios.com).
 
