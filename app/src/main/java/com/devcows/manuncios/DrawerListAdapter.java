@@ -93,7 +93,7 @@ public class DrawerListAdapter extends BaseAdapter {
                 case DrawerActivity.DRAWER_RATE_POSITION:
                     holder.imageView.setBackgroundResource(R.drawable.ic_action_edit);
 
-                    if (android.os.Build.VERSION.SDK_INT >= 15) {
+                    if (android.os.Build.VERSION.SDK_INT > 15) {
                         view.setBackgroundResource(R.drawable.drawer_style_first_bottom);
                     }
                     break;
@@ -101,7 +101,7 @@ public class DrawerListAdapter extends BaseAdapter {
                 case DrawerActivity.DRAWER_SHARE_POSITION:
                     holder.imageView.setBackgroundResource(R.drawable.ic_action_share);
 
-                    if (android.os.Build.VERSION.SDK_INT >= 15) {
+                    if (android.os.Build.VERSION.SDK_INT > 15) {
                         view.setBackgroundResource(R.drawable.drawer_style_other_bottom);
                     }
                     break;
